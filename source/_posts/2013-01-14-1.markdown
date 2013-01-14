@@ -3,10 +3,11 @@ layout: post
 title: "Mac + Ruby + Octopress + Github でブログの作成"
 date: 2013-01-14 22:22
 comments: true
-categories: "Octopress"
+categories: Octopress
 ---
 技術系の話をメモするためのブログを作ろうと思っていたところ、このようなものを発見[Octopress](http://octopress.org)。コードの管理に普段からGithubを使ってるので、技術系の話はすべてGithub上に集約してしまおう、という試み。以下SSHKeyの登録などGithubの設定はひと通り終わってる前提で話を進めています。
 
+<!-- more -->
 ##環境
 PC: MacBook Air, Core i5 1.7GHz, Mem 4GB  
 OS: OS X 10.8.2  
@@ -58,7 +59,14 @@ sourse/_posts/以下に新しい記事のテンプレートが作成される。
     $ rake deploy
     $ git add . && git commit -m "Create octopress install page."
     $ git push
-これでとりあえず問題は無いはず。細かい部分は後ほど確認する予定。
+
+##コメント欄の追加
+記事にコメント欄を追加するには、[Disqus](http://disqus.com/)に登録しなければならないっぽいので登録した。[このページ](http://blog.morizotter.com/octopress%E3%81%AB%E3%82%B3%E3%83%A1%E3%83%B3%E3%83%88%E3%82%92%E8%BF%BD%E5%8A%A0%E3%81%99%E3%82%8B/)を見つつ_config.ymlに設定を記述した。
+
+##サイドバーにプロフィール欄を追加
+[ここ](http://www.mk-mode.com/octopress/2012/12/17/octopress-add-profile/)を参考にしました。`source/_includes/custom/asides/about.html` を編集（中身はただのHTML）。サイドバーの表示設定を変更するために_config.ymlを編集。
+    default_asides: [...]
+の中の任意の位置にcustom/asides/about.htmlを追加する。genereteしてdeployすればプロフィールがサイドバーに表示されるはず。
 
 ##感想
 ちょこちょこ弄ってみた感想ですが、  
