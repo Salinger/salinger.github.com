@@ -1,0 +1,68 @@
+---
+layout: post
+title: "Mac + Ruby + Octopress + Github でブログの作成"
+date: 2013-01-14 22:22
+comments: true
+categories: "Octopress"
+---
+技術系の話をメモするためのブログを作ろうと思っていたところ、このようなものを発見[Octopress](http://octopress.org)。コードの管理に普段からGithubを使ってるので、技術系の話はすべてGithub上に集約してしまおう、という試み。以下SSHKeyの登録などGithubの設定はひと通り終わってる前提で話を進めています。
+
+##環境
+PC: MacBook Air, Core i5 1.7GHz, Mem 4GB  
+OS: OS X 10.8.2  
+XCode: 4.5.2  
+
+##Rubyのインストール
+1.9.3が入ってればいいらしいので、MacPortsを使ってインストール。
+    $ sudo port install ruby19 +nosuffix
+bundle のインストール (とりあえずgem1.9を使えば問題はなかった。gem だと標準でインストールされている1.8系にインストールされるのか？試していないので分からないが)。
+    $ sudo gem1.9 install bundle
+
+##Octopressのインストール
+    $ cd ~/Downloads/
+    $ git clone https://github.com/imathis/octopress.git
+    $ cd octopress
+    $ bundle install
+    $ rake install
+
+
+##Github Pagesの準備
+Github Pagesを利用するために、username.github.com というような名前でリポジトリを作成。[ここ](https://github.com/repositories/new)で私の場合はsalinger.github.comという名前で作成した。→のGithub Reposに見えてるかな？
+
+##Octpress のデプロイ設定
+    $ rake setup_github_pages
+ここでgit@github.com:Salinger/salinger.github.com.git を入力。
+    $ rake generate
+    $ rake deploy
+この2行をまとめて実行する場合には
+    $ rake gen_deploy
+で可能。
+
+##Github コミット
+    $ git add . && git commit -m "Initial commit"
+    $ git push
+
+##初期設定
+[ここ](http://change-the-world.github.com/blog/2012/08/26/1/)を見ながら_config.ymlを弄って初期設定。Github,Twitterとの連携も簡単にできる。
+
+
+##新規記事作成
+    $ rake new_post["1"]
+sourse/_posts/以下に新しい記事のテンプレートが作成される。
+[Wikipedia:Markdown](http://ja.wikipedia.org/wiki/Markdown)
+を見ながら、テストがてらこの記事を作成してみた。
+なおデプロイする前に
+    $ rake generate
+    $ rake preview
+を実行すると、http://localhost:4000でプレビューが見れる。
+    $ rake deploy
+    $ git add . && git commit -m "Create octopress install page."
+    $ git push
+これでとりあえず問題は無いはず。細かい部分は後ほど確認する予定。
+
+##感想
+ちょこちょこ弄ってみた感想ですが、  
+1. Githubとの連携が良い感じ。  
+2. Markdown記法なかなか書きやすい。普段使ってるEmacsで書けるのはありがたい。  
+3. 2とも関連するが、作業中にエディタ内でシームレスに書けるのは非常に楽。  
+静的なページでいいなら、レンタルサーバ借りるよりもこっちの方がいいかも。
