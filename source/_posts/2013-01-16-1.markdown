@@ -1,0 +1,48 @@
+---
+layout: post
+title: "homebrew環境の構築"
+date: 2013-01-16 02:41
+comments: true
+categories: Mac
+---
+Macbook Airの環境を再構築したので、その際のメモ。今まではパッケージ管理にMacPortsを使っていたが、今回からHomebrewに移行した。元からMountain LionにインストールされてるPythonやRubyと、パッケージ管理ソフトで導入したそれらの最新版の管理がMacPortsだと少々面倒くさかったので、もう少し楽に済みそうなものを使ってみようというのが理由だ。
+
+##Homebrewのインストール
+以下のコマンドを実行。
+    $ /usr/bin/ruby -e "$(/usr/bin/curl -fsSL https://raw.github.com/mxcl/homebrew/master/Library/Contributions/install_homebrew.rb)"
+    $ brew doctor
+gitのインストール。
+    $ brew install git
+Homebrewのアップデート。
+    $ brew update
+`/usr/local/sbin`の作成。
+    $ mkdir /usr/local/sbin
+Pathを設定するため`/etc/paths`の編集。
+    /usr/bin
+    /bin
+    /usr/sbin
+    /sbin
+    /usr/local/bin
+となっているのを、
+    /usr/local/bin
+    /usr/bin
+    /bin
+    /usr/sbin
+    /usr/local/sbin
+    /sbin
+    /usr/local/bin
+と変更。これでHomebrewでインストールした方が優先される。
+ターミナルを再起動してとりあえずの設定は終わり。
+
+##Ruby1.9.3のインストール
+とりあえずこのブログを編集するためのRuby環境構築。
+    $ brew install ruby
+    $ gem install bundler
+このBlogのデータを`git clone`で作業用ディレクトリに持ってきて、そのディレクトに移動。そこで、
+    $ bundle install
+を実行しようとしたら、bundleコマンドが見当たらないぞ？次のコマンドを実行すれば良かった。
+    $ brew unlink ruby
+    $ brew link ruby
+
+##おわりに
+こんな感じでBlogを更新するための環境の再構築はとりあえず終了。MacPortsの時に面倒だったRubyとGemのバージョン指定周りも特に気にする必要はなかった。早くPythonの環境も整えねば。
