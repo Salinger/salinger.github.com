@@ -73,3 +73,8 @@ bashだとPathは問題なく2.7.3が起動したけど、普段使ってるtmux
     $ Enter a post title:2
 作成できたぞ？今回Pathを弄ったのが原因か？  
 この辺の動作がよくわからんので。また確認しとかないと。
+
+###追記
+.zshrcに
+    alias rake="noglob rake"
+を追記したらエラー消えました。ありがとうございます > shogo82148 。
