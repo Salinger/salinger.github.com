@@ -5,12 +5,12 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>さりんじゃーのプログラミング日記</title>
+  <title>Homebrew + virtualenv 環境でlibsvmのインストール - さりんじゃーのプログラミング日記</title>
   <meta name="author" content="Salinger">
 
   
   <meta name="description" content="サポートベクターマシン(SVM)についての概要は Wikipedia でも見てください。
-スパムの分類、ユーザーのクラスタリング、他何か色々なものを分類する用途に使われます。今回はSVMを使うための環境構築を行った際のメモです。 ">
+スパムの分類、ユーザーのクラスタリング、他何か色々なものを分類する用途に使われます。今回はSVMを使うための環境構築を行った際のメモです。 libsvmについて libsvmはChih-Chung &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -19,7 +19,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://Salinger.github.com/">
+  <link rel="canonical" href="http://Salinger.github.com/blog/2013/01/18/1/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -63,15 +63,12 @@
 </nav>
   <div id="main">
     <div id="content">
-      <div class="blog-index">
+      <div>
+<article class="hentry" role="article">
   
-  
-  
-    <article>
-      
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2013/01/18/1/">Homebrew + Virtualenv 環境でlibsvmのインストール</a></h1>
+      <h1 class="entry-title">Homebrew + Virtualenv 環境でlibsvmのインストール</h1>
     
     
       <p class="meta">
@@ -89,81 +86,120 @@
 
 <time datetime="2013-01-18T02:42:00+09:00" pubdate data-updated="true">Jan 18<span>th</span>, 2013</time>
         
-         | <a href="/blog/2013/01/18/1/#disqus_thread">Comments</a>
+         | <a href="#disqus_thread">Comments</a>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>サポートベクターマシン(SVM)についての概要は <a href="http://ja.wikipedia.org/wiki/%E3%82%B5%E3%83%9D%E3%83%BC%E3%83%88%E3%83%99%E3%82%AF%E3%82%BF%E3%83%BC%E3%83%9E%E3%82%B7%E3%83%B3">Wikipedia</a> でも見てください。
+<div class="entry-content"><p>サポートベクターマシン(SVM)についての概要は <a href="http://ja.wikipedia.org/wiki/%E3%82%B5%E3%83%9D%E3%83%BC%E3%83%88%E3%83%99%E3%82%AF%E3%82%BF%E3%83%BC%E3%83%9E%E3%82%B7%E3%83%B3">Wikipedia</a> でも見てください。
 スパムの分類、ユーザーのクラスタリング、他何か色々なものを分類する用途に使われます。今回はSVMを使うための環境構築を行った際のメモです。</p>
 
+<!-- more -->
+
+
+<h2>libsvmについて</h2>
+
+<p><a href="http://www.csie.ntu.edu.tw/~cjlin/libsvm/">libsvm</a>はChih-Chung Changさん・Chih-Jen Linさんが開発したSVMのライブラリです。様々なSVMタイプ・カーネル関数、また細かくオプションも指定できるので、SVMを使う必要がある場合は、とりあえずこれを選んでおけば困ることは少ないと思います。</p>
+
+<h2>libsvmのインストール</h2>
+
+<pre><code>$ brew search libsvm
+libsvm
+</code></pre>
+
+<p>brewにあった。ラッキー。</p>
+
+<pre><code>$ brew install libsvm
+</code></pre>
+
+<p>本体のインストール完了。</p>
+
+<pre><code>$ svm-train
+Usage: svm-train [options] training_set_file [model_file]
+options:
+-s svm_type : set type of SVM (default 0)
+        0 -- C-SVC              (multi-class classification)
+...
+</code></pre>
+
+<p>動いた。がこれだとPython用バインディングがインストールできなかった。残念。</p>
+
+<h2>libsvmのPython用バインディングのインストール</h2>
+
+<p>無いなら、pipで公式のバインディングをインストールするためのsetup.pyを自分で書いてしまえばいいじゃない。てな訳で書いた奴をgithubに上げといた<a href="https://github.com/Salinger/libsvm-python">(libsvm-python)</a>。
+問題はsetup.py書いたのが初めてなので、これであってるのかどうか自信がない。とりあえず以下のコマンドでインストールできます。</p>
+
+<pre><code>$ pip install -e git+https://github.com/Salinger/libsvm-python.git#egg=libsvm-python
+</code></pre>
+
+<h2>動作確認</h2>
+
+<p>テスト用のコード。</p>
+
+<div><script src='https://gist.github.com/4579980.js'></script>
+<noscript><pre><code>#!/usr/bin/env python                                                                                     
+#-*- coding:utf-8 -*-                                                                                     
+
+from svm import *
+from svmutil import *
+
+# For learning                                                                                            
+t_label = [1,-1,1,-1]
+t_data = [
+    [1.0, 2.0, 3.0],
+    [3.0, 1.5, 1.0],
+    [2.0, 3.0, 4.0],
+    [0.5, 1.0, 1.5]
+    ]
+problem = svm_problem(t_label, t_data)
+parameter = svm_parameter('-s 0 -t 0')
+t = svm_train(problem, parameter)
+
+# For predict                                                                                             
+p_label = [1, 1, -1, -1]
+p_data = [
+    [0.3, 0.9, 1.2],
+    [2.0, 3.0, 4.5],
+    [3.0, 1.0, 0.3],
+    [1.0, 0.5, 0.25]
+    ]
+result = svm_predict(p_label, p_data , t)
+
+print &quot;[Result]&quot;
+for r in result:
+    print r</code></pre></noscript></div>
+
+
+<p>そして実行。</p>
+
+<pre><code>$ python libsvm_test.py 
+.*.*
+optimization finished, #iter = 9
+nu = 0.298326
+obj = -0.596685, rho = 3.000257
+nSV = 3, nBSV = 0
+Total nSV = 3
+Accuracy = 75% (3/4) (classification)
+[Result]
+[-1.0, 1.0, -1.0, -1.0]
+(75.0, 1.0, 0.3333333333333333)
+[[-1.3527684585781998], [3.038557720585867], [-1.9331234989121904], [-2.4115929900464406]]
+</code></pre>
+
+<p>問題なく動くのを確認できた。自分で書いたsetup.pyもとりあえず問題ないっぽい？</p>
 </div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2013/01/18/1/">続きを読む &rarr;</a>
-    </footer>
-  
 
 
-    </article>
-  
-  
-    <article>
+  <footer>
+    <p class="meta">
       
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/01/17/1/">Homebrew + Virtualenv 環境でMeCabのインストール</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
   
 
+<span class="byline author vcard">Posted by <span class="fn">Salinger</span></span>
 
-<time datetime="2013-01-17T18:40:00+09:00" pubdate data-updated="true">Jan 17<span>th</span>, 2013</time>
-        
-         | <a href="/blog/2013/01/17/1/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>普段良く使うモジュールのMeCabのインストール。
-Homebrewもvirutalenvも最近使い始めたばかりなので、自分用メモとして記録。</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2013/01/17/1/">続きを読む &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
-  
-    <article>
       
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/01/16/2/">Macでvirtualenvの設定</a></h1>
-    
-    
-      <p class="meta">
-        
 
 
 
@@ -175,120 +211,42 @@ Homebrewもvirutalenvも最近使い始めたばかりなので、自分用メ�
   
 
 
-<time datetime="2013-01-16T17:41:00+09:00" pubdate data-updated="true">Jan 16<span>th</span>, 2013</time>
-        
-         | <a href="/blog/2013/01/16/2/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>virtualenvはPython用の仮想環境構築のためのモジュール。virtualenvwrapperはvirtualenvを楽に使うためのラッパー。とりあえずPython周りの環境は、基本的にPython自体をHomebrewで、モジュールはvirtualenv + virtualenvwrapper + pip で管理することにする。</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2013/01/16/2/">続きを読む &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
-  
-    <article>
+<time datetime="2013-01-18T02:42:00+09:00" pubdate data-updated="true">Jan 18<span>th</span>, 2013</time>
       
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/01/16/1/">Homebrew環境の構築</a></h1>
-    
-    
-      <p class="meta">
-        
 
-
-
-
-
-
-
-
+<span class="categories">
   
+    <a class='category' href='/blog/categories/mac/'>Mac</a>, <a class='category' href='/blog/categories/nlp/'>NLP</a>, <a class='category' href='/blog/categories/python/'>Python</a>
+  
+</span>
 
 
-<time datetime="2013-01-16T02:41:00+09:00" pubdate data-updated="true">Jan 16<span>th</span>, 2013</time>
-        
-         | <a href="/blog/2013/01/16/1/#disqus_thread">Comments</a>
-        
-      </p>
+    </p>
     
-  </header>
-
-
-  <div class="entry-content"><p>Macbook Airの環境を再構築したので、その際のメモ。今まではパッケージ管理にMacPortsを使っていたが、今回からHomebrewに移行した。元からMountain LionにインストールされてるPythonやRubyと、パッケージ管理ソフトで導入したそれらの最新版の管理がMacPortsだと少々面倒くさかったので、もう少し楽に済みそうなものを使ってみようというのが理由だ。</p>
-
+      <div class="sharing">
+  
+  
+  
 </div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2013/01/16/1/">続きを読む &rarr;</a>
-    </footer>
-  
 
-
-    </article>
-  
-  
-    <article>
+    
+    <p class="meta">
       
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/01/14/1/">Mac + Ruby + Octopress + Github でブログの作成</a></h1>
-    
-    
-      <p class="meta">
-        
+        <a class="basic-alignment left" href="/blog/2013/01/17/1/" title="Previous Post: Homebrew + virtualenv 環境でMeCabのインストール">&laquo; Homebrew + virtualenv 環境でMeCabのインストール</a>
+      
+      
+    </p>
+  </footer>
+</article>
 
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-01-14T22:22:00+09:00" pubdate data-updated="true">Jan 14<span>th</span>, 2013</time>
-        
-         | <a href="/blog/2013/01/14/1/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>技術系の話をメモするためのブログを作ろうと思っていたところ、このようなものを発見<a href="http://octopress.org">Octopress</a>。コードの管理に普段からGithubを使ってるので、技術系の話はすべてGithub上に集約してしまおう、という試み。以下SSHKeyの登録などGithubの設定はひと通り終わってる前提で話を進めています。</p>
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
 
 </div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2013/01/14/1/">続きを読む &rarr;</a>
-    </footer>
-  
 
-
-    </article>
-  
-  <div class="pagination">
-    
-    <a href="/blog/archives">Blog Archives</a>
-    
-  </div>
-</div>
 <aside class="sidebar">
   
     <section>
@@ -328,7 +286,7 @@ Homebrewもvirutalenvも最近使い始めたばかりなので、自分用メ�
 <section>
   <h1>GitHub Repos</h1>
   <ul id="gh_repos">
-    <li class="loading">Status updating&#8230;</li>
+    <li class="loading">Status updating...</li>
   </ul>
   
   <a href="https://github.com/Salinger">@Salinger</a> on GitHub
@@ -358,7 +316,7 @@ Homebrewもvirutalenvも最近使い始めたばかりなので、自分用メ�
 <section>
   <h1>Latest Tweets</h1>
   <ul id="tweets">
-    <li class="loading">Status updating&#8230;</li>
+    <li class="loading">Status updating...</li>
   </ul>
   <script type="text/javascript">
     $.domReady(function(){
@@ -378,6 +336,7 @@ Homebrewもvirutalenvも最近使い始めたばかりなので、自分用メ�
   
 </aside>
 
+
     </div>
   </div>
   <footer role="contentinfo"><p>
@@ -392,7 +351,10 @@ Homebrewもvirutalenvも最近使い始めたばかりなので、自分用メ�
       var disqus_shortname = 'salinger';
       
         
-        var disqus_script = 'count.js';
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://Salinger.github.com/blog/2013/01/18/1/';
+        var disqus_url = 'http://Salinger.github.com/blog/2013/01/18/1/';
+        var disqus_script = 'embed.js';
       
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;

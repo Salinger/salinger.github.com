@@ -5,12 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>さりんじゃーのプログラミング日記</title>
+  <title>Macでvirtualenvの設定 - さりんじゃーのプログラミング日記</title>
   <meta name="author" content="Salinger">
 
   
-  <meta name="description" content="サポートベクターマシン(SVM)についての概要は Wikipedia でも見てください。
-スパムの分類、ユーザーのクラスタリング、他何か色々なものを分類する用途に使われます。今回はSVMを使うための環境構築を行った際のメモです。 ">
+  <meta name="description" content="virtualenvはPython用の仮想環境構築のためのモジュール。virtualenvwrapperはvirtualenvを楽に使うためのラッパー。とりあえずPython周りの環境は、基本的にPython自体をHomebrewで、モジュールはvirtualenv + &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -19,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://Salinger.github.com/">
+  <link rel="canonical" href="http://Salinger.github.com/blog/2013/01/16/2/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -63,103 +62,12 @@
 </nav>
   <div id="main">
     <div id="content">
-      <div class="blog-index">
+      <div>
+<article class="hentry" role="article">
   
-  
-  
-    <article>
-      
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2013/01/18/1/">Homebrew + Virtualenv 環境でlibsvmのインストール</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-01-18T02:42:00+09:00" pubdate data-updated="true">Jan 18<span>th</span>, 2013</time>
-        
-         | <a href="/blog/2013/01/18/1/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>サポートベクターマシン(SVM)についての概要は <a href="http://ja.wikipedia.org/wiki/%E3%82%B5%E3%83%9D%E3%83%BC%E3%83%88%E3%83%99%E3%82%AF%E3%82%BF%E3%83%BC%E3%83%9E%E3%82%B7%E3%83%B3">Wikipedia</a> でも見てください。
-スパムの分類、ユーザーのクラスタリング、他何か色々なものを分類する用途に使われます。今回はSVMを使うための環境構築を行った際のメモです。</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2013/01/18/1/">続きを読む &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/01/17/1/">Homebrew + Virtualenv 環境でMeCabのインストール</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-01-17T18:40:00+09:00" pubdate data-updated="true">Jan 17<span>th</span>, 2013</time>
-        
-         | <a href="/blog/2013/01/17/1/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>普段良く使うモジュールのMeCabのインストール。
-Homebrewもvirutalenvも最近使い始めたばかりなので、自分用メモとして記録。</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2013/01/17/1/">続きを読む &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/01/16/2/">Macでvirtualenvの設定</a></h1>
+      <h1 class="entry-title">Macでvirtualenvの設定</h1>
     
     
       <p class="meta">
@@ -177,79 +85,140 @@ Homebrewもvirutalenvも最近使い始めたばかりなので、自分用メ�
 
 <time datetime="2013-01-16T17:41:00+09:00" pubdate data-updated="true">Jan 16<span>th</span>, 2013</time>
         
-         | <a href="/blog/2013/01/16/2/#disqus_thread">Comments</a>
+         | <a href="#disqus_thread">Comments</a>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>virtualenvはPython用の仮想環境構築のためのモジュール。virtualenvwrapperはvirtualenvを楽に使うためのラッパー。とりあえずPython周りの環境は、基本的にPython自体をHomebrewで、モジュールはvirtualenv + virtualenvwrapper + pip で管理することにする。</p>
+<div class="entry-content"><p>virtualenvはPython用の仮想環境構築のためのモジュール。virtualenvwrapperはvirtualenvを楽に使うためのラッパー。とりあえずPython周りの環境は、基本的にPython自体をHomebrewで、モジュールはvirtualenv + virtualenvwrapper + pip で管理することにする。</p>
 
+<!-- more -->
+
+
+<h2>Pythonのインストール</h2>
+
+<p>必要な物をHomebrewでインストール。</p>
+
+<pre><code>$ python -V
+Python 2.7.2 # Macに標準で入ってるPython
+$ brew install readline sqlite gdbm
+$ brew install python --universal --framework
+$ python -V
+Python 2.7.2
+</code></pre>
+
+<p>あれっ？変化なし？
+bashだとPathは問題なく2.7.3が起動したけど、普段使ってるtmux + zshだと2.7.2が起動した。.zshrcに以下のようにPathの記述をする必要あり。</p>
+
+<pre><code>export PATH=/usr/local/bin:/usr/local/sbin:/sbin:/usr/sbin:${PATH}
+</code></pre>
+
+<p>.zshrcの再読み込み</p>
+
+<pre><code>$ source .zshrc
+$ python -V
+Python 2.7.3
+</code></pre>
+
+<p>これでPython2系最新版のインストールはOK。</p>
+
+<h2>virtualenvとvirtualenvwrapperのインストール</h2>
+
+<pre><code>$ which pip # インストール先の確認
+/usr/local/bin/pip # Homebrewでインストールした先になっているのを確認
+$ pip install virtualenv
+$ pip install virtualenvwrapper
+$ mkdir ~/.virtualenvs
+</code></pre>
+
+<p>.zshrcに</p>
+
+<pre><code>#virtualenv settings
+export WORKON_HOME=$HOME/.virtualenvs
+. /usr/local/share/python/virtualenvwrapper.sh
+</code></pre>
+
+<p>を記述。</p>
+
+<pre><code>$ source .zshrc # リロード
+virtualenvが見えない…
+</code></pre>
+
+<p>.zshrcに</p>
+
+<pre><code>export PATH=/usr/local/share/python:${PATH}
+</code></pre>
+
+<p>を追記。</p>
+
+<pre><code>$ source .zshrc
+</code></pre>
+
+<p>問題解決。</p>
+
+<h2>テスト</h2>
+
+<pre><code>$ pip freeze # 現在のモジュールの確認 (virtualenvなど)
+$ mkvirtualenv test1 # test1という環境を作成
+$ deactivate #環境から抜ける
+$ mkvirtualenv test2 # test2という環境を作成
+$ workon # 環境の一覧を確認
+test1
+test2
+$ workon test1 # testを選択
+$ pip install numpy # test1 にnumpyをインストール
+$ pip freeze # nuupyのインストールを確認
+$ deactivate 
+$ pip freeze # 元の環境に影響がないのを確認
+$ rmvirtualenv test1 # テスト環境を削除
+$ rmvirtualenv test2
+$ workon # 出力なし 削除完了
+</code></pre>
+
+<p>動作確認完了。モジュールの切り替えが非常に楽なので、今後の開発が捗りそう。</p>
+
+<h2>Octopressとzshのトラブル？</h2>
+
+<p>この記事を書こうとして、</p>
+
+<pre><code>$ rake new_post["2"]
+</code></pre>
+
+<p>を実行したら、</p>
+
+<pre><code>$ zsh: no matches found: new_post["2"]
+</code></pre>
+
+<p>というエラーが。何故だ？しかし、</p>
+
+<pre><code>$ rake new_post
+$ Enter a post title:2
+</code></pre>
+
+<p>作成できたぞ？今回Pathを弄ったのが原因か？<br/>
+この辺の動作がよくわからんので。また確認しとかないと。</p>
+
+<h3>追記</h3>
+
+<p>.zshrcに</p>
+
+<pre><code>alias rake="noglob rake"
+</code></pre>
+
+<p>を追記したらエラー消えました。ありがとうございます > shogo82148 。</p>
 </div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2013/01/16/2/">続きを読む &rarr;</a>
-    </footer>
-  
 
 
-    </article>
-  
-  
-    <article>
+  <footer>
+    <p class="meta">
       
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/01/16/1/">Homebrew環境の構築</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
   
 
+<span class="byline author vcard">Posted by <span class="fn">Salinger</span></span>
 
-<time datetime="2013-01-16T02:41:00+09:00" pubdate data-updated="true">Jan 16<span>th</span>, 2013</time>
-        
-         | <a href="/blog/2013/01/16/1/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Macbook Airの環境を再構築したので、その際のメモ。今まではパッケージ管理にMacPortsを使っていたが、今回からHomebrewに移行した。元からMountain LionにインストールされてるPythonやRubyと、パッケージ管理ソフトで導入したそれらの最新版の管理がMacPortsだと少々面倒くさかったので、もう少し楽に済みそうなものを使ってみようというのが理由だ。</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2013/01/16/1/">続きを読む &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
-  
-    <article>
       
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/01/14/1/">Mac + Ruby + Octopress + Github でブログの作成</a></h1>
-    
-    
-      <p class="meta">
-        
 
 
 
@@ -261,34 +230,44 @@ Homebrewもvirutalenvも最近使い始めたばかりなので、自分用メ�
   
 
 
-<time datetime="2013-01-14T22:22:00+09:00" pubdate data-updated="true">Jan 14<span>th</span>, 2013</time>
-        
-         | <a href="/blog/2013/01/14/1/#disqus_thread">Comments</a>
-        
-      </p>
+<time datetime="2013-01-16T17:41:00+09:00" pubdate data-updated="true">Jan 16<span>th</span>, 2013</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/python/'>Python</a>
+  
+</span>
+
+
+    </p>
     
-  </header>
+      <div class="sharing">
+  
+  
+  
+</div>
 
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2013/01/16/1/" title="Previous Post: homebrew環境の構築">&laquo; homebrew環境の構築</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2013/01/17/1/" title="Next Post: Homebrew + virtualenv 環境でMeCabのインストール">Homebrew + virtualenv 環境でMeCabのインストール &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
 
-  <div class="entry-content"><p>技術系の話をメモするためのブログを作ろうと思っていたところ、このようなものを発見<a href="http://octopress.org">Octopress</a>。コードの管理に普段からGithubを使ってるので、技術系の話はすべてGithub上に集約してしまおう、という試み。以下SSHKeyの登録などGithubの設定はひと通り終わってる前提で話を進めています。</p>
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
 
 </div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2013/01/14/1/">続きを読む &rarr;</a>
-    </footer>
-  
 
-
-    </article>
-  
-  <div class="pagination">
-    
-    <a href="/blog/archives">Blog Archives</a>
-    
-  </div>
-</div>
 <aside class="sidebar">
   
     <section>
@@ -328,7 +307,7 @@ Homebrewもvirutalenvも最近使い始めたばかりなので、自分用メ�
 <section>
   <h1>GitHub Repos</h1>
   <ul id="gh_repos">
-    <li class="loading">Status updating&#8230;</li>
+    <li class="loading">Status updating...</li>
   </ul>
   
   <a href="https://github.com/Salinger">@Salinger</a> on GitHub
@@ -358,7 +337,7 @@ Homebrewもvirutalenvも最近使い始めたばかりなので、自分用メ�
 <section>
   <h1>Latest Tweets</h1>
   <ul id="tweets">
-    <li class="loading">Status updating&#8230;</li>
+    <li class="loading">Status updating...</li>
   </ul>
   <script type="text/javascript">
     $.domReady(function(){
@@ -378,6 +357,7 @@ Homebrewもvirutalenvも最近使い始めたばかりなので、自分用メ�
   
 </aside>
 
+
     </div>
   </div>
   <footer role="contentinfo"><p>
@@ -392,7 +372,10 @@ Homebrewもvirutalenvも最近使い始めたばかりなので、自分用メ�
       var disqus_shortname = 'salinger';
       
         
-        var disqus_script = 'count.js';
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://Salinger.github.com/blog/2013/01/16/2/';
+        var disqus_url = 'http://Salinger.github.com/blog/2013/01/16/2/';
+        var disqus_script = 'embed.js';
       
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
