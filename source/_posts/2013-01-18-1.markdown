@@ -1,0 +1,51 @@
+---
+layout: post
+title: "Homebrew + virtualenv 環境でlibsvmのインストール"
+date: 2013-01-18 02:42
+comments: true
+categories: NLP Python Mac
+---
+サポートベクターマシン(SVM)についての概要は [Wikipedia](http://ja.wikipedia.org/wiki/%E3%82%B5%E3%83%9D%E3%83%BC%E3%83%88%E3%83%99%E3%82%AF%E3%82%BF%E3%83%BC%E3%83%9E%E3%82%B7%E3%83%B3) でも見てください。
+スパムの分類、ユーザーのクラスタリング、他何か色々なものを分類する用途に使われます。今回はSVMを使うための環境構築を行った際のメモです。
+<!-- more -->
+
+##libsvmについて
+[libsvm](http://www.csie.ntu.edu.tw/~cjlin/libsvm/)はChih-Chung Changさん・Chih-Jen Linさんが開発したSVMのライブラリです。様々なSVMタイプ・カーネル関数、また細かくオプションも指定できるので、SVMを使う必要がある場合は、とりあえずこれを選んでおけば困ることは少ないと思います。
+
+##libsvmのインストール
+    $ brew search libsvm
+    libsvm
+brewにあった。ラッキー。
+    $ brew install libsvm
+本体のインストール完了。
+    $ svm-train
+    Usage: svm-train [options] training_set_file [model_file]
+    options:
+    -s svm_type : set type of SVM (default 0)
+            0 -- C-SVC              (multi-class classification)
+    ...
+動いた。がこれだとPython用バインディングがインストールできなかった。残念。
+
+##libsvmのPython用バインディングのインストール
+無いなら、pipで公式のバインディングをインストールするためのsetup.pyを自分で書いてしまえばいいじゃない。てな訳で書いた奴をgithubに上げといた[(libsvm-python)](https://github.com/Salinger/libsvm-python)。
+問題はsetup.py書いたのが初めてなので、これであってるのかどうか自信がない。とりあえず以下のコマンドでインストールできます。
+    $ pip install -e git+https://github.com/Salinger/libsvm-python.git#egg=libsvm-python
+
+##動作確認
+テスト用のコード。
+{% gist 4579980 %}
+
+そして実行。
+    $ python libsvm_test.py 
+    .*.*
+    optimization finished, #iter = 9
+    nu = 0.298326
+    obj = -0.596685, rho = 3.000257
+    nSV = 3, nBSV = 0
+    Total nSV = 3
+    Accuracy = 75% (3/4) (classification)
+    [Result]
+    [-1.0, 1.0, -1.0, -1.0]
+    (75.0, 1.0, 0.3333333333333333)
+    [[-1.3527684585781998], [3.038557720585867], [-1.9331234989121904], [-2.4115929900464406]]
+問題なく動くのを確認できた。自分で書いたsetup.pyもとりあえず問題ないっぽい？
