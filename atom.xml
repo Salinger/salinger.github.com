@@ -4,7 +4,7 @@
   <title><![CDATA[さりんじゃーのプログラミング日記]]></title>
   <link href="http://Salinger.github.com/atom.xml" rel="self"/>
   <link href="http://Salinger.github.com/"/>
-  <updated>2013-01-24T16:53:11+09:00</updated>
+  <updated>2013-01-24T17:01:51+09:00</updated>
   <id>http://Salinger.github.com/</id>
   <author>
     <name><![CDATA[Salinger]]></name>
@@ -202,6 +202,15 @@ $ dd sudo time dd bs=1m if=2012-12-16-wheezy-raspbian.img of=/dev/rdisk1
 </code></pre>
 
 <p>を実行することで、いつでも再設定出来ます。</p>
+
+<h2>使用した感想</h2>
+
+<p>私が買ったのは$35のモデルです。<br/>
+想像以上に高性能です。コンソールから使う分には特に不満なし。<br/>
+軽い開発なら実機のみでそれなりにできそう。<br/>
+低消費電力なのでサーバー用途に良さそう。<br/>
+GPIO / オーディオ出力 などいろいろ遊べそう。<br/>
+なかなか遊びがいのあるおもちゃですね。</p>
 ]]></content>
   </entry>
   
