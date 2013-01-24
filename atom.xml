@@ -4,7 +4,7 @@
   <title><![CDATA[さりんじゃーのプログラミング日記]]></title>
   <link href="http://Salinger.github.com/atom.xml" rel="self"/>
   <link href="http://Salinger.github.com/"/>
-  <updated>2013-01-21T02:53:20+09:00</updated>
+  <updated>2013-01-24T16:53:11+09:00</updated>
   <id>http://Salinger.github.com/</id>
   <author>
     <name><![CDATA[Salinger]]></name>
@@ -12,6 +12,198 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Laspberry Piについて]]></title>
+    <link href="http://Salinger.github.com/blog/2013/01/24/1/"/>
+    <updated>2013-01-24T14:39:00+09:00</updated>
+    <id>http://Salinger.github.com/blog/2013/01/24/1</id>
+    <content type="html"><![CDATA[<p>今回は<a href="http://www.raspberrypi.org">Raspberry Pi</a>の紹介をしたいと思います。Raspberry PiはARMプロセッサを搭載したシングルボードコンピュータです。
+<img src="http://Salinger.github.com/images/2013-01-24/R0012199.jpg" alt="Raspberry Pi 画像" /></p>
+
+<!-- more -->
+
+
+<h2>ハードウェアの仕様</h2>
+
+<p>以下簡単なハードウェア仕様のまとめ。</p>
+
+<table>
+<thead>
+<tr>
+<th></th>
+<th><strong>モデル</strong></th>
+<th><strong>Model A</strong></th>
+<th><strong>Model B</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+<td>価格</td>
+<td>$25</td>
+<td>$35</td>
+</tr>
+<tr>
+<td></td>
+<td>CPU</td>
+<td>ARM11 ARM1176JZF-S core</td>
+<td>同じ</td>
+</tr>
+<tr>
+<td></td>
+<td>メモリ</td>
+<td>256 MB</td>
+<td>512 MB</td>
+</tr>
+<tr>
+<td></td>
+<td>GPU</td>
+<td>Broadcom VideoCore IV,OpenGL ES 2.0, OpenVG 1080p30 H.264 high-profile encode/decode</td>
+<td>同じ</td>
+</tr>
+<tr>
+<td></td>
+<td>ストレージ</td>
+<td>SDメモリーカード / MMC / SDIO カードスロット</td>
+<td>同じ</td>
+</tr>
+<tr>
+<td></td>
+<td>USB2.0</td>
+<td>1ポート</td>
+<td>2ポート</td>
+</tr>
+<tr>
+<td></td>
+<td>ビデオ出力</td>
+<td>コンポジット(RCA) / HDMI</td>
+<td>同じ</td>
+</tr>
+<tr>
+<td></td>
+<td>音声出力</td>
+<td>3.5mmジャック / HDMI</td>
+<td>同じ</td>
+</tr>
+<tr>
+<td></td>
+<td>LAN</td>
+<td>なし</td>
+<td>10/100M 有線Ethernet</td>
+</tr>
+<tr>
+<td></td>
+<td>その他インターフェイス</td>
+<td>GPIO / SPI / UART</td>
+<td>同じ</td>
+</tr>
+<tr>
+<td></td>
+<td>電源</td>
+<td>500 mA</td>
+<td>700 mA</td>
+</tr>
+<tr>
+<td></td>
+<td>電源ソース</td>
+<td>5V MicroUSB Type B or GPIO</td>
+<td>同じ</td>
+</tr>
+<tr>
+<td></td>
+<td>サイズ</td>
+<td>85.60 mm ×53.98mm</td>
+<td> 同じ</td>
+</tr>
+</tbody>
+</table>
+
+
+<h2>ソフトウェア</h2>
+
+<p>OSはDebian(wheezy)ベースのもの、Arch Linux、RISC OSなどが動きます。ダウンロードは<a href="http://www.raspberrypi.org/downloads">ここ</a>から。</p>
+
+<h2>購入先</h2>
+
+<p><a href="http://jp.rs-online.com/web/generalDisplay.html?id=raspberrypi">ここ</a>で購入しました。私が入手した際は1ヶ月以上待ちましたが、今はどうなってるのやら。</p>
+
+<h2>インストール</h2>
+
+<p>書き込み作業の際、ディスクの指定を誤るとシステムデータが飛ぶ可能性があるので、気をつけてください。</p>
+
+<h3>OSのダウンロード</h3>
+
+<p>インストールするOSのイメージを上記のページからダウンロードしておきます。今回はDebianベースのRaspbian &#8220;wheezy&#8221;(2012-12-16-wheezy-raspbian.zip) を利用しました。<code>~/Downloads/</code> (デフォルトのダウンロードフォルダ)に保存しておきます。</p>
+
+<h3>SDカードの準備</h3>
+
+<p>OSをインストールするためのSDカードを用意します。OS自体は2GB程度なので、最低4GB程度の容量があれば大丈夫ですが、色々とソフトをインストールする場合を考えると、8GB程度あれば問題ないと思います。インストールの際、カード内の全データが消去されます。</p>
+
+<h3>SDカードへの書き込み。</h3>
+
+<p>今回はMacOSXで作業しました。Unix系のOSならおそらくほぼ同じ方法でできるはず。最初にSDカードのデバイス名を調べます。SDカードを接続する前に、以下のコマンドを実行します。</p>
+
+<pre><code>$ df -h
+</code></pre>
+
+<p>次にSDカード接続後に同じコマンドを実行します。私の環境の場合、SDカード名は<code>/dev/disk1s1</code>になっていました。次にSDカードをアンマウントします。</p>
+
+<pre><code>$ umount /dev/disk1s1
+</code></pre>
+
+<p>ダウンロードしたOSのイメージがあるところへ移動し、ddコマンドを実行。この際、デバイスの指定は<code>/dev/disk1s1</code> => <code>/dev/rdisk1</code>のようにrawデバイスを指定します。</p>
+
+<pre><code>$ cd ~/Downloads
+$ dd sudo time dd bs=1m if=2012-12-16-wheezy-raspbian.img of=/dev/rdisk1
+</code></pre>
+
+<p>これでOSの入ったSDカードの準備ができた。</p>
+
+<h3>起動</h3>
+
+<p>Raspberry Piに先ほど準備したSDカード、モニタ、キーボード、LAN、その他デバイスを接続し、USBポートまたはGPIOから電源を供給して起動します。電源供給と同時に起動するので、電源の接続は最後にしてください<br/>
+初回のみ、設定画面が表示されます。項目は以下の通りです。</p>
+
+<p>・info<br/>
+　　このツールの情報の確認。スルーして問題なし。<br/>
+・expand_rootfs<br/>
+　　デフォルトではSDカードのうち2GB程度しか使用していません。<br/>
+　　全領域を使用するようにここで設定出来ます。設定後、要再起動。<br/>
+・overscan<br/>
+　　テレビに出力する場合、画面周囲がきちんと表示されない場合があります。<br/>
+　　その際、ここで周囲に余白を設定することで、正常に表示できるようになります。<br/>
+・configure_keyboard<br/>
+　　キーボードの配列の設定。<br/>
+　　日本語配列、US配列、使用しているキーボードに合わせて設定。<br/>
+・change_pass<br/>
+　　デフォルトのユーザである&#8217;pi&#8217; ユーザのパスワードの変更。<br/>
+　　自分のパスワードに変更しておくべき。<br/>
+・change_locale<br/>
+　　ロケールの設定。<br/>
+　　日本語フォントが入っていないので、UTF-8に設定しても日本語は文字化けする。<br/>
+　　とりあえずデフォルトのままで問題ない。<br/>
+・change_timezone<br/>
+　　時間の設定。日本は&#8221;Asia&#8221;の&#8221;Tokyo&#8221;を指定すればよい。<br/>
+・memory_split<br/>
+　　GPUどれだけメモリを割り当てるか。通常はデフォルトのままで問題ない。<br/>
+・ssh<br/>
+　　sshを利用してリモートログインする場合&#8221;Enable&#8221;を指定。<br/>
+　　設定しておけば別マシンから開発できる。<br/>
+・boot_behaviour<br/>
+　　&#8221;Yes&#8221;を選択すれば、最初からGUIな画面で起動する。<br/>
+　　CUIで起動して、startxするのが面倒くさいなら&#8221;Yes&#8221;に。<br/>
+・update<br/>
+　　この設定用ツール raspi-config のアップデート。</p>
+
+<p>これで最低限の設定は終わりです。もし、再設定したいならコンソールから</p>
+
+<pre><code>$ sudo raspi-config
+</code></pre>
+
+<p>を実行することで、いつでも再設定出来ます。</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Homebrew + virtualenv 環境でlibsvmのインストール]]></title>
