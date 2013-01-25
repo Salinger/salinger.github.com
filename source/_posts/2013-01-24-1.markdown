@@ -3,9 +3,10 @@ layout: post
 title: "Laspberry Piについて"
 date: 2013-01-24 14:39
 comments: true
-categories: "RaspberryPi"
+categories: RaspberryPi
 ---
 今回は[Raspberry Pi](http://www.raspberrypi.org)の紹介をしたいと思います。Raspberry PiはARMプロセッサを搭載したシングルボードコンピュータです。
+
 ![Raspberry Pi 画像](/images/2013-01-24/R0012199.jpg)
 
 <!-- more -->
