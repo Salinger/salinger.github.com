@@ -5,13 +5,13 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Blog Archive - さりんじゃーのプログラミング日記</title>
+  <title>Raspberry PiとキャラクタLCDで遊んでみた - さりんじゃーのプログラミング日記</title>
   <meta name="author" content="Salinger">
 
   
-  <meta name="description" content="Blog Archive 2013 Raspberry PiとキャラクタLCDで遊んでみた
-Jan 25 2013 posted in Python, RaspberryPi Laspberry Piについて
-Jan 24 2013 posted in RaspberryPi Homebrew &hellip;">
+  <meta name="description" content="せっかくGPIOがあるんだから、ここに何かをくっつけて遊んでみたくなった。という訳で、キャラクタLCDを接続してみました。Raspberry Piの電源はGPIOへ直接入力してます。 用意したもの 秋月電子で以下のものを購入。
+・SD1602HUOB 16x2 キャラクタLCD x 1
+・GF12 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -20,7 +20,7 @@ Jan 24 2013 posted in RaspberryPi Homebrew &hellip;">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://Salinger.github.com/blog/archives/">
+  <link rel="canonical" href="http://Salinger.github.com/blog/2013/01/25/1/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -65,120 +65,132 @@ Jan 24 2013 posted in RaspberryPi Homebrew &hellip;">
   <div id="main">
     <div id="content">
       <div>
-<article role="article">
+<article class="hentry" role="article">
   
   <header>
-    <h1 class="entry-title">Blog Archive</h1>
+    
+      <h1 class="entry-title">Raspberry PiとキャラクタLCDで遊んでみた</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-01-25T16:46:00+09:00" pubdate data-updated="true">Jan 25<span>th</span>, 2013</time>
+        
+         | <a href="#disqus_thread">Comments</a>
+        
+      </p>
     
   </header>
-  
-  <div id="blog-archives">
 
 
+<div class="entry-content"><p>せっかくGPIOがあるんだから、ここに何かをくっつけて遊んでみたくなった。という訳で、キャラクタLCDを接続してみました。Raspberry Piの電源はGPIOへ直接入力してます。</p>
 
-  
-  <h2>2013</h2>
+<p><img src="/images/2013-01-25/LCD.jpg" alt="Raspberry Pi 画像" /></p>
 
-<article>
-  
-<h1><a href="/blog/2013/01/25/1/">Raspberry PiとキャラクタLCDで遊んでみた</a></h1>
-<time datetime="2013-01-25T16:46:00+09:00" pubdate><span class='month'>Jan</span> <span class='day'>25</span> <span class='year'>2013</span></time>
-
-<footer>
-  <span class="categories">posted in <a class='category' href='/blog/categories/python/'>Python</a>, <a class='category' href='/blog/categories/raspberrypi/'>RaspberryPi</a></span>
-</footer>
+<!-- more -->
 
 
-</article>
+<h2>用意したもの</h2>
 
+<p><a href="http://akizukidenshi.com/catalog/default.aspx">秋月電子</a>で以下のものを購入。
+・SD1602HUOB 16x2 キャラクタLCD x 1
+・GF12-US0520 5V2A ACアダプタ x 1
+・半固定抵抗器 50Ω x 1
+・ピンソケット (メス) 2x13 (26P) x 1
+・ブレッドボード用DCジャックDIP化キット x 1
+・トグルスイッチ3P x 1
+・ユニバーサル基板 (両面スルーホール) 72x47 x 1</p>
 
+<p>合計して約2000円。配線は以前からの余りを流用。</p>
 
-<article>
-  
-<h1><a href="/blog/2013/01/24/1/">Laspberry Piについて</a></h1>
-<time datetime="2013-01-24T14:39:00+09:00" pubdate><span class='month'>Jan</span> <span class='day'>24</span> <span class='year'>2013</span></time>
+<h2>LCD用基板の作成</h2>
 
-<footer>
-  <span class="categories">posted in <a class='category' href='/blog/categories/raspberrypi/'>RaspberryPi</a></span>
-</footer>
+<p>今回使用したLCDはHD44780の互換品なので以下の作業は<a href="http://www.raspberrypi-spy.co.uk/2012/07/16x2-lcd-module-control-using-python/">このページ</a>を参考にして行いました。</p>
 
+<p>GPIOとLCDのピンの接続は、基本的に参考ページの通りに接続。基本的には問題ないのですが、注意点が１つ。参考サイトではLCDの3番ピン(Contrast)がGNDに接続されてますが、今回使用したキャラクタLCDはここに可変抵抗器を入れないと、コントラストの関係で液晶に四角い塊が出力される状態になる(斜めから見るとギリギリ文字が読める)。可変抵抗器で分圧してやれば、コントラストの調節ができるようになり、無事文字が読めるようになりました。</p>
 
-</article>
+<p>また、Raspberry Piには電源スイッチがないので、電源ON/OFFのためのスイッチも追加しました。これでリセット時にACアダプタを抜き差しする必要がなくなった。</p>
 
+<h2>LCD出力用のプログラム</h2>
 
+<p>参考用ページにアルファベットを出力するための、Pythonのプログラムがあったが、日本語(半角カナ・記号)をLCDに出力するために少々書き換えました。GPIO用のモジュール:RPi.GPIO はeasy_installやpipで適当にインストールしてください。<br/>
+Github:<a href="https://github.com/Salinger/Raspberry-Pi-LCD-HD44780">Raspberry-Pi-LCD-HD44780</a><br/>
+このプログラムを使えば、日本語（ひらがな・カタカナ・一部記号）とアルファベットの混じった文字列ををunicodeで渡してやれば、いい感じに変換して出力してくれます。この記事TOPの画像は、このプログラムを動かしたときのものです。</p>
 
-<article>
-  
-<h1><a href="/blog/2013/01/18/1/">Homebrew + virtualenv 環境でlibsvmのインストール</a></h1>
-<time datetime="2013-01-18T02:42:00+09:00" pubdate><span class='month'>Jan</span> <span class='day'>18</span> <span class='year'>2013</span></time>
+<p>実行する際の注意点として、このプログラムはroot権限で動かす必要があります(GPIO使う場合は必須なのか？)。</p>
 
-<footer>
-  <span class="categories">posted in <a class='category' href='/blog/categories/mac/'>Mac</a>, <a class='category' href='/blog/categories/nlp/'>NLP</a>, <a class='category' href='/blog/categories/python/'>Python</a></span>
-</footer>
+<pre><code>$ sudo python lcd.py
+</code></pre>
 
+<h2>まとめ</h2>
 
-</article>
-
-
-
-<article>
-  
-<h1><a href="/blog/2013/01/17/1/">Homebrew + virtualenv 環境でMeCabのインストール</a></h1>
-<time datetime="2013-01-17T18:40:00+09:00" pubdate><span class='month'>Jan</span> <span class='day'>17</span> <span class='year'>2013</span></time>
-
-<footer>
-  <span class="categories">posted in <a class='category' href='/blog/categories/mac/'>Mac</a>, <a class='category' href='/blog/categories/nlp/'>NLP</a>, <a class='category' href='/blog/categories/python/'>Python</a></span>
-</footer>
-
-
-</article>
-
-
-
-<article>
-  
-<h1><a href="/blog/2013/01/16/2/">Macでvirtualenvの設定</a></h1>
-<time datetime="2013-01-16T17:41:00+09:00" pubdate><span class='month'>Jan</span> <span class='day'>16</span> <span class='year'>2013</span></time>
-
-<footer>
-  <span class="categories">posted in <a class='category' href='/blog/categories/python/'>Python</a></span>
-</footer>
-
-
-</article>
-
-
-
-<article>
-  
-<h1><a href="/blog/2013/01/16/1/">homebrew環境の構築</a></h1>
-<time datetime="2013-01-16T02:41:00+09:00" pubdate><span class='month'>Jan</span> <span class='day'>16</span> <span class='year'>2013</span></time>
-
-<footer>
-  <span class="categories">posted in <a class='category' href='/blog/categories/mac/'>Mac</a></span>
-</footer>
-
-
-</article>
-
-
-
-<article>
-  
-<h1><a href="/blog/2013/01/14/1/">Mac + Ruby + Octopress + Github でブログの作成</a></h1>
-<time datetime="2013-01-14T22:22:00+09:00" pubdate><span class='month'>Jan</span> <span class='day'>14</span> <span class='year'>2013</span></time>
-
-<footer>
-  <span class="categories">posted in <a class='category' href='/blog/categories/octopress/'>Octopress</a></span>
-</footer>
-
-
-</article>
-
+<p>これで文字列を生成するPythonのプログラムから、自由にLCDへ出力できるようになりました。電源はRaspberry PiとLCDどちらもACアダプタからの入力で動作します。あと地味に電源スイッチが便利です。次はPythonで文字列を生成するプログラムを書いてこいつに乗っけます。</p>
 </div>
 
+
+  <footer>
+    <p class="meta">
+      
   
+
+<span class="byline author vcard">Posted by <span class="fn">Salinger</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-01-25T16:46:00+09:00" pubdate data-updated="true">Jan 25<span>th</span>, 2013</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/python/'>Python</a>, <a class='category' href='/blog/categories/raspberrypi/'>RaspberryPi</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2013/01/24/1/" title="Previous Post: Laspberry Piについて">&laquo; Laspberry Piについて</a>
+      
+      
+    </p>
+  </footer>
 </article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
 
 </div>
 
@@ -286,7 +298,10 @@ Jan 24 2013 posted in RaspberryPi Homebrew &hellip;">
       var disqus_shortname = 'salinger';
       
         
-        var disqus_script = 'count.js';
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://Salinger.github.com/blog/2013/01/25/1/';
+        var disqus_url = 'http://Salinger.github.com/blog/2013/01/25/1/';
+        var disqus_script = 'embed.js';
       
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;

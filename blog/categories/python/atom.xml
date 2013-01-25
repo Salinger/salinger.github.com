@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Python | さりんじゃーのプログラミング日記]]></title>
   <link href="http://Salinger.github.com/blog/categories/python/atom.xml" rel="self"/>
   <link href="http://Salinger.github.com/"/>
-  <updated>2013-01-24T17:03:06+09:00</updated>
+  <updated>2013-01-26T01:47:17+09:00</updated>
   <id>http://Salinger.github.com/</id>
   <author>
     <name><![CDATA[Salinger]]></name>
@@ -12,6 +12,56 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Raspberry PiとキャラクタLCDで遊んでみた]]></title>
+    <link href="http://Salinger.github.com/blog/2013/01/25/1/"/>
+    <updated>2013-01-25T16:46:00+09:00</updated>
+    <id>http://Salinger.github.com/blog/2013/01/25/1</id>
+    <content type="html"><![CDATA[<p>せっかくGPIOがあるんだから、ここに何かをくっつけて遊んでみたくなった。という訳で、キャラクタLCDを接続してみました。Raspberry Piの電源はGPIOへ直接入力してます。</p>
+
+<p><img src="/images/2013-01-25/LCD.jpg" alt="Raspberry Pi 画像" /></p>
+
+<!-- more -->
+
+
+<h2>用意したもの</h2>
+
+<p><a href="http://akizukidenshi.com/catalog/default.aspx">秋月電子</a>で以下のものを購入。
+・SD1602HUOB 16x2 キャラクタLCD x 1
+・GF12-US0520 5V2A ACアダプタ x 1
+・半固定抵抗器 50Ω x 1
+・ピンソケット (メス) 2x13 (26P) x 1
+・ブレッドボード用DCジャックDIP化キット x 1
+・トグルスイッチ3P x 1
+・ユニバーサル基板 (両面スルーホール) 72x47 x 1</p>
+
+<p>合計して約2000円。配線は以前からの余りを流用。</p>
+
+<h2>LCD用基板の作成</h2>
+
+<p>今回使用したLCDはHD44780の互換品なので以下の作業は<a href="http://www.raspberrypi-spy.co.uk/2012/07/16x2-lcd-module-control-using-python/">このページ</a>を参考にして行いました。</p>
+
+<p>GPIOとLCDのピンの接続は、基本的に参考ページの通りに接続。基本的には問題ないのですが、注意点が１つ。参考サイトではLCDの3番ピン(Contrast)がGNDに接続されてますが、今回使用したキャラクタLCDはここに可変抵抗器を入れないと、コントラストの関係で液晶に四角い塊が出力される状態になる(斜めから見るとギリギリ文字が読める)。可変抵抗器で分圧してやれば、コントラストの調節ができるようになり、無事文字が読めるようになりました。</p>
+
+<p>また、Raspberry Piには電源スイッチがないので、電源ON/OFFのためのスイッチも追加しました。これでリセット時にACアダプタを抜き差しする必要がなくなった。</p>
+
+<h2>LCD出力用のプログラム</h2>
+
+<p>参考用ページにアルファベットを出力するための、Pythonのプログラムがあったが、日本語(半角カナ・記号)をLCDに出力するために少々書き換えました。GPIO用のモジュール:RPi.GPIO はeasy_installやpipで適当にインストールしてください。<br/>
+Github:<a href="https://github.com/Salinger/Raspberry-Pi-LCD-HD44780">Raspberry-Pi-LCD-HD44780</a><br/>
+このプログラムを使えば、日本語（ひらがな・カタカナ・一部記号）とアルファベットの混じった文字列ををunicodeで渡してやれば、いい感じに変換して出力してくれます。この記事TOPの画像は、このプログラムを動かしたときのものです。</p>
+
+<p>実行する際の注意点として、このプログラムはroot権限で動かす必要があります(GPIO使う場合は必須なのか？)。</p>
+
+<pre><code>$ sudo python lcd.py
+</code></pre>
+
+<h2>まとめ</h2>
+
+<p>これで文字列を生成するPythonのプログラムから、自由にLCDへ出力できるようになりました。電源はRaspberry PiとLCDどちらもACアダプタからの入力で動作します。あと地味に電源スイッチが便利です。次はPythonで文字列を生成するプログラムを書いてこいつに乗っけます。</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Homebrew + virtualenv 環境でlibsvmのインストール]]></title>
