@@ -1,0 +1,491 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Laspberry Piについて - さりんじゃーのプログラミング日記</title>
+  <meta name="author" content="Salinger">
+
+  
+  <meta name="description" content="今回はRaspberry Piの紹介をしたいと思います。Raspberry PiはARMプロセッサを搭載したシングルボードコンピュータです。 ハードウェアの仕様 以下簡単なハードウェア仕様のまとめ。 モデル
+Model A
+Model B 価格
+$25
+$35 CPU
+ARM11 &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://Salinger.github.com/blog/2013/01/24/1/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="さりんじゃーのプログラミング日記" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">さりんじゃーのプログラミング日記</a></h1>
+  
+    <h2>Salinger's programming diary</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:Salinger.github.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Laspberry Piについて</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-01-24T14:39:00+09:00" pubdate data-updated="true">Jan 24<span>th</span>, 2013</time>
+        
+         | <a href="#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>今回は<a href="http://www.raspberrypi.org">Raspberry Pi</a>の紹介をしたいと思います。Raspberry PiはARMプロセッサを搭載したシングルボードコンピュータです。</p>
+
+<p><img src="/images/2013-01-24/R0012199.jpg" alt="Raspberry Pi 画像" /></p>
+
+<!-- more -->
+
+
+<h2>ハードウェアの仕様</h2>
+
+<p>以下簡単なハードウェア仕様のまとめ。</p>
+
+<table>
+<thead>
+<tr>
+<th></th>
+<th><strong>モデル</strong></th>
+<th><strong>Model A</strong></th>
+<th><strong>Model B</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+<td>価格</td>
+<td>$25</td>
+<td>$35</td>
+</tr>
+<tr>
+<td></td>
+<td>CPU</td>
+<td>ARM11 ARM1176JZF-S core</td>
+<td>同じ</td>
+</tr>
+<tr>
+<td></td>
+<td>メモリ</td>
+<td>256 MB</td>
+<td>512 MB</td>
+</tr>
+<tr>
+<td></td>
+<td>GPU</td>
+<td>Broadcom VideoCore IV,OpenGL ES 2.0, OpenVG 1080p30 H.264 high-profile encode/decode</td>
+<td>同じ</td>
+</tr>
+<tr>
+<td></td>
+<td>ストレージ</td>
+<td>SDメモリーカード / MMC / SDIO カードスロット</td>
+<td>同じ</td>
+</tr>
+<tr>
+<td></td>
+<td>USB2.0</td>
+<td>1ポート</td>
+<td>2ポート</td>
+</tr>
+<tr>
+<td></td>
+<td>ビデオ出力</td>
+<td>コンポジット(RCA) / HDMI</td>
+<td>同じ</td>
+</tr>
+<tr>
+<td></td>
+<td>音声出力</td>
+<td>3.5mmジャック / HDMI</td>
+<td>同じ</td>
+</tr>
+<tr>
+<td></td>
+<td>LAN</td>
+<td>なし</td>
+<td>10/100M 有線Ethernet</td>
+</tr>
+<tr>
+<td></td>
+<td>その他インターフェイス</td>
+<td>GPIO / SPI / UART</td>
+<td>同じ</td>
+</tr>
+<tr>
+<td></td>
+<td>電源</td>
+<td>500 mA</td>
+<td>700 mA</td>
+</tr>
+<tr>
+<td></td>
+<td>電源ソース</td>
+<td>5V MicroUSB Type B or GPIO</td>
+<td>同じ</td>
+</tr>
+<tr>
+<td></td>
+<td>サイズ</td>
+<td>85.60 mm ×53.98mm</td>
+<td> 同じ</td>
+</tr>
+</tbody>
+</table>
+
+
+<h2>ソフトウェア</h2>
+
+<p>OSはDebian(wheezy)ベースのもの、Arch Linux、RISC OSなどが動きます。ダウンロードは<a href="http://www.raspberrypi.org/downloads">ここ</a>から。</p>
+
+<h2>購入先</h2>
+
+<p><a href="http://jp.rs-online.com/web/generalDisplay.html?id=raspberrypi">ここ</a>で購入しました。私が入手した際は1ヶ月以上待ちましたが、今はどうなってるのやら。</p>
+
+<h2>インストール</h2>
+
+<p>書き込み作業の際、ディスクの指定を誤るとシステムデータが飛ぶ可能性があるので、気をつけてください。</p>
+
+<h3>OSのダウンロード</h3>
+
+<p>インストールするOSのイメージを上記のページからダウンロードしておきます。今回はDebianベースのRaspbian &#8220;wheezy&#8221;(2012-12-16-wheezy-raspbian.zip) を利用しました。<code>~/Downloads/</code> (デフォルトのダウンロードフォルダ)に保存しておきます。</p>
+
+<h3>SDカードの準備</h3>
+
+<p>OSをインストールするためのSDカードを用意します。OS自体は2GB程度なので、最低4GB程度の容量があれば大丈夫ですが、色々とソフトをインストールする場合を考えると、8GB程度あれば問題ないと思います。インストールの際、カード内の全データが消去されます。</p>
+
+<h3>SDカードへの書き込み。</h3>
+
+<p>今回はMacOSXで作業しました。Unix系のOSならおそらくほぼ同じ方法でできるはず。最初にSDカードのデバイス名を調べます。SDカードを接続する前に、以下のコマンドを実行します。</p>
+
+<pre><code>$ df -h
+</code></pre>
+
+<p>次にSDカード接続後に同じコマンドを実行します。私の環境の場合、SDカード名は<code>/dev/disk1s1</code>になっていました。次にSDカードをアンマウントします。</p>
+
+<pre><code>$ umount /dev/disk1s1
+</code></pre>
+
+<p>ダウンロードしたOSのイメージがあるところへ移動し、ddコマンドを実行。この際、デバイスの指定は<code>/dev/disk1s1</code> => <code>/dev/rdisk1</code>のようにrawデバイスを指定します。</p>
+
+<pre><code>$ cd ~/Downloads
+$ dd sudo time dd bs=1m if=2012-12-16-wheezy-raspbian.img of=/dev/rdisk1
+</code></pre>
+
+<p>これでOSの入ったSDカードの準備ができた。</p>
+
+<h3>起動</h3>
+
+<p>Raspberry Piに先ほど準備したSDカード、モニタ、キーボード、LAN、その他デバイスを接続し、USBポートまたはGPIOから電源を供給して起動します。電源供給と同時に起動するので、電源の接続は最後にしてください<br/>
+初回のみ、設定画面が表示されます。項目は以下の通りです。</p>
+
+<p>・info<br/>
+　　このツールの情報の確認。スルーして問題なし。<br/>
+・expand_rootfs<br/>
+　　デフォルトではSDカードのうち2GB程度しか使用していません。<br/>
+　　全領域を使用するようにここで設定出来ます。設定後、要再起動。<br/>
+・overscan<br/>
+　　テレビに出力する場合、画面周囲がきちんと表示されない場合があります。<br/>
+　　その際、ここで周囲に余白を設定することで、正常に表示できるようになります。<br/>
+・configure_keyboard<br/>
+　　キーボードの配列の設定。<br/>
+　　日本語配列、US配列、使用しているキーボードに合わせて設定。<br/>
+・change_pass<br/>
+　　デフォルトのユーザである&#8217;pi&#8217; ユーザのパスワードの変更。<br/>
+　　自分のパスワードに変更しておくべき。<br/>
+・change_locale<br/>
+　　ロケールの設定。<br/>
+　　日本語フォントが入っていないので、UTF-8に設定しても日本語は文字化けする。<br/>
+　　とりあえずデフォルトのままで問題ない。<br/>
+・change_timezone<br/>
+　　時間の設定。日本は&#8221;Asia&#8221;の&#8221;Tokyo&#8221;を指定すればよい。<br/>
+・memory_split<br/>
+　　GPUどれだけメモリを割り当てるか。通常はデフォルトのままで問題ない。<br/>
+・ssh<br/>
+　　sshを利用してリモートログインする場合&#8221;Enable&#8221;を指定。<br/>
+　　設定しておけば別マシンから開発できる。<br/>
+・boot_behaviour<br/>
+　　&#8221;Yes&#8221;を選択すれば、最初からGUIな画面で起動する。<br/>
+　　CUIで起動して、startxするのが面倒くさいなら&#8221;Yes&#8221;に。<br/>
+・update<br/>
+　　この設定用ツール raspi-config のアップデート。</p>
+
+<p>これで最低限の設定は終わりです。もし、再設定したいならコンソールから</p>
+
+<pre><code>$ sudo raspi-config
+</code></pre>
+
+<p>を実行することで、いつでも再設定出来ます。</p>
+
+<h2>使用した感想</h2>
+
+<p>私が買ったのは$35のモデルです。<br/>
+想像以上に高性能です。コンソールから使う分には特に不満なし。<br/>
+軽い開発なら実機のみでそれなりにできそう。<br/>
+低消費電力なのでサーバー用途に良さそう。<br/>
+GPIO / オーディオ出力 などいろいろ遊べそう。<br/>
+なかなか遊びがいのあるおもちゃですね。</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Salinger</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-01-24T14:39:00+09:00" pubdate data-updated="true">Jan 24<span>th</span>, 2013</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/raspberrypi/'>RaspberryPi</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2013/01/18/1/" title="Previous Post: Homebrew + virtualenv 環境でlibsvmのインストール">&laquo; Homebrew + virtualenv 環境でlibsvmのインストール</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2013/01/25/1/" title="Next Post: Raspberry PiとキャラクタLCDで遊んでみた">Raspberry PiとキャラクタLCDで遊んでみた &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>About</h1>
+  <p>
+    Name:  さりんじゃー<br />
+    Info:  雪国の大学院生。プログラミングなどの技術系の話をメインに。主にPythonを使います。専門分野は機械
+  </p>
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2013/01/25/1/">Raspberry PiとキャラクタLCDで遊んでみた</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/01/24/1/">Laspberry Piについて</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/01/18/1/">Homebrew + virtualenv 環境でlibsvmのインストール</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/01/17/1/">Homebrew + virtualenv 環境でMeCabのインストール</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/01/16/2/">Macでvirtualenvの設定</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/Salinger">@Salinger</a> on GitHub
+  
+  <script type="text/javascript">
+    $.domReady(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'Salinger',
+            count: 5,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+<section>
+  <h1>Latest Tweets</h1>
+  <ul id="tweets">
+    <li class="loading">Status updating...</li>
+  </ul>
+  <script type="text/javascript">
+    $.domReady(function(){
+      getTwitterFeed("salinger001101", 5, false);
+    });
+  </script>
+  <script src="/javascripts/twitter.js" type="text/javascript"> </script>
+  
+    <a href="http://twitter.com/salinger001101" class="twitter-follow-button" data-show-count="false">Follow @salinger001101</a>
+  
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Salinger -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'salinger';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://Salinger.github.com/blog/2013/01/24/1/';
+        var disqus_url = 'http://Salinger.github.com/blog/2013/01/24/1/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

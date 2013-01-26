@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: RaspberryPi | さりんじゃーのプログラミング日記]]></title>
+  <link href="http://Salinger.github.com/blog/categories/raspberrypi/atom.xml" rel="self"/>
+  <link href="http://Salinger.github.com/"/>
+  <updated>2013-01-26T01:47:17+09:00</updated>
+  <id>http://Salinger.github.com/</id>
+  <author>
+    <name><![CDATA[Salinger]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Raspberry PiとキャラクタLCDで遊んでみた]]></title>
+    <link href="http://Salinger.github.com/blog/2013/01/25/1/"/>
+    <updated>2013-01-25T16:46:00+09:00</updated>
+    <id>http://Salinger.github.com/blog/2013/01/25/1</id>
+    <content type="html"><![CDATA[<p>せっかくGPIOがあるんだから、ここに何かをくっつけて遊んでみたくなった。という訳で、キャラクタLCDを接続してみました。Raspberry Piの電源はGPIOへ直接入力してます。</p>
+
+<p><img src="/images/2013-01-25/LCD.jpg" alt="Raspberry Pi 画像" /></p>
+
+<!-- more -->
+
+
+<h2>用意したもの</h2>
+
+<p><a href="http://akizukidenshi.com/catalog/default.aspx">秋月電子</a>で以下のものを購入。
+・SD1602HUOB 16x2 キャラクタLCD x 1
+・GF12-US0520 5V2A ACアダプタ x 1
+・半固定抵抗器 50Ω x 1
+・ピンソケット (メス) 2x13 (26P) x 1
+・ブレッドボード用DCジャックDIP化キット x 1
+・トグルスイッチ3P x 1
+・ユニバーサル基板 (両面スルーホール) 72x47 x 1</p>
+
+<p>合計して約2000円。配線は以前からの余りを流用。</p>
+
+<h2>LCD用基板の作成</h2>
+
+<p>今回使用したLCDはHD44780の互換品なので以下の作業は<a href="http://www.raspberrypi-spy.co.uk/2012/07/16x2-lcd-module-control-using-python/">このページ</a>を参考にして行いました。</p>
+
+<p>GPIOとLCDのピンの接続は、基本的に参考ページの通りに接続。基本的には問題ないのですが、注意点が１つ。参考サイトではLCDの3番ピン(Contrast)がGNDに接続されてますが、今回使用したキャラクタLCDはここに可変抵抗器を入れないと、コントラストの関係で液晶に四角い塊が出力される状態になる(斜めから見るとギリギリ文字が読める)。可変抵抗器で分圧してやれば、コントラストの調節ができるようになり、無事文字が読めるようになりました。</p>
+
+<p>また、Raspberry Piには電源スイッチがないので、電源ON/OFFのためのスイッチも追加しました。これでリセット時にACアダプタを抜き差しする必要がなくなった。</p>
+
+<h2>LCD出力用のプログラム</h2>
+
+<p>参考用ページにアルファベットを出力するための、Pythonのプログラムがあったが、日本語(半角カナ・記号)をLCDに出力するために少々書き換えました。GPIO用のモジュール:RPi.GPIO はeasy_installやpipで適当にインストールしてください。<br/>
+Github:<a href="https://github.com/Salinger/Raspberry-Pi-LCD-HD44780">Raspberry-Pi-LCD-HD44780</a><br/>
+このプログラムを使えば、日本語（ひらがな・カタカナ・一部記号）とアルファベットの混じった文字列ををunicodeで渡してやれば、いい感じに変換して出力してくれます。この記事TOPの画像は、このプログラムを動かしたときのものです。</p>
+
+<p>実行する際の注意点として、このプログラムはroot権限で動かす必要があります(GPIO使う場合は必須なのか？)。</p>
+
+<pre><code>$ sudo python lcd.py
+</code></pre>
+
+<h2>まとめ</h2>
+
+<p>これで文字列を生成するPythonのプログラムから、自由にLCDへ出力できるようになりました。電源はRaspberry PiとLCDどちらもACアダプタからの入力で動作します。あと地味に電源スイッチが便利です。次はPythonで文字列を生成するプログラムを書いてこいつに乗っけます。</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Laspberry Piについて]]></title>
+    <link href="http://Salinger.github.com/blog/2013/01/24/1/"/>
+    <updated>2013-01-24T14:39:00+09:00</updated>
+    <id>http://Salinger.github.com/blog/2013/01/24/1</id>
+    <content type="html"><![CDATA[<p>今回は<a href="http://www.raspberrypi.org">Raspberry Pi</a>の紹介をしたいと思います。Raspberry PiはARMプロセッサを搭載したシングルボードコンピュータです。</p>
+
+<p><img src="/images/2013-01-24/R0012199.jpg" alt="Raspberry Pi 画像" /></p>
+
+<!-- more -->
+
+
+<h2>ハードウェアの仕様</h2>
+
+<p>以下簡単なハードウェア仕様のまとめ。</p>
+
+<table>
+<thead>
+<tr>
+<th></th>
+<th><strong>モデル</strong></th>
+<th><strong>Model A</strong></th>
+<th><strong>Model B</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+<td>価格</td>
+<td>$25</td>
+<td>$35</td>
+</tr>
+<tr>
+<td></td>
+<td>CPU</td>
+<td>ARM11 ARM1176JZF-S core</td>
+<td>同じ</td>
+</tr>
+<tr>
+<td></td>
+<td>メモリ</td>
+<td>256 MB</td>
+<td>512 MB</td>
+</tr>
+<tr>
+<td></td>
+<td>GPU</td>
+<td>Broadcom VideoCore IV,OpenGL ES 2.0, OpenVG 1080p30 H.264 high-profile encode/decode</td>
+<td>同じ</td>
+</tr>
+<tr>
+<td></td>
+<td>ストレージ</td>
+<td>SDメモリーカード / MMC / SDIO カードスロット</td>
+<td>同じ</td>
+</tr>
+<tr>
+<td></td>
+<td>USB2.0</td>
+<td>1ポート</td>
+<td>2ポート</td>
+</tr>
+<tr>
+<td></td>
+<td>ビデオ出力</td>
+<td>コンポジット(RCA) / HDMI</td>
+<td>同じ</td>
+</tr>
+<tr>
+<td></td>
+<td>音声出力</td>
+<td>3.5mmジャック / HDMI</td>
+<td>同じ</td>
+</tr>
+<tr>
+<td></td>
+<td>LAN</td>
+<td>なし</td>
+<td>10/100M 有線Ethernet</td>
+</tr>
+<tr>
+<td></td>
+<td>その他インターフェイス</td>
+<td>GPIO / SPI / UART</td>
+<td>同じ</td>
+</tr>
+<tr>
+<td></td>
+<td>電源</td>
+<td>500 mA</td>
+<td>700 mA</td>
+</tr>
+<tr>
+<td></td>
+<td>電源ソース</td>
+<td>5V MicroUSB Type B or GPIO</td>
+<td>同じ</td>
+</tr>
+<tr>
+<td></td>
+<td>サイズ</td>
+<td>85.60 mm ×53.98mm</td>
+<td> 同じ</td>
+</tr>
+</tbody>
+</table>
+
+
+<h2>ソフトウェア</h2>
+
+<p>OSはDebian(wheezy)ベースのもの、Arch Linux、RISC OSなどが動きます。ダウンロードは<a href="http://www.raspberrypi.org/downloads">ここ</a>から。</p>
+
+<h2>購入先</h2>
+
+<p><a href="http://jp.rs-online.com/web/generalDisplay.html?id=raspberrypi">ここ</a>で購入しました。私が入手した際は1ヶ月以上待ちましたが、今はどうなってるのやら。</p>
+
+<h2>インストール</h2>
+
+<p>書き込み作業の際、ディスクの指定を誤るとシステムデータが飛ぶ可能性があるので、気をつけてください。</p>
+
+<h3>OSのダウンロード</h3>
+
+<p>インストールするOSのイメージを上記のページからダウンロードしておきます。今回はDebianベースのRaspbian "wheezy"(2012-12-16-wheezy-raspbian.zip) を利用しました。<code>~/Downloads/</code> (デフォルトのダウンロードフォルダ)に保存しておきます。</p>
+
+<h3>SDカードの準備</h3>
+
+<p>OSをインストールするためのSDカードを用意します。OS自体は2GB程度なので、最低4GB程度の容量があれば大丈夫ですが、色々とソフトをインストールする場合を考えると、8GB程度あれば問題ないと思います。インストールの際、カード内の全データが消去されます。</p>
+
+<h3>SDカードへの書き込み。</h3>
+
+<p>今回はMacOSXで作業しました。Unix系のOSならおそらくほぼ同じ方法でできるはず。最初にSDカードのデバイス名を調べます。SDカードを接続する前に、以下のコマンドを実行します。</p>
+
+<pre><code>$ df -h
+</code></pre>
+
+<p>次にSDカード接続後に同じコマンドを実行します。私の環境の場合、SDカード名は<code>/dev/disk1s1</code>になっていました。次にSDカードをアンマウントします。</p>
+
+<pre><code>$ umount /dev/disk1s1
+</code></pre>
+
+<p>ダウンロードしたOSのイメージがあるところへ移動し、ddコマンドを実行。この際、デバイスの指定は<code>/dev/disk1s1</code> => <code>/dev/rdisk1</code>のようにrawデバイスを指定します。</p>
+
+<pre><code>$ cd ~/Downloads
+$ dd sudo time dd bs=1m if=2012-12-16-wheezy-raspbian.img of=/dev/rdisk1
+</code></pre>
+
+<p>これでOSの入ったSDカードの準備ができた。</p>
+
+<h3>起動</h3>
+
+<p>Raspberry Piに先ほど準備したSDカード、モニタ、キーボード、LAN、その他デバイスを接続し、USBポートまたはGPIOから電源を供給して起動します。電源供給と同時に起動するので、電源の接続は最後にしてください<br/>
+初回のみ、設定画面が表示されます。項目は以下の通りです。</p>
+
+<p>・info<br/>
+　　このツールの情報の確認。スルーして問題なし。<br/>
+・expand_rootfs<br/>
+　　デフォルトではSDカードのうち2GB程度しか使用していません。<br/>
+　　全領域を使用するようにここで設定出来ます。設定後、要再起動。<br/>
+・overscan<br/>
+　　テレビに出力する場合、画面周囲がきちんと表示されない場合があります。<br/>
+　　その際、ここで周囲に余白を設定することで、正常に表示できるようになります。<br/>
+・configure_keyboard<br/>
+　　キーボードの配列の設定。<br/>
+　　日本語配列、US配列、使用しているキーボードに合わせて設定。<br/>
+・change_pass<br/>
+　　デフォルトのユーザである'pi' ユーザのパスワードの変更。<br/>
+　　自分のパスワードに変更しておくべき。<br/>
+・change_locale<br/>
+　　ロケールの設定。<br/>
+　　日本語フォントが入っていないので、UTF-8に設定しても日本語は文字化けする。<br/>
+　　とりあえずデフォルトのままで問題ない。<br/>
+・change_timezone<br/>
+　　時間の設定。日本は"Asia"の"Tokyo"を指定すればよい。<br/>
+・memory_split<br/>
+　　GPUどれだけメモリを割り当てるか。通常はデフォルトのままで問題ない。<br/>
+・ssh<br/>
+　　sshを利用してリモートログインする場合"Enable"を指定。<br/>
+　　設定しておけば別マシンから開発できる。<br/>
+・boot_behaviour<br/>
+　　"Yes"を選択すれば、最初からGUIな画面で起動する。<br/>
+　　CUIで起動して、startxするのが面倒くさいなら"Yes"に。<br/>
+・update<br/>
+　　この設定用ツール raspi-config のアップデート。</p>
+
+<p>これで最低限の設定は終わりです。もし、再設定したいならコンソールから</p>
+
+<pre><code>$ sudo raspi-config
+</code></pre>
+
+<p>を実行することで、いつでも再設定出来ます。</p>
+
+<h2>使用した感想</h2>
+
+<p>私が買ったのは$35のモデルです。<br/>
+想像以上に高性能です。コンソールから使う分には特に不満なし。<br/>
+軽い開発なら実機のみでそれなりにできそう。<br/>
+低消費電力なのでサーバー用途に良さそう。<br/>
+GPIO / オーディオ出力 などいろいろ遊べそう。<br/>
+なかなか遊びがいのあるおもちゃですね。</p>
+]]></content>
+  </entry>
+  
+</feed>

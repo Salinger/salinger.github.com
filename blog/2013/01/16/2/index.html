@@ -1,0 +1,408 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Macでvirtualenvの設定 - さりんじゃーのプログラミング日記</title>
+  <meta name="author" content="Salinger">
+
+  
+  <meta name="description" content="virtualenvはPython用の仮想環境構築のためのモジュール。virtualenvwrapperはvirtualenvを楽に使うためのラッパー。とりあえずPython周りの環境は、基本的にPython自体をHomebrewで、モジュールはvirtualenv + &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://Salinger.github.com/blog/2013/01/16/2/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="さりんじゃーのプログラミング日記" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">さりんじゃーのプログラミング日記</a></h1>
+  
+    <h2>Salinger's programming diary</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:Salinger.github.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Macでvirtualenvの設定</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-01-16T17:41:00+09:00" pubdate data-updated="true">Jan 16<span>th</span>, 2013</time>
+        
+         | <a href="#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>virtualenvはPython用の仮想環境構築のためのモジュール。virtualenvwrapperはvirtualenvを楽に使うためのラッパー。とりあえずPython周りの環境は、基本的にPython自体をHomebrewで、モジュールはvirtualenv + virtualenvwrapper + pip で管理することにする。</p>
+
+<!-- more -->
+
+
+<h2>Pythonのインストール</h2>
+
+<p>必要な物をHomebrewでインストール。</p>
+
+<pre><code>$ python -V
+Python 2.7.2 # Macに標準で入ってるPython
+$ brew install readline sqlite gdbm
+$ brew install python --universal --framework
+$ python -V
+Python 2.7.2
+</code></pre>
+
+<p>あれっ？変化なし？
+bashだとPathは問題なく2.7.3が起動したけど、普段使ってるtmux + zshだと2.7.2が起動した。.zshrcに以下のようにPathの記述をする必要あり。</p>
+
+<pre><code>export PATH=/usr/local/bin:/usr/local/sbin:/sbin:/usr/sbin:${PATH}
+</code></pre>
+
+<p>.zshrcの再読み込み</p>
+
+<pre><code>$ source .zshrc
+$ python -V
+Python 2.7.3
+</code></pre>
+
+<p>これでPython2系最新版のインストールはOK。</p>
+
+<h2>virtualenvとvirtualenvwrapperのインストール</h2>
+
+<pre><code>$ which pip # インストール先の確認
+/usr/local/bin/pip # Homebrewでインストールした先になっているのを確認
+$ pip install virtualenv
+$ pip install virtualenvwrapper
+$ mkdir ~/.virtualenvs
+</code></pre>
+
+<p>.zshrcに</p>
+
+<pre><code>#virtualenv settings
+export WORKON_HOME=$HOME/.virtualenvs
+. /usr/local/share/python/virtualenvwrapper.sh
+</code></pre>
+
+<p>を記述。</p>
+
+<pre><code>$ source .zshrc # リロード
+virtualenvが見えない…
+</code></pre>
+
+<p>.zshrcに</p>
+
+<pre><code>export PATH=/usr/local/share/python:${PATH}
+</code></pre>
+
+<p>を追記。</p>
+
+<pre><code>$ source .zshrc
+</code></pre>
+
+<p>問題解決。</p>
+
+<h2>テスト</h2>
+
+<pre><code>$ pip freeze # 現在のモジュールの確認 (virtualenvなど)
+$ mkvirtualenv test1 # test1という環境を作成
+$ deactivate #環境から抜ける
+$ mkvirtualenv test2 # test2という環境を作成
+$ workon # 環境の一覧を確認
+test1
+test2
+$ workon test1 # testを選択
+$ pip install numpy # test1 にnumpyをインストール
+$ pip freeze # nuupyのインストールを確認
+$ deactivate 
+$ pip freeze # 元の環境に影響がないのを確認
+$ rmvirtualenv test1 # テスト環境を削除
+$ rmvirtualenv test2
+$ workon # 出力なし 削除完了
+</code></pre>
+
+<p>動作確認完了。モジュールの切り替えが非常に楽なので、今後の開発が捗りそう。</p>
+
+<h2>Octopressとzshのトラブル？</h2>
+
+<p>この記事を書こうとして、</p>
+
+<pre><code>$ rake new_post["2"]
+</code></pre>
+
+<p>を実行したら、</p>
+
+<pre><code>$ zsh: no matches found: new_post["2"]
+</code></pre>
+
+<p>というエラーが。何故だ？しかし、</p>
+
+<pre><code>$ rake new_post
+$ Enter a post title:2
+</code></pre>
+
+<p>作成できたぞ？今回Pathを弄ったのが原因か？<br/>
+この辺の動作がよくわからんので。また確認しとかないと。</p>
+
+<h3>追記</h3>
+
+<p>.zshrcに</p>
+
+<pre><code>alias rake="noglob rake"
+</code></pre>
+
+<p>を追記したらエラー消えました。ありがとうございます > shogo82148 。</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Salinger</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-01-16T17:41:00+09:00" pubdate data-updated="true">Jan 16<span>th</span>, 2013</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/python/'>Python</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2013/01/16/1/" title="Previous Post: homebrew環境の構築">&laquo; homebrew環境の構築</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2013/01/17/1/" title="Next Post: Homebrew + virtualenv 環境でMeCabのインストール">Homebrew + virtualenv 環境でMeCabのインストール &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>About</h1>
+  <p>
+    Name:  さりんじゃー<br />
+    Info:  雪国の大学院生。プログラミングなどの技術系の話をメインに。主にPythonを使います。専門分野は機械
+  </p>
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2013/01/25/1/">Raspberry PiとキャラクタLCDで遊んでみた</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/01/24/1/">Laspberry Piについて</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/01/18/1/">Homebrew + virtualenv 環境でlibsvmのインストール</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/01/17/1/">Homebrew + virtualenv 環境でMeCabのインストール</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/01/16/2/">Macでvirtualenvの設定</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/Salinger">@Salinger</a> on GitHub
+  
+  <script type="text/javascript">
+    $.domReady(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'Salinger',
+            count: 5,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+<section>
+  <h1>Latest Tweets</h1>
+  <ul id="tweets">
+    <li class="loading">Status updating...</li>
+  </ul>
+  <script type="text/javascript">
+    $.domReady(function(){
+      getTwitterFeed("salinger001101", 5, false);
+    });
+  </script>
+  <script src="/javascripts/twitter.js" type="text/javascript"> </script>
+  
+    <a href="http://twitter.com/salinger001101" class="twitter-follow-button" data-show-count="false">Follow @salinger001101</a>
+  
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Salinger -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'salinger';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://Salinger.github.com/blog/2013/01/16/2/';
+        var disqus_url = 'http://Salinger.github.com/blog/2013/01/16/2/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

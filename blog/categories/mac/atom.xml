@@ -1,0 +1,317 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Mac | さりんじゃーのプログラミング日記]]></title>
+  <link href="http://Salinger.github.com/blog/categories/mac/atom.xml" rel="self"/>
+  <link href="http://Salinger.github.com/"/>
+  <updated>2013-01-26T01:47:17+09:00</updated>
+  <id>http://Salinger.github.com/</id>
+  <author>
+    <name><![CDATA[Salinger]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Homebrew + virtualenv 環境でlibsvmのインストール]]></title>
+    <link href="http://Salinger.github.com/blog/2013/01/18/1/"/>
+    <updated>2013-01-18T02:42:00+09:00</updated>
+    <id>http://Salinger.github.com/blog/2013/01/18/1</id>
+    <content type="html"><![CDATA[<p>サポートベクターマシン(SVM)についての概要は <a href="http://ja.wikipedia.org/wiki/%E3%82%B5%E3%83%9D%E3%83%BC%E3%83%88%E3%83%99%E3%82%AF%E3%82%BF%E3%83%BC%E3%83%9E%E3%82%B7%E3%83%B3">Wikipedia</a> でも見てください。
+スパムの分類、ユーザーのクラスタリング、他何か色々なものを分類する用途に使われます。今回はSVMを使うための環境構築を行った際のメモです。</p>
+
+<!-- more -->
+
+
+<h2>libsvmについて</h2>
+
+<p><a href="http://www.csie.ntu.edu.tw/~cjlin/libsvm/">libsvm</a>はChih-Chung Changさん・Chih-Jen Linさんが開発したSVMのライブラリです。様々なSVMタイプ・カーネル関数、また細かくオプションも指定できるので、SVMを使う必要がある場合は、とりあえずこれを選んでおけば困ることは少ないと思います。</p>
+
+<h2>libsvmのインストール</h2>
+
+<pre><code>$ brew search libsvm
+libsvm
+</code></pre>
+
+<p>brewにあった。ラッキー。</p>
+
+<pre><code>$ brew install libsvm
+</code></pre>
+
+<p>本体のインストール完了。</p>
+
+<pre><code>$ svm-train
+Usage: svm-train [options] training_set_file [model_file]
+options:
+-s svm_type : set type of SVM (default 0)
+        0 -- C-SVC              (multi-class classification)
+...
+</code></pre>
+
+<p>動いた。がこれだとPython用バインディングがインストールできなかった。残念。</p>
+
+<h2>libsvmのPython用バインディングのインストール</h2>
+
+<p>無いなら、pipで公式のバインディングをインストールするためのsetup.pyを自分で書いてしまえばいいじゃない。てな訳で書いた奴をgithubに上げといた<a href="https://github.com/Salinger/libsvm-python">(libsvm-python)</a>。
+問題はsetup.py書いたのが初めてなので、これであってるのかどうか自信がない。とりあえず以下のコマンドでインストールできます。</p>
+
+<pre><code>$ pip install -e git+https://github.com/Salinger/libsvm-python.git#egg=libsvm-python
+</code></pre>
+
+<h2>動作確認</h2>
+
+<p>テスト用のコード。
+<div><script src='https://gist.github.com/4579980.js'></script>
+<noscript><pre><code>#!/usr/bin/env python                                                                                     
+#-*- coding:utf-8 -*-                                                                                     
+
+from svm import *
+from svmutil import *
+
+# For learning                                                                                            
+t_label = [1,-1,1,-1]
+t_data = [
+    [1.0, 2.0, 3.0],
+    [3.0, 1.5, 1.0],
+    [2.0, 3.0, 4.0],
+    [0.5, 1.0, 1.5]
+    ]
+problem = svm_problem(t_label, t_data)
+parameter = svm_parameter('-s 0 -t 0')
+t = svm_train(problem, parameter)
+
+# For predict                                                                                             
+p_label = [1, 1, -1, -1]
+p_data = [
+    [0.3, 0.9, 1.2],
+    [2.0, 3.0, 4.5],
+    [3.0, 1.0, 0.3],
+    [1.0, 0.5, 0.25]
+    ]
+result = svm_predict(p_label, p_data , t)
+
+print &quot;[Result]&quot;
+for r in result:
+    print r</code></pre></noscript></div>
+</p>
+
+<p>そして実行。</p>
+
+<pre><code>$ python libsvm_test.py 
+.*.*
+optimization finished, #iter = 9
+nu = 0.298326
+obj = -0.596685, rho = 3.000257
+nSV = 3, nBSV = 0
+Total nSV = 3
+Accuracy = 75% (3/4) (classification)
+[Result]
+[-1.0, 1.0, -1.0, -1.0]
+(75.0, 1.0, 0.3333333333333333)
+[[-1.3527684585781998], [3.038557720585867], [-1.9331234989121904], [-2.4115929900464406]]
+</code></pre>
+
+<p>問題なく動くのを確認できた。自分で書いたsetup.pyもとりあえず問題ないっぽい？</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Homebrew + virtualenv 環境でMeCabのインストール]]></title>
+    <link href="http://Salinger.github.com/blog/2013/01/17/1/"/>
+    <updated>2013-01-17T18:40:00+09:00</updated>
+    <id>http://Salinger.github.com/blog/2013/01/17/1</id>
+    <content type="html"><![CDATA[<p>普段良く使うモジュールのMeCabのインストール。
+Homebrewもvirutalenvも最近使い始めたばかりなので、自分用メモとして記録。</p>
+
+<!-- more -->
+
+
+<h2>virtualenv環境の作成</h2>
+
+<p>普段はNormalという環境を作って、これを使うことにする。</p>
+
+<pre><code>$ mkvirtualenv Normal
+</code></pre>
+
+<h2>MeCabのインストール</h2>
+
+<pre><code>$ brew search mecab
+mecab mecab-ipadic
+</code></pre>
+
+<p>Homebrewにあった。</p>
+
+<pre><code>$ brew install mecab mecab-ipadic
+$ mecab
+</code></pre>
+
+<p>これでこの時点の最新版である0.994とIPA辞書がインストールできた。動作確認。</p>
+
+<pre><code>$ mecab
+すもももももももものうち
+すもも  名詞,一般,*,*,*,*,すもも,スモモ,スモモ
+も      助詞,係助詞,*,*,*,*,も,モ,モ
+もも    名詞,一般,*,*,*,*,もも,モモ,モモ
+も      助詞,係助詞,*,*,*,*,も,モ,モ
+もも    名詞,一般,*,*,*,*,もも,モモ,モモ
+の      助詞,連体化,*,*,*,*,の,ノ,ノ
+うち    名詞,非自立,副詞可能,*,*,*,うち,ウチ,ウチ
+EOS
+</code></pre>
+
+<p>Ctrl + c で終了。
+文字コード周りのトラブルも特になし。</p>
+
+<h2>MeCabのPythonバインディングのインストール</h2>
+
+<p>MacPortsのときはPythonバインディングもまとめてインストールできたが、Homebrewには無いっぽい。まあvirtualenvで作った環境にインストールするには結局自分で入れなきゃならないらしいので、普通にインストールすることにする。インストール先のvirtualenv環境のまま作業続行。</p>
+
+<pre><code>$ cd ~/Downloads/
+$ curl -O http://mecab.googlecode.com/files/mecab-python-0.994.tar.gz # 同じバージョンのものをダウンロード
+$ pip install mecab-python-0.994.tar.gz # tar.gz のままインストールできる。
+</code></pre>
+
+<p>動作確認を行う。</p>
+
+<h2>Pythonバインディングの動作確認</h2>
+
+<p>サンプルコード
+<div><script src='https://gist.github.com/4555097.js'></script>
+<noscript><pre><code>#!/usr/bin/env python                                                                                                                                           
+#-*- coding:utf-8 -*-                                                                                                                                           
+import MeCab
+
+m = MeCab.Tagger(&quot;-Ochasen&quot;)
+string = u&quot;それサバンナでも同じ事言えんの？&quot;
+
+# MeCabでUnicode文字列を扱う場合は、一度エンコードする必要がある。                                                                                              
+# この際、                                                                                                                                                      
+# node = tagger.parseToNode(string.encode(&quot;utf-8&quot;))                                                                                                             
+# とすると、stringがパース中にガベコレされてしまって、                                                                                                          
+# 変な挙動になる場合があるので注意。このように一度変数に代入すれば問題ない。                                                                                    
+string = string.encode(&quot;utf-8&quot;)
+node = m.parseToNode(string)
+
+# ノードを順番にたどる。                                                                                                                                        
+# node.surface, node.feature はstr型なので、                                                                                                                    
+# この時点でunicode型に変換する方がトラブル防止のためにはいいかも。                                                                                             
+while node:
+    print node.surface, node.feature
+    node = node.next
+
+</code></pre></noscript></div>
+</p>
+
+<p>実行。</p>
+
+<pre><code>$ python mecab_test.py
+ BOS/EOS,*,*,*,*,*,*,*,*
+それ 名詞,代名詞,一般,*,*,*,それ,ソレ,ソレ
+サバンナ 名詞,一般,*,*,*,*,サバンナ,サバンナ,サバンナ
+で 助詞,格助詞,一般,*,*,*,で,デ,デ
+も 助詞,係助詞,*,*,*,*,も,モ,モ
+同じ 連体詞,*,*,*,*,*,同じ,オナジ,オナジ
+事 名詞,非自立,一般,*,*,*,事,コト,コト
+言え 動詞,自立,*,*,一段,未然形,言える,イエ,イエ
+ん 助動詞,*,*,*,不変化型,基本形,ん,ン,ン
+の 助詞,終助詞,*,*,*,*,の,ノ,ノ
+？ 記号,一般,*,*,*,*,？,？,？
+ BOS/EOS,*,*,*,*,*,*,*,*
+</code></pre>
+
+<p>動いた。</p>
+
+<h2>おまけ</h2>
+
+<p>今回はgistで書いたコードをブログに貼ってみたけど、</p>
+
+<pre><code>{% gist 4555097 %}
+</code></pre>
+
+<p>の1行で長いコードを見やすい形式で貼れるのってかなり便利だ。
+Github + Octopress 快適すぎる。</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[homebrew環境の構築]]></title>
+    <link href="http://Salinger.github.com/blog/2013/01/16/1/"/>
+    <updated>2013-01-16T02:41:00+09:00</updated>
+    <id>http://Salinger.github.com/blog/2013/01/16/1</id>
+    <content type="html"><![CDATA[<p>Macbook Airの環境を再構築したので、その際のメモ。今まではパッケージ管理にMacPortsを使っていたが、今回からHomebrewに移行した。元からMountain LionにインストールされてるPythonやRubyと、パッケージ管理ソフトで導入したそれらの最新版の管理がMacPortsだと少々面倒くさかったので、もう少し楽に済みそうなものを使ってみようというのが理由だ。</p>
+
+<!-- more -->
+
+
+<h2>Homebrewのインストール</h2>
+
+<p>以下のコマンドを実行。</p>
+
+<pre><code>$ ruby -e "$(curl -fsSkL raw.github.com/mxcl/homebrew/go)"
+$ brew doctor
+</code></pre>
+
+<p>gitのインストール。</p>
+
+<pre><code>$ brew install git
+</code></pre>
+
+<p>Homebrewのアップデート。</p>
+
+<pre><code>$ brew update
+</code></pre>
+
+<p><code>/usr/local/sbin</code>の作成。</p>
+
+<pre><code>$ mkdir /usr/local/sbin
+</code></pre>
+
+<p>Pathを設定するため<code>/etc/paths</code>の編集。</p>
+
+<pre><code>/usr/bin
+/bin
+/usr/sbin
+/sbin
+/usr/local/bin
+</code></pre>
+
+<p>となっているのを、</p>
+
+<pre><code>/usr/local/bin
+/usr/bin
+/bin
+/usr/sbin
+/usr/local/sbin
+/sbin
+</code></pre>
+
+<p>と変更。これでHomebrewでインストールした方が優先される。
+ターミナルを再起動してとりあえずの設定は終わり。</p>
+
+<h2>Ruby1.9.3のインストール</h2>
+
+<p>とりあえずこのブログを編集するためのRuby環境構築。</p>
+
+<pre><code>$ brew install ruby
+$ gem install bundler
+</code></pre>
+
+<p>このBlogのデータを<code>git clone</code>で作業用ディレクトリに持ってきて、そのディレクトに移動。そこで、</p>
+
+<pre><code>$ bundle install
+</code></pre>
+
+<p>を実行しようとしたら、bundleコマンドが見当たらないぞ？次のコマンドを実行すれば良かった。</p>
+
+<pre><code>$ brew unlink ruby
+$ brew link ruby
+</code></pre>
+
+<h2>おわりに</h2>
+
+<p>こんな感じでBlogを更新するための環境の再構築はとりあえず終了。MacPortsの時に面倒だったRubyとGemのバージョン指定周りも特に気にする必要はなかった。早くPythonの環境も整えないと。</p>
+]]></content>
+  </entry>
+  
+</feed>
