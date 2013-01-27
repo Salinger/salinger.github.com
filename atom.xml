@@ -4,7 +4,7 @@
   <title><![CDATA[さりんじゃーのプログラミング日記]]></title>
   <link href="http://Salinger.github.com/atom.xml" rel="self"/>
   <link href="http://Salinger.github.com/"/>
-  <updated>2013-01-26T01:47:17+09:00</updated>
+  <updated>2013-01-27T23:02:02+09:00</updated>
   <id>http://Salinger.github.com/</id>
   <author>
     <name><![CDATA[Salinger]]></name>
@@ -12,6 +12,280 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[NDS30:JAWS-UG-NGキックオフ に参加してきました]]></title>
+    <link href="http://Salinger.github.com/blog/2013/01/27/2/"/>
+    <updated>2013-01-27T22:55:00+09:00</updated>
+    <id>http://Salinger.github.com/blog/2013/01/27/2</id>
+    <content type="html"><![CDATA[<p>2013年1月26日に行われた<a href="http://nagaoka.techtalk.jp/no30">長岡開発者勉強会(NDS)</a>に参加してきました。今回は第30回でメインテーマはAmazon Web Service(AWS)のハンズオン。前回はWindows Azureのハンズオンだったので、2回連続で講師のもと、クラウド関連のサービスに触れる貴重な機会となりました。</p>
+
+<!-- more -->
+
+
+<h2>JAWS-UG-NG発足の儀</h2>
+
+<p>JAWS-UG は AWS User Group - Japan 最後のNGは 新潟 or 長岡。31番目の支部らしい。</p>
+
+<h2>AWSハンズオン</h2>
+
+<p>VPC(Virtual Private Cloud)の作成から始まって、EC2インスタンスを作成してアプリケーションサーバの構築、DBインスタンスを作成してEC2インスタンス内で動かしてたデータベースを移行、ロードバランサの追加という流れで進んでいった。</p>
+
+<p>小規模なWebサービスを立ち上げて、トラフィックの増加に従い、システムリソースの拡張を行う際の流れをひと通り経験出来た。システムの可用性の向上、セキュリティ面で注意すべきことなどの話もきちんとあり、AWS未経験の人間でも数時間でそれなりのシステムが組めるようになった(気がする)。</p>
+
+<p>今回のハンズオンでAWSに以下の様な印象を持った。</p>
+
+<ul>
+<li>低コスト
+
+<ul>
+<li>時間やマシンスペックなどこちらの方が割安</li>
+</ul>
+</li>
+<li><a href="http://aws.amazon.com/jp/products/">豊富なサービス</a>が用意されている
+
+<ul>
+<li>一番気になったのは、<a href="http://aws.amazon.com/jp/elasticmapreduce/">Amazon Elastic MapReduce(EMR)</a>。Hadoopクラスタのセットアップ &amp; 計算量に応じた計算機の確保が容易に出来そう。今後のために使い方勉強しておいたほうが良さそうだ。</li>
+<li><a href="http://aws.amazon.com/jp/glacier/">Amazon Glacier</a>も気になった。データの取り出しに時間が必要だが1ヶ月あたり0.01USD/GBと、大容量のデータを安価にバックアップできる。</li>
+</ul>
+</li>
+<li>細かいルールや設定の管理・適用がしやすい</li>
+</ul>
+
+
+<p>Azureも悪くはないが、個人で利用する場合は少しコスト面が気になる。ネットワーク周りやディスクアクセス周りは、両者で実際にそれなりのサービスを動かして比較してみないとなんとも言えませんね。AWSで今後使う可能性がありそうなサービスは、EC2で簡易なWebサービスのホスト、Amazon Glacierで重要であまり変更が行われないデータのバックアップあたりかな？将来的にはHadoop関連のサービスあたりも使うかも。1年間の無料枠があるので、その間にもう少しいじってみる予定。</p>
+
+<h2>LT(ライトニングトーク)</h2>
+
+<p>一人あたり約5分程度の枠で合計約1時間程度の発表。</p>
+
+<h3>5min de Heroku (@dictav)</h3>
+
+<p><a href="https://gist.github.com/4640042">https://gist.github.com/4640042</a><br/>
+Webサービスが簡単に作れる。<br/>
+スケーリングも簡単にできるが、お金も必要。<br/>
+簡易な処理で済むサービス動かすならいい感じ。<br/>
+家で調べてみたらこのブログで使ってるOctopressもHerokuにデプロイ可能なようだ。</p>
+
+<h3>音をグリッチしてモテたい話 (@neko_gata_s)</h3>
+
+<p><a href="https://github.com/Shinpeim/WaveZutaZuta">https://github.com/Shinpeim/WaveZutaZuta</a><br/>
+いけてるほうのねこがたさん<br/>
+音を分割して繋いでリミックス<br/>
+くーる！<br/>
+えんじにあにはもててた</p>
+
+<h3>高齢者テスター事業構想について (@muromav)</h3>
+
+<p>NPOが実施している高齢者向けパソコン教室の受講者の高齢者のみささんにテスターをやってもらおうという試み。<br/>
+「自助」災害時に自力で情報収集 ＋「共助」高齢者の友達の輪<br/>
+開発者は若年層が多いので、高齢者向けのデザインはあまり考慮されてないものが多い。高齢者にも優しいプロダクトを。<br/>
+多少なりとも報酬を。高齢者のPC学習のモチベーション向上に。</p>
+
+<h3>Raspberry PiでLチカ(aokcub)</h3>
+
+<p>Raspberry Piネタ1人目。<br/>
+<a href="https://github.com/aokcub/PiGPIO">https://github.com/aokcub/PiGPIO</a><br/>
+Lチカ。LEDチカチカ。マイコンのHello, World!<br/>
+Perlで制御。PWM制御も実装。<br/>
+もてそう。</p>
+
+<h3>Raspberry Piについてのなにか (@yutacar)</h3>
+
+<p>Raspberry Piネタ2人目。<br/>
+USB温度センサーで部屋の温度取得。<br/>
+Matplotlibでグラフ化<br/>
+将来はエアコンの管理も？</p>
+
+<h3>Raspberry PiとキャラクタLCDで遊んでみた。 (@salinger001101)</h3>
+
+<p>私が発表しました。このBlogに書いたRaspberry Piネタ(概要・キャラクタLCD・人工無能)を話しました。<br/>
+<a href="http://Salinger.github.com/data/nds30/20130127.pdf">発表スライドのPDF</a><br/>
+<a href="https://gist.github.com/4640042">LCD制御用のプログラム</a><br/>
+<a href="https://github.com/Salinger/MunouChan-onRaspberryPi">人工無能: MunouChan</a></p>
+
+<h3>High Performance Web Server (@wokamoto)</h3>
+
+<p>Webサービスの高速化についてのお話。</p>
+
+<ol>
+<li>HipHop VM for PHP
+
+<ul>
+<li>PHPをC++に自動変換して高速化。VMで動的に。</li>
+</ul>
+</li>
+<li>mod_pagespeed
+
+<ul>
+<li>GoogleのWebサイト高速化モジュール。Apacheサーバに。余計なコード(コメントなど)を自動的に除去。ngx_pagespeedもあるのでnginxでも問題なし。</li>
+</ul>
+</li>
+<li>SPDY
+
+<ul>
+<li>通信プロトコル。接続の高速化。ブラウザが対応してないとダメ。最新版のChrome、Firefox、Operaはデフォルトで対応済み。つまりIEはダメ。</li>
+<li>Multiplexed streams、Request prioritization、HTTP header compression、Server push、Server hintなど。</li>
+</ul>
+</li>
+</ol>
+
+
+<h3>AWSとTitaniumの新しい関係 (@NPoi)</h3>
+
+<p>Titanium Mobile: JavaScriptでiOS・Androidのアプリが書ける。<br/>
+Appcelerator Cloud Services(ACS) -> AWS上で動いている<br/>
+BaaS Backend as a Service<br/>
+あらかじめ用意された機能群から必要な機能を選択できる。<br/>
+サーバーサイド、バックエンド側の知識が少なくてもどうにかなるように。<br/>
+非常に高い堅牢性。</p>
+
+<h2>まとめ</h2>
+
+<p>短時間でAWSでのWebサービス構築方法を学べたので非常に有意義だった。LTも普段触れない技術に触れることの出来る良い機会でした。そろそろLTで言語処理関連の話や機械学習の話もしたいですね。</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Raspberry Piに人工無能搭載してみた]]></title>
+    <link href="http://Salinger.github.com/blog/2013/01/27/1/"/>
+    <updated>2013-01-27T00:09:00+09:00</updated>
+    <id>http://Salinger.github.com/blog/2013/01/27/1</id>
+    <content type="html"><![CDATA[<p>前回の記事に引き続きRaspberry Piネタ。マルコフ連鎖により文章を自動生成しLCDに出力してみた。</p>
+
+<p><img src="http://Salinger.github.com/images/2013-01-27/001.png" alt="出力例の画像" /></p>
+
+<!--more-->
+
+
+<h2>人工無能とは</h2>
+
+<p>考えてるように見えて考えてない。ただ確率に従い文章を生成するプログラム。それでも人間から見ると、意味のある文章に見える文章が生成される。</p>
+
+<p>基本的な生成手順は</p>
+
+<ol>
+<li>元データを形態素解析して形態素毎に分割</li>
+<li>マルコフ連鎖により再構成</li>
+</ol>
+
+
+<h2>形態素解析</h2>
+
+<p>自然言語で書かれた文を、形態素 (言語で意味を持つ最小単位) ごとに分割し、各形態素の品詞を特定することを形態素解析と呼ぶ。プログラムで自然言語を扱う場合、よく使われる技術の一つ。細かいことは<a href="http://ja.wikipedia.org/wiki/%e5%bd%a2%e6%85%8b%e7%b4%a0%e8%a7%a3%e6%9e%90">Wikipedia</a> でも見てください。</p>
+
+<p>日本語の形態素解析を行うためのツールは以下の様なものがある。</p>
+
+<ul>
+<li><a href="http://mecab.sourceforge.net/">MeCab</a>
+
+<ul>
+<li>bi-gram マルコフモデル</li>
+<li>学習モデルはCRF</li>
+</ul>
+</li>
+<li><a href="http://chasen-legacy.sourceforge.jp">ChaSen</a>
+
+<ul>
+<li>可変長マルコフモデル</li>
+<li>学習モデルは隠れマルコフモデル(HMM)</li>
+</ul>
+</li>
+<li><a href="http://www.phontron.com/kytea/index-ja.html">KyTea</a>
+
+<ul>
+<li>比較的最近でてきたもの</li>
+<li>ネットスラングや顔文字などの認識も比較的精度がいいらしい</li>
+</ul>
+</li>
+<li><a href="http://developer.yahoo.co.jp/webapi/jlp/ma/v1/parse.html">日本語形態素解析Webサービス</a>
+
+<ul>
+<li>Webベースの日本語形態素解析API</li>
+<li>組み込み系などマシンが非力な場合にも使えそう</li>
+</ul>
+</li>
+</ul>
+
+
+<p>今回は使い慣れているMeCabを使いました。</p>
+
+<h2>マルコフ連鎖</h2>
+
+<p>すごく簡単に言うと、ある要素を次々と発生させる状況を考えたときに、次の要素が現在の要素のみによって決まるのがマルコフ連鎖である。詳しくは<a href="http://ja.wikipedia.org/wiki/%e3%83%9e%e3%83%ab%e3%82%b3%e3%83%95%e9%80%a3%e9%8e%96">Wikipedia</a>でも見てください。</p>
+
+<p>これを文章に適用した場合の例だが、解説はこのページがわかりやすい(<a href="https://www.evernote.com/shard/s70/sh/71947f67-ee6c-405f-92a2-1d64fd631639/2d9397138827808cbc21c36c9389f642">「それが大事」にマルコフ連鎖を適用してみる</a>)。</p>
+
+<p>ある単語があったとき、その単語の次に現れる可能性のある単語の確率のみを考える場合を単語uni-gramのマルコフ連鎖、2単語ずつをペアにして考える場合を単語bi-gramのマルコフ連鎖、さらに続いてtri-gram、4-gram、…N-gram。と呼ぶ。</p>
+
+<p>例えば、<br/>
+私/は/旅行/に/行き/たい/。<br/>
+という文章があった場合、</p>
+
+<ul>
+<li>単語uni-gram:
+
+<ul>
+<li>&#8220;私&#8221;, &#8220;は&#8221;, &#8220;旅行&#8221;, &#8220;に&#8221;, &#8220;行き&#8221;, &#8220;たい&#8221;, &#8220;。&#8221;</li>
+</ul>
+</li>
+<li>単語bi-gram:
+
+<ul>
+<li>&#8220;私/は&#8221;, &#8220;は/旅行&#8221;, &#8220;旅行/に&#8221;, &#8220;に/行き&#8221;, &#8220;行き/たい&#8221;, &#8220;たい/。&#8221;</li>
+</ul>
+</li>
+<li>単語tri-gram:
+
+<ul>
+<li>&#8220;私/は/旅行&#8221;, &#8220;は/旅行/に&#8221;, &#8220;旅行/に/行き&#8221;, &#8220;に/行き/たい&#8221;, &#8220;行き/たい/。&#8221;<br/>
+となる。</li>
+</ul>
+</li>
+</ul>
+
+
+<h2>文章を生成する際のポイント</h2>
+
+<ol>
+<li>要素の単位
+
+<ul>
+<li>文字単位でマルコフ連鎖を行う場合もあるが、単語単位で生成したほうが読みやすい文章になる。N-gramのNが大きくなれば、長文になりやすく、同じパターンのものが生成されやすい。解決するためにはデータ量を増やす必要がある。個人的にいい意味で人工無能っぽさが出るは単語bi-gramかtri-gramあたりだと思う。</li>
+</ul>
+</li>
+<li>開始・終了の扱い
+
+<ul>
+<li>開始、終了にも適当な目印を割り当てると楽。<code>[S]/私/は/旅行/に/行き/たい/。/[E]</code>のように。単語[S]から作り始めて、単語[E]が現れたら終了。</li>
+</ul>
+</li>
+<li>元データの選択
+
+<ul>
+<li>◯◯っぽいものを作りたい場合は◯◯っぽい文章を集めてくる。とりあえず試してみたい場合のデータ収集元としておすすめなのはTwitterやネットのニュースあたり。この辺りを元データにしたものは<a href="https://twitter.com/shuumai">しゅうまい君</a>や<a href="http://pha22.net/comp/">圧縮新聞</a>なんかが有名ですね。</li>
+</ul>
+</li>
+</ol>
+
+
+<h2>プログラム</h2>
+
+<p>という訳で、Raspberry Pi + LCD で動くものを実装してみました(<a href="https://github.com/Salinger/MunouChan-onRaspberryPi">MunouChan</a>)。文章生成に使用したのは友人のTweet。<code>@~</code> から始まるリプライツイートは削除しました。各単語はMeCabで分割し単語の読みに変換(最終出力が半角カナのみなので)。単語の読みのみを考慮して(火と日は&#8221;ひ&#8221;で同一単語扱い)bi-gramの単語ペアを生成。ペアの出現回数をカウント。次に現れる単語の確率を計算したものをpickleモジュールでダンプしたものが上記URLのプログラムの状態です。</p>
+
+<p>後はプログラム起動時にダンプされたデータを読み込み、開始単語から終了単語が現れるまで確率に従いランダムに単語を選択。LCDに収まる文字数ならLCDに出力し、オーバーしていたら再生成。</p>
+
+<p><code>./probability.pkl</code>を削除またはリネームし、tweetディレクトリの中のsample.tsvを同じ形式で書き換えてやれば、任意の元データでも動くはず。ただ元データに文字数が多いものばかりを選ぶと、制限文字数をオーバしまくるので怪しい動作しそう。</p>
+
+<p>実行したときの画像がこのページトップあたりにある画像です。</p>
+
+<h2>まとめ</h2>
+
+<p>シンプルな人工無能を作るのはさほど難しくないが、人間らしい応答をさせようとすると難易度が跳ね上がる。そもそも「人間らしい」という定義すらよくわからない。</p>
+
+<p>これはマルコフ連鎖を文章に適用した例だけど、状態の遷移を確率的に表現できるものに適用できるので、音楽や絵の自動生成など、他分野にもいろいろ適用できるはず。</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Raspberry PiとキャラクタLCDで遊んでみた]]></title>

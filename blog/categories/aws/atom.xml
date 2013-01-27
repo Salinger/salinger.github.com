@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: AWS | さりんじゃーのプログラミング日記]]></title>
+  <link href="http://Salinger.github.com/blog/categories/aws/atom.xml" rel="self"/>
+  <link href="http://Salinger.github.com/"/>
+  <updated>2013-01-27T23:02:02+09:00</updated>
+  <id>http://Salinger.github.com/</id>
+  <author>
+    <name><![CDATA[Salinger]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[NDS30:JAWS-UG-NGキックオフ に参加してきました]]></title>
+    <link href="http://Salinger.github.com/blog/2013/01/27/2/"/>
+    <updated>2013-01-27T22:55:00+09:00</updated>
+    <id>http://Salinger.github.com/blog/2013/01/27/2</id>
+    <content type="html"><![CDATA[<p>2013年1月26日に行われた<a href="http://nagaoka.techtalk.jp/no30">長岡開発者勉強会(NDS)</a>に参加してきました。今回は第30回でメインテーマはAmazon Web Service(AWS)のハンズオン。前回はWindows Azureのハンズオンだったので、2回連続で講師のもと、クラウド関連のサービスに触れる貴重な機会となりました。</p>
+
+<!-- more -->
+
+
+<h2>JAWS-UG-NG発足の儀</h2>
+
+<p>JAWS-UG は AWS User Group - Japan 最後のNGは 新潟 or 長岡。31番目の支部らしい。</p>
+
+<h2>AWSハンズオン</h2>
+
+<p>VPC(Virtual Private Cloud)の作成から始まって、EC2インスタンスを作成してアプリケーションサーバの構築、DBインスタンスを作成してEC2インスタンス内で動かしてたデータベースを移行、ロードバランサの追加という流れで進んでいった。</p>
+
+<p>小規模なWebサービスを立ち上げて、トラフィックの増加に従い、システムリソースの拡張を行う際の流れをひと通り経験出来た。システムの可用性の向上、セキュリティ面で注意すべきことなどの話もきちんとあり、AWS未経験の人間でも数時間でそれなりのシステムが組めるようになった(気がする)。</p>
+
+<p>今回のハンズオンでAWSに以下の様な印象を持った。</p>
+
+<ul>
+<li>低コスト
+
+<ul>
+<li>時間やマシンスペックなどこちらの方が割安</li>
+</ul>
+</li>
+<li><a href="http://aws.amazon.com/jp/products/">豊富なサービス</a>が用意されている
+
+<ul>
+<li>一番気になったのは、<a href="http://aws.amazon.com/jp/elasticmapreduce/">Amazon Elastic MapReduce(EMR)</a>。Hadoopクラスタのセットアップ &amp; 計算量に応じた計算機の確保が容易に出来そう。今後のために使い方勉強しておいたほうが良さそうだ。</li>
+<li><a href="http://aws.amazon.com/jp/glacier/">Amazon Glacier</a>も気になった。データの取り出しに時間が必要だが1ヶ月あたり0.01USD/GBと、大容量のデータを安価にバックアップできる。</li>
+</ul>
+</li>
+<li>細かいルールや設定の管理・適用がしやすい</li>
+</ul>
+
+
+<p>Azureも悪くはないが、個人で利用する場合は少しコスト面が気になる。ネットワーク周りやディスクアクセス周りは、両者で実際にそれなりのサービスを動かして比較してみないとなんとも言えませんね。AWSで今後使う可能性がありそうなサービスは、EC2で簡易なWebサービスのホスト、Amazon Glacierで重要であまり変更が行われないデータのバックアップあたりかな？将来的にはHadoop関連のサービスあたりも使うかも。1年間の無料枠があるので、その間にもう少しいじってみる予定。</p>
+
+<h2>LT(ライトニングトーク)</h2>
+
+<p>一人あたり約5分程度の枠で合計約1時間程度の発表。</p>
+
+<h3>5min de Heroku (@dictav)</h3>
+
+<p><a href="https://gist.github.com/4640042">https://gist.github.com/4640042</a><br/>
+Webサービスが簡単に作れる。<br/>
+スケーリングも簡単にできるが、お金も必要。<br/>
+簡易な処理で済むサービス動かすならいい感じ。<br/>
+家で調べてみたらこのブログで使ってるOctopressもHerokuにデプロイ可能なようだ。</p>
+
+<h3>音をグリッチしてモテたい話 (@neko_gata_s)</h3>
+
+<p><a href="https://github.com/Shinpeim/WaveZutaZuta">https://github.com/Shinpeim/WaveZutaZuta</a><br/>
+いけてるほうのねこがたさん<br/>
+音を分割して繋いでリミックス<br/>
+くーる！<br/>
+えんじにあにはもててた</p>
+
+<h3>高齢者テスター事業構想について (@muromav)</h3>
+
+<p>NPOが実施している高齢者向けパソコン教室の受講者の高齢者のみささんにテスターをやってもらおうという試み。<br/>
+「自助」災害時に自力で情報収集 ＋「共助」高齢者の友達の輪<br/>
+開発者は若年層が多いので、高齢者向けのデザインはあまり考慮されてないものが多い。高齢者にも優しいプロダクトを。<br/>
+多少なりとも報酬を。高齢者のPC学習のモチベーション向上に。</p>
+
+<h3>Raspberry PiでLチカ(aokcub)</h3>
+
+<p>Raspberry Piネタ1人目。<br/>
+<a href="https://github.com/aokcub/PiGPIO">https://github.com/aokcub/PiGPIO</a><br/>
+Lチカ。LEDチカチカ。マイコンのHello, World!<br/>
+Perlで制御。PWM制御も実装。<br/>
+もてそう。</p>
+
+<h3>Raspberry Piについてのなにか (@yutacar)</h3>
+
+<p>Raspberry Piネタ2人目。<br/>
+USB温度センサーで部屋の温度取得。<br/>
+Matplotlibでグラフ化<br/>
+将来はエアコンの管理も？</p>
+
+<h3>Raspberry PiとキャラクタLCDで遊んでみた。 (@salinger001101)</h3>
+
+<p>私が発表しました。このBlogに書いたRaspberry Piネタ(概要・キャラクタLCD・人工無能)を話しました。<br/>
+<a href="/data/nds30/20130127.pdf">発表スライドのPDF</a><br/>
+<a href="https://gist.github.com/4640042">LCD制御用のプログラム</a><br/>
+<a href="https://github.com/Salinger/MunouChan-onRaspberryPi">人工無能: MunouChan</a></p>
+
+<h3>High Performance Web Server (@wokamoto)</h3>
+
+<p>Webサービスの高速化についてのお話。</p>
+
+<ol>
+<li>HipHop VM for PHP
+
+<ul>
+<li>PHPをC++に自動変換して高速化。VMで動的に。</li>
+</ul>
+</li>
+<li>mod_pagespeed
+
+<ul>
+<li>GoogleのWebサイト高速化モジュール。Apacheサーバに。余計なコード(コメントなど)を自動的に除去。ngx_pagespeedもあるのでnginxでも問題なし。</li>
+</ul>
+</li>
+<li>SPDY
+
+<ul>
+<li>通信プロトコル。接続の高速化。ブラウザが対応してないとダメ。最新版のChrome、Firefox、Operaはデフォルトで対応済み。つまりIEはダメ。</li>
+<li>Multiplexed streams、Request prioritization、HTTP header compression、Server push、Server hintなど。</li>
+</ul>
+</li>
+</ol>
+
+
+<h3>AWSとTitaniumの新しい関係 (@NPoi)</h3>
+
+<p>Titanium Mobile: JavaScriptでiOS・Androidのアプリが書ける。<br/>
+Appcelerator Cloud Services(ACS) -> AWS上で動いている<br/>
+BaaS Backend as a Service<br/>
+あらかじめ用意された機能群から必要な機能を選択できる。<br/>
+サーバーサイド、バックエンド側の知識が少なくてもどうにかなるように。<br/>
+非常に高い堅牢性。</p>
+
+<h2>まとめ</h2>
+
+<p>短時間でAWSでのWebサービス構築方法を学べたので非常に有意義だった。LTも普段触れない技術に触れることの出来る良い機会でした。そろそろLTで言語処理関連の話や機械学習の話もしたいですね。</p>
+]]></content>
+  </entry>
+  
+</feed>
