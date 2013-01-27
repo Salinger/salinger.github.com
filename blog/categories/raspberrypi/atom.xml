@@ -4,7 +4,7 @@
   <title><![CDATA[Category: RaspberryPi | さりんじゃーのプログラミング日記]]></title>
   <link href="http://Salinger.github.com/blog/categories/raspberrypi/atom.xml" rel="self"/>
   <link href="http://Salinger.github.com/"/>
-  <updated>2013-01-27T23:02:02+09:00</updated>
+  <updated>2013-01-27T23:17:25+09:00</updated>
   <id>http://Salinger.github.com/</id>
   <author>
     <name><![CDATA[Salinger]]></name>
@@ -14,7 +14,7 @@
 
   
   <entry>
-    <title type="html"><![CDATA[Raspberry Piに人工無能搭載してみた]]></title>
+    <title type="html"><![CDATA[Raspberry Piに人工無脳搭載してみた]]></title>
     <link href="http://Salinger.github.com/blog/2013/01/27/1/"/>
     <updated>2013-01-27T00:09:00+09:00</updated>
     <id>http://Salinger.github.com/blog/2013/01/27/1</id>
@@ -25,7 +25,7 @@
 <!--more-->
 
 
-<h2>人工無能とは</h2>
+<h2>人工無脳とは</h2>
 
 <p>考えてるように見えて考えてない。ただ確率に従い文章を生成するプログラム。それでも人間から見ると、意味のある文章に見える文章が生成される。</p>
 
@@ -118,7 +118,7 @@
 <li>要素の単位
 
 <ul>
-<li>文字単位でマルコフ連鎖を行う場合もあるが、単語単位で生成したほうが読みやすい文章になる。N-gramのNが大きくなれば、長文になりやすく、同じパターンのものが生成されやすい。解決するためにはデータ量を増やす必要がある。個人的にいい意味で人工無能っぽさが出るは単語bi-gramかtri-gramあたりだと思う。</li>
+<li>文字単位でマルコフ連鎖を行う場合もあるが、単語単位で生成したほうが読みやすい文章になる。N-gramのNが大きくなれば、長文になりやすく、同じパターンのものが生成されやすい。解決するためにはデータ量を増やす必要がある。個人的にいい意味で人工無脳っぽさが出るは単語bi-gramかtri-gramあたりだと思う。</li>
 </ul>
 </li>
 <li>開始・終了の扱い
@@ -148,7 +148,7 @@
 
 <h2>まとめ</h2>
 
-<p>シンプルな人工無能を作るのはさほど難しくないが、人間らしい応答をさせようとすると難易度が跳ね上がる。そもそも「人間らしい」という定義すらよくわからない。</p>
+<p>シンプルな人工無脳を作るのはさほど難しくないが、人間らしい応答をさせようとすると難易度が跳ね上がる。そもそも「人間らしい」という定義すらよくわからない。</p>
 
 <p>これはマルコフ連鎖を文章に適用した例だけど、状態の遷移を確率的に表現できるものに適用できるので、音楽や絵の自動生成など、他分野にもいろいろ適用できるはず。</p>
 ]]></content>
