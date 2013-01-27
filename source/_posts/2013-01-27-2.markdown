@@ -1,0 +1,93 @@
+---
+layout: post
+title: "NDS30:JAWS-UG-NGキックオフ に参加してきました"
+date: 2013-01-27 22:55
+comments: true
+categories: Study NDS AWS
+---
+2013年1月26日に行われた[長岡開発者勉強会(NDS)](http://nagaoka.techtalk.jp/no30)に参加してきました。今回は第30回でメインテーマはAmazon Web Service(AWS)のハンズオン。前回はWindows Azureのハンズオンだったので、2回連続で講師のもと、クラウド関連のサービスに触れる貴重な機会となりました。
+
+<!-- more -->
+
+##JAWS-UG-NG発足の儀
+JAWS-UG は AWS User Group - Japan 最後のNGは 新潟 or 長岡。31番目の支部らしい。
+
+##AWSハンズオン
+VPC(Virtual Private Cloud)の作成から始まって、EC2インスタンスを作成してアプリケーションサーバの構築、DBインスタンスを作成してEC2インスタンス内で動かしてたデータベースを移行、ロードバランサの追加という流れで進んでいった。
+
+小規模なWebサービスを立ち上げて、トラフィックの増加に従い、システムリソースの拡張を行う際の流れをひと通り経験出来た。システムの可用性の向上、セキュリティ面で注意すべきことなどの話もきちんとあり、AWS未経験の人間でも数時間でそれなりのシステムが組めるようになった(気がする)。
+
+今回のハンズオンでAWSに以下の様な印象を持った。
+
+* 低コスト
+    * 時間やマシンスペックなどこちらの方が割安
+* [豊富なサービス](http://aws.amazon.com/jp/products/)が用意されている
+    * 一番気になったのは、[Amazon Elastic MapReduce(EMR)](http://aws.amazon.com/jp/elasticmapreduce/)。Hadoopクラスタのセットアップ & 計算量に応じた計算機の確保が容易に出来そう。今後のために使い方勉強しておいたほうが良さそうだ。
+    * [Amazon Glacier](http://aws.amazon.com/jp/glacier/)も気になった。データの取り出しに時間が必要だが1ヶ月あたり0.01USD/GBと、大容量のデータを安価にバックアップできる。
+* 細かいルールや設定の管理・適用がしやすい
+
+Azureも悪くはないが、個人で利用する場合は少しコスト面が気になる。ネットワーク周りやディスクアクセス周りは、両者で実際にそれなりのサービスを動かして比較してみないとなんとも言えませんね。AWSで今後使う可能性がありそうなサービスは、EC2で簡易なWebサービスのホスト、Amazon Glacierで重要であまり変更が行われないデータのバックアップあたりかな？将来的にはHadoop関連のサービスあたりも使うかも。1年間の無料枠があるので、その間にもう少しいじってみる予定。
+
+##LT(ライトニングトーク)
+一人あたり約5分程度の枠で合計約1時間程度の発表。
+
+###5min de Heroku (@dictav)
+[https://gist.github.com/4640042](https://gist.github.com/4640042)  
+Webサービスが簡単に作れる。  
+スケーリングも簡単にできるが、お金も必要。  
+簡易な処理で済むサービス動かすならいい感じ。  
+家で調べてみたらこのブログで使ってるOctopressもHerokuにデプロイ可能なようだ。
+
+###音をグリッチしてモテたい話 (@neko_gata_s)
+[https://github.com/Shinpeim/WaveZutaZuta](https://github.com/Shinpeim/WaveZutaZuta)  
+いけてるほうのねこがたさん  
+音を分割して繋いでリミックス  
+くーる！  
+えんじにあにはもててた  
+
+###高齢者テスター事業構想について (@muromav)
+NPOが実施している高齢者向けパソコン教室の受講者の高齢者のみささんにテスターをやってもらおうという試み。  
+「自助」災害時に自力で情報収集 ＋「共助」高齢者の友達の輪  
+開発者は若年層が多いので、高齢者向けのデザインはあまり考慮されてないものが多い。高齢者にも優しいプロダクトを。  
+多少なりとも報酬を。高齢者のPC学習のモチベーション向上に。
+
+###Raspberry PiでLチカ(aokcub)
+Raspberry Piネタ1人目。  
+[https://github.com/aokcub/PiGPIO](https://github.com/aokcub/PiGPIO)  
+Lチカ。LEDチカチカ。マイコンのHello, World!  
+Perlで制御。PWM制御も実装。  
+もてそう。
+
+###Raspberry Piについてのなにか (@yutacar)
+Raspberry Piネタ2人目。  
+USB温度センサーで部屋の温度取得。  
+Matplotlibでグラフ化  
+将来はエアコンの管理も？  
+
+###Raspberry PiとキャラクタLCDで遊んでみた。 (@salinger001101)
+私が発表しました。このBlogに書いたRaspberry Piネタ(概要・キャラクタLCD・人工無能)を話しました。  
+[発表スライドのPDF](/data/nds30/20130127.pdf)  
+[LCD制御用のプログラム](https://gist.github.com/4640042)  
+[人工無能: MunouChan](https://github.com/Salinger/MunouChan-onRaspberryPi)
+
+###High Performance Web Server (@wokamoto)
+Webサービスの高速化についてのお話。
+
+1. HipHop VM for PHP
+    * PHPをC++に自動変換して高速化。VMで動的に。
+2. mod_pagespeed
+    * GoogleのWebサイト高速化モジュール。Apacheサーバに。余計なコード(コメントなど)を自動的に除去。ngx_pagespeedもあるのでnginxでも問題なし。
+3. SPDY
+    * 通信プロトコル。接続の高速化。ブラウザが対応してないとダメ。最新版のChrome、Firefox、Operaはデフォルトで対応済み。つまりIEはダメ。
+    * Multiplexed streams、Request prioritization、HTTP header compression、Server push、Server hintなど。
+
+###AWSとTitaniumの新しい関係 (@NPoi)
+Titanium Mobile: JavaScriptでiOS・Androidのアプリが書ける。  
+Appcelerator Cloud Services(ACS) -> AWS上で動いている  
+BaaS Backend as a Service  
+あらかじめ用意された機能群から必要な機能を選択できる。  
+サーバーサイド、バックエンド側の知識が少なくてもどうにかなるように。  
+非常に高い堅牢性。  
+
+##まとめ
+短時間でAWSでのWebサービス構築方法を学べたので非常に有意義だった。LTも普段触れない技術に触れることの出来る良い機会でした。そろそろLTで言語処理関連の話や機械学習の話もしたいですね。
