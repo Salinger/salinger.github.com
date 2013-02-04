@@ -1,0 +1,67 @@
+---
+layout: post
+title: "MacでTeX環境の構築"
+date: 2013-02-04 14:23
+comments: true
+categories: Mac TeX
+---
+TeXで文章を書く必要があったので、その環境構築を行う際のメモ。基本的にコンソール上のEmacsで作業するための環境を構築します。具体的にはMacTexとYaTeXをインストールして、プレビューにはOSXデフォルトとPreview.appを使用します。OSはMountain Lionです。
+
+<!-- more -->
+
+##MacTeXのインストール
+[MacTeX](http://www.tug.org/mactex)から、MacTeX.pkgをダウンロード。ダウンロードした.pkgファイルをダブルクリックしてインストール。
+
+動作確認。以下のサンプルをhogehoge.texの名前で保存。
+
+    \documentclass{jarticle}
+    \begin{document}
+    こんにちは、世界。
+    こんにちは、\TeX。
+    
+    こんにちは、\LaTeX。
+    \end{document}
+
+コンソールから、
+
+    $ platex hogehoge.tex
+    $ dvipdfmx hogehoge.dvi
+
+これで、hogehoge.pdfが生成される。日本語も問題ない。
+
+##YaTeX(やてふ)のインストール
+普段はコンソール上のEmacsで作業しているので、そこからTeXを便利に使うためのツールをインストール。
+
+[YaTeX](http://www.yatex.org)から、最新版のtar.gzをダウンロード。
+
+    $ cd ~/Downloads
+    $ curl -O http://www.yatex.org/yatex1.76.tar.gz
+    $ tar zxvf yatex1.76.tar.gz
+    $ mkdir ~/.emacs.d/lisp/yatex
+    $ mv yatex1.76 ~/.emacs.d/lisp/yatex
+
+次に、.emacsを編集。以下のコードを最後に追記。
+
+    ;; for YaTex
+    ;; Add library path
+    (add-to-list 'load-path "~/.emacs.d/lisp/yatex")
+    ;; YaTeX mode
+    (setq auto-mode-alist
+        (cons (cons "\\.tex$" 'yatex-mode) auto-mode-alist))
+    (autoload 'yatex-mode "yatex" "Yet Another LaTeX mode" t)
+    (setq tex-command "platex")
+    (setq dviprint-command-format "dvipdfmx %s")
+    ;; use Preview.app
+    (setq dvi2-command "open -a Preview")
+
+動作確認。
+    $ emacs hogehoge.tex
+
+`C-c t j`でコンパイル。`C-c t l`でdviをpdfに。`C-c t p`でpdfファイルをプレビュー。
+
+動いた。
+
+##TeX、YaTeXの使い方など
+この辺りのページ参照。  
+[LaTeXコマンドシート一覧](http://www002.upp.so-net.ne.jp/latex/)  
+[野鳥(YaTeX)[物理のかぎしっぽ]](http://hooktail.sub.jp/tex/yatex/)  
