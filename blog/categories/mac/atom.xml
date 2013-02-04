@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Mac | さりんじゃーのプログラミング日記]]></title>
   <link href="http://Salinger.github.com/blog/categories/mac/atom.xml" rel="self"/>
   <link href="http://Salinger.github.com/"/>
-  <updated>2013-01-27T23:17:25+09:00</updated>
+  <updated>2013-02-04T17:09:33+09:00</updated>
   <id>http://Salinger.github.com/</id>
   <author>
     <name><![CDATA[Salinger]]></name>
@@ -12,6 +12,84 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[MacでTeX環境の構築]]></title>
+    <link href="http://Salinger.github.com/blog/2013/02/04/1/"/>
+    <updated>2013-02-04T14:23:00+09:00</updated>
+    <id>http://Salinger.github.com/blog/2013/02/04/1</id>
+    <content type="html"><![CDATA[<p>TeXで文章を書く必要があったので、その環境構築を行う際のメモ。基本的にコンソール上のEmacsで作業するための環境を構築します。具体的にはMacTexとYaTeXをインストールして、プレビューにはOSXデフォルトとPreview.appを使用します。OSはMountain Lionです。</p>
+
+<!-- more -->
+
+
+<h2>MacTeXのインストール</h2>
+
+<p><a href="http://www.tug.org/mactex">MacTeX</a>から、MacTeX.pkgをダウンロード。ダウンロードした.pkgファイルをダブルクリックしてインストール。</p>
+
+<p>動作確認。以下のサンプルをhogehoge.texの名前で保存。</p>
+
+<pre><code>\documentclass{jarticle}
+\begin{document}
+こんにちは、世界。
+こんにちは、\TeX。
+
+こんにちは、\LaTeX。
+\end{document}
+</code></pre>
+
+<p>コンソールから、</p>
+
+<pre><code>$ platex hogehoge.tex
+$ dvipdfmx hogehoge.dvi
+</code></pre>
+
+<p>これで、hogehoge.pdfが生成される。日本語も問題ない。</p>
+
+<h2>YaTeX(やてふ)のインストール</h2>
+
+<p>普段はコンソール上のEmacsで作業しているので、そこからTeXを便利に使うためのツールをインストール。</p>
+
+<p><a href="http://www.yatex.org">YaTeX</a>から、最新版のtar.gzをダウンロード。</p>
+
+<pre><code>$ cd ~/Downloads
+$ curl -O http://www.yatex.org/yatex1.76.tar.gz
+$ tar zxvf yatex1.76.tar.gz
+$ mkdir ~/.emacs.d/lisp/yatex
+$ mv yatex1.76 ~/.emacs.d/lisp/yatex
+</code></pre>
+
+<p>次に、.emacsを編集。以下のコードを最後に追記。</p>
+
+<pre><code>;; for YaTex
+;; Add library path
+(add-to-list 'load-path "~/.emacs.d/lisp/yatex")
+;; YaTeX mode
+(setq auto-mode-alist
+    (cons (cons "\\.tex$" 'yatex-mode) auto-mode-alist))
+(autoload 'yatex-mode "yatex" "Yet Another LaTeX mode" t)
+(setq tex-command "platex")
+(setq dviprint-command-format "dvipdfmx %s")
+;; use Preview.app
+(setq dvi2-command "open -a Preview")
+</code></pre>
+
+<p>動作確認。</p>
+
+<pre><code>$ emacs hogehoge.tex
+</code></pre>
+
+<p><code>C-c t j</code>でコンパイル。<code>C-c t l</code>でdviをpdfに。<code>C-c t p</code>でpdfファイルをプレビュー。</p>
+
+<p>動いた。</p>
+
+<h2>TeX、YaTeXの使い方など</h2>
+
+<p>この辺りのページ参照。<br/>
+<a href="http://www002.upp.so-net.ne.jp/latex/">LaTeXコマンドシート一覧</a><br/>
+<a href="http://hooktail.sub.jp/tex/yatex/">野鳥(YaTeX)[物理のかぎしっぽ]</a></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Homebrew + virtualenv 環境でlibsvmのインストール]]></title>
