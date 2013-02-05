@@ -53,7 +53,7 @@ TeXで文章を書く必要があったので、その環境構築を行う際�
     (setq dviprint-command-format "dvipdfmx %s")
     ;; use Preview.app
     (setq dvi2-command "open -a Preview")
-
+    (setq bibtex-command "pbibtex")
 動作確認。
     $ emacs hogehoge.tex
 
