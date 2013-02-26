@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Mac | さりんじゃーのプログラミング日記]]></title>
   <link href="http://Salinger.github.com/blog/categories/mac/atom.xml" rel="self"/>
   <link href="http://Salinger.github.com/"/>
-  <updated>2013-02-04T17:09:33+09:00</updated>
+  <updated>2013-02-26T23:40:17+09:00</updated>
   <id>http://Salinger.github.com/</id>
   <author>
     <name><![CDATA[Salinger]]></name>
@@ -12,6 +12,57 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Mac + Homebrew で R 環境の構築]]></title>
+    <link href="http://Salinger.github.com/blog/2013/02/26/1/"/>
+    <updated>2013-02-26T22:43:00+09:00</updated>
+    <id>http://Salinger.github.com/blog/2013/02/26/1</id>
+    <content type="html"><![CDATA[<p>「R」は統計データの処理や解析を行うための言語です。面倒くさい統計処理と視覚化が関数の組み合わせだけであっという間に完了する便利な言語。今回はその環境構築の際のメモ。</p>
+
+<!-- more -->
+
+
+<p>最初にRをインストールするために必要なパッケージのgfortranをHomebrewでインストール。</p>
+
+<pre><code>$ brew install gfortran
+</code></pre>
+
+<p>あれ？</p>
+
+<pre><code>Brews that require a Fortran compiler should not use:
+  depends_on 'gfortran'
+</code></pre>
+
+<p>とか言われた。アップデートしてみる。</p>
+
+<pre><code>$ brew update
+$ brew install gfortran
+$ brew install r
+</code></pre>
+
+<p>起動のテストとデモ。</p>
+
+<pre><code>$ R
+Rは、自由なソフトウェアであり、「完全に無保証」です。
+一定の条件に従えば、自由にこれを再配布することができます。
+配布条件の詳細に関しては、'license()'あるいは'licence()'と入力してください。
+
+Rは多くの貢献者による共同プロジェクトです。
+詳しくは'contributors()'と入力してください。
+また、RやRのパッケージを出版物で引用する際の形式については
+'citation()'と入力してください。
+
+'demo()'と入力すればデモをみることができます。
+'help()'とすればオンラインヘルプが出ます。
+'help.start()'でHTMLブラウザによるヘルプがみられます。
+'q()'と入力すればRを終了します。
+&gt; demo(nlm)
+</code></pre>
+
+<p>動いたよ！</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[MacでTeX環境の構築]]></title>
@@ -72,6 +123,7 @@ $ mv yatex1.76 ~/.emacs.d/lisp/yatex
 (setq dviprint-command-format "dvipdfmx %s")
 ;; use Preview.app
 (setq dvi2-command "open -a Preview")
+(setq bibtex-command "pbibtex")
 </code></pre>
 
 <p>動作確認。</p>

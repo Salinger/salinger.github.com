@@ -4,7 +4,7 @@
   <title><![CDATA[Category: TeX | さりんじゃーのプログラミング日記]]></title>
   <link href="http://Salinger.github.com/blog/categories/tex/atom.xml" rel="self"/>
   <link href="http://Salinger.github.com/"/>
-  <updated>2013-02-04T17:09:33+09:00</updated>
+  <updated>2013-02-26T23:40:17+09:00</updated>
   <id>http://Salinger.github.com/</id>
   <author>
     <name><![CDATA[Salinger]]></name>
@@ -72,6 +72,7 @@ $ mv yatex1.76 ~/.emacs.d/lisp/yatex
 (setq dviprint-command-format "dvipdfmx %s")
 ;; use Preview.app
 (setq dvi2-command "open -a Preview")
+(setq bibtex-command "pbibtex")
 </code></pre>
 
 <p>動作確認。</p>
