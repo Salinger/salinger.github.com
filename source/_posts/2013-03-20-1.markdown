@@ -1,0 +1,10 @@
+---
+layout: post
+title: "RのProxy設定（Mac）"
+date: 2013-03-20 03:25
+comments: true
+categories: R, Mac
+---
+Rでネットに繋ごうとすると繋がらない。
+Proxy環境下では、以下のコマンドをRのコンソール上で入力すればOKだった。
+    Sys.setenv("http_proxy"="http://xxx.com:yyyy") # xxx: host, yyyy: port
