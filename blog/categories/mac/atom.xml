@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Mac | さりんじゃーのプログラミング日記]]></title>
   <link href="http://Salinger.github.com/blog/categories/mac/atom.xml" rel="self"/>
   <link href="http://Salinger.github.com/"/>
-  <updated>2013-03-11T14:57:52+09:00</updated>
+  <updated>2013-03-20T04:28:02+09:00</updated>
   <id>http://Salinger.github.com/</id>
   <author>
     <name><![CDATA[Salinger]]></name>
@@ -12,6 +12,19 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[RのProxy設定（Mac）]]></title>
+    <link href="http://Salinger.github.com/blog/2013/03/20/1/"/>
+    <updated>2013-03-20T03:25:00+09:00</updated>
+    <id>http://Salinger.github.com/blog/2013/03/20/1</id>
+    <content type="html"><![CDATA[<p>Rでネットに繋ごうとすると繋がらない。
+Proxy環境下では、以下のコマンドをRのコンソール上で入力すればOKだった。</p>
+
+<pre><code>Sys.setenv("http_proxy"="http://xxx.com:yyyy") # xxx: host, yyyy: port
+</code></pre>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Mac + Homebrew で R 環境の構築]]></title>
@@ -361,86 +374,6 @@ while node:
 
 <p>の1行で長いコードを見やすい形式で貼れるのってかなり便利だ。
 Github + Octopress 快適すぎる。</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[homebrew環境の構築]]></title>
-    <link href="http://Salinger.github.com/blog/2013/01/16/1/"/>
-    <updated>2013-01-16T02:41:00+09:00</updated>
-    <id>http://Salinger.github.com/blog/2013/01/16/1</id>
-    <content type="html"><![CDATA[<p>Macbook Airの環境を再構築したので、その際のメモ。今まではパッケージ管理にMacPortsを使っていたが、今回からHomebrewに移行した。元からMountain LionにインストールされてるPythonやRubyと、パッケージ管理ソフトで導入したそれらの最新版の管理がMacPortsだと少々面倒くさかったので、もう少し楽に済みそうなものを使ってみようというのが理由だ。</p>
-
-<!-- more -->
-
-
-<h2>Homebrewのインストール</h2>
-
-<p>以下のコマンドを実行。</p>
-
-<pre><code>$ ruby -e "$(curl -fsSkL raw.github.com/mxcl/homebrew/go)"
-$ brew doctor
-</code></pre>
-
-<p>gitのインストール。</p>
-
-<pre><code>$ brew install git
-</code></pre>
-
-<p>Homebrewのアップデート。</p>
-
-<pre><code>$ brew update
-</code></pre>
-
-<p><code>/usr/local/sbin</code>の作成。</p>
-
-<pre><code>$ mkdir /usr/local/sbin
-</code></pre>
-
-<p>Pathを設定するため<code>/etc/paths</code>の編集。</p>
-
-<pre><code>/usr/bin
-/bin
-/usr/sbin
-/sbin
-/usr/local/bin
-</code></pre>
-
-<p>となっているのを、</p>
-
-<pre><code>/usr/local/bin
-/usr/bin
-/bin
-/usr/sbin
-/usr/local/sbin
-/sbin
-</code></pre>
-
-<p>と変更。これでHomebrewでインストールした方が優先される。
-ターミナルを再起動してとりあえずの設定は終わり。</p>
-
-<h2>Ruby1.9.3のインストール</h2>
-
-<p>とりあえずこのブログを編集するためのRuby環境構築。</p>
-
-<pre><code>$ brew install ruby
-$ gem install bundler
-</code></pre>
-
-<p>このBlogのデータを<code>git clone</code>で作業用ディレクトリに持ってきて、そのディレクトに移動。そこで、</p>
-
-<pre><code>$ bundle install
-</code></pre>
-
-<p>を実行しようとしたら、bundleコマンドが見当たらないぞ？次のコマンドを実行すれば良かった。</p>
-
-<pre><code>$ brew unlink ruby
-$ brew link ruby
-</code></pre>
-
-<h2>おわりに</h2>
-
-<p>こんな感じでBlogを更新するための環境の再構築はとりあえず終了。MacPortsの時に面倒だったRubyとGemのバージョン指定周りも特に気にする必要はなかった。早くPythonの環境も整えないと。</p>
 ]]></content>
   </entry>
   

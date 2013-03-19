@@ -4,7 +4,7 @@
   <title><![CDATA[さりんじゃーのプログラミング日記]]></title>
   <link href="http://Salinger.github.com/atom.xml" rel="self"/>
   <link href="http://Salinger.github.com/"/>
-  <updated>2013-03-11T14:57:52+09:00</updated>
+  <updated>2013-03-20T04:28:02+09:00</updated>
   <id>http://Salinger.github.com/</id>
   <author>
     <name><![CDATA[Salinger]]></name>
@@ -12,6 +12,19 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[RのProxy設定（Mac）]]></title>
+    <link href="http://Salinger.github.com/blog/2013/03/20/1/"/>
+    <updated>2013-03-20T03:25:00+09:00</updated>
+    <id>http://Salinger.github.com/blog/2013/03/20/1</id>
+    <content type="html"><![CDATA[<p>Rでネットに繋ごうとすると繋がらない。
+Proxy環境下では、以下のコマンドをRのコンソール上で入力すればOKだった。</p>
+
+<pre><code>Sys.setenv("http_proxy"="http://xxx.com:yyyy") # xxx: host, yyyy: port
+</code></pre>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Mac + Homebrew で R 環境の構築]]></title>

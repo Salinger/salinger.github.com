@@ -9,7 +9,8 @@
   <meta name="author" content="Salinger">
 
   
-  <meta name="description" content="「R」は統計データの処理や解析を行うための言語です。面倒くさい統計処理と視覚化が関数の組み合わせだけであっという間に完了する便利な言語。今回はその環境構築の際のメモ。 ">
+  <meta name="description" content="Rでネットに繋ごうとすると繋がらない。
+Proxy環境下では、以下のコマンドをRのコンソール上で入力すればOKだった。 Sys.setenv("http_proxy"="http://xxx.com:yyyy") # xxx: host, yyyy: port ">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -76,6 +77,48 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/03/20/1/">RのProxy設定（Mac）</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-03-20T03:25:00+09:00" pubdate data-updated="true">Mar 20<span>th</span>, 2013</time>
+        
+         | <a href="/blog/2013/03/20/1/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Rでネットに繋ごうとすると繋がらない。
+Proxy環境下では、以下のコマンドをRのコンソール上で入力すればOKだった。</p>
+
+<pre><code>Sys.setenv("http_proxy"="http://xxx.com:yyyy") # xxx: host, yyyy: port
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -472,49 +515,6 @@ Homebrewもvirutalenvも最近使い始めたばかりなので、自分用メ�
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/01/16/1/">Homebrew環境の構築</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-01-16T02:41:00+09:00" pubdate data-updated="true">Jan 16<span>th</span>, 2013</time>
-        
-         | <a href="/blog/2013/01/16/1/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Macbook Airの環境を再構築したので、その際のメモ。今まではパッケージ管理にMacPortsを使っていたが、今回からHomebrewに移行した。元からMountain LionにインストールされてるPythonやRubyと、パッケージ管理ソフトで導入したそれらの最新版の管理がMacPortsだと少々面倒くさかったので、もう少し楽に済みそうなものを使ってみようというのが理由だ。</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2013/01/16/1/">続きを読む &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/2/">&larr; Older</a>
@@ -537,6 +537,10 @@ Homebrewもvirutalenvも最近使い始めたばかりなので、自分用メ�
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2013/03/20/1/">RのProxy設定（Mac）</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2013/02/26/1/">Mac + Homebrew で R 環境の構築</a>
       </li>
     
@@ -550,10 +554,6 @@ Homebrewもvirutalenvも最近使い始めたばかりなので、自分用メ�
     
       <li class="post">
         <a href="/blog/2013/01/27/1/">Raspberry Piに人工無脳搭載してみた</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/01/25/1/">Raspberry PiとキャラクタLCDで遊んでみた</a>
       </li>
     
   </ul>
