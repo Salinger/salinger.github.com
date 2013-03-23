@@ -4,7 +4,7 @@
   <title><![CDATA[さりんじゃーのプログラミング日記]]></title>
   <link href="http://Salinger.github.com/atom.xml" rel="self"/>
   <link href="http://Salinger.github.com/"/>
-  <updated>2013-03-20T04:28:02+09:00</updated>
+  <updated>2013-03-23T22:59:34+09:00</updated>
   <id>http://Salinger.github.com/</id>
   <author>
     <name><![CDATA[Salinger]]></name>
@@ -12,6 +12,163 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Niigata.LLに参加して来ました]]></title>
+    <link href="http://Salinger.github.com/blog/2013/03/23/1/"/>
+    <updated>2013-03-23T20:00:00+09:00</updated>
+    <id>http://Salinger.github.com/blog/2013/03/23/1</id>
+    <content type="html"><![CDATA[<p>本日行われた<a href="http://atnd.org/events/36394">Niigata.LL</a>に参加してきました。LL(Lightweight Language)と言っても、どの言語がLLなのかは各自の判断に任されたので、様々な言語・プロダクトについての話がありました。</p>
+
+<p>以下今日の発表の簡単なまとめです。</p>
+
+<!--more-->
+
+
+<h2>発表まとめ</h2>
+
+<p>@~ はTwitterのid</p>
+
+<h3>SL4Aでとび森を捗らせたかった @nekokusa</h3>
+
+<p><a href="http://docs.solab.jp/sl4a/">SL4A(Scripting Layer for Android)</a>を利用すると、Android上でPython Perl RubyなどのScript言語が動く。これとQRコードスキャナを組み合わせて、「とびだせ どうぶつの森」のマイデザインのQRコードを生成する。</p>
+
+<p>…はずが失敗。マイデザインのQRコードの中身は独自形式のバイナリデータだったため。Unicode文字列で表示できない文字が&lt;?>に。この部分を改善すればどうにかなるのか？</p>
+
+<h3>C#はLLですが何か？ @masaru_b_cl</h3>
+
+<p>祝電スライド1つ目。内容は<a href="http://www.slideshare.net/masaru_b_cl/lightweight-c">こちら</a> 。</p>
+
+<p><a href="http://ltsv.org/">LTSV（Labeled Tab-separated Values）</a> とは <code>hoge:foo\tbar:baz\n</code>のような形式のデータストラクチャ。</p>
+
+<p><a href="https://github.com/masaru-b-cl/DynamicLTSV">DynamicLTSV</a>：LTSVライブラリを作ったよという話。これからLTSV流行る？</p>
+
+<h3>ガベージコレクションについて @mihyaeru21</h3>
+
+<p><a href="http://ja.wikipedia.org/wiki/%e3%82%ac%e3%83%99%e3%83%bc%e3%82%b8%e3%82%b3%e3%83%ac%e3%82%af%e3%82%bf">ガベージコレクション</a>の基本的なアルゴリズムのお話。基本的なマーク・アンド・スイープ、参照カウント、コピーGCに加え、３つを組み合わせたもの、世代別GCなどの発展的なものの話もあり。最強のGCは無いっぽい。</p>
+
+<h3>Groovyの紹介 @toby55kij</h3>
+
+<p><a href="http://groovy.codehaus.org/">Groovy</a>はJavaVM上で動作する動的なプログラミング言語。Javaのコードがほぼそのまま動くのでJavaとの相性が良い。クロージャー、演算子オーバーロード、Groovy JDK （GDK）、便利なライブラリ(Groovy API)など、Javaを強化する機能が盛り沢山。</p>
+
+<p>開発を効率化するために、Webアプリフレームワークの「Grails」、デスクトップアプリケーションフレームワークの「Griffon」、ビルドツール「Gradle」、常駐化で高速起動「GroobyServ」、その他「Gaelyk」、「Gpars」、「GroovyFX」などのフレームワークやライブラリ群などがある。
+　
+パフォーマンスはそのままだとそこまで良くないが、最近実装された静的な型チェックや静的コンパイル機能を使ってやると結構早い。Javaより少し遅い程度かも？</p>
+
+<p><a href="http://www.jggug.org/">日本Grails/Groovyユーザーグループ</a>に日本語情報あり。</p>
+
+<h3>Padrinoでオンラインブックマークサービスを作った @jewel_x12 (1回目)</h3>
+
+<p><a href="http://titra.herokuapp.com">鯛虎</a>という、Web記事タイトルをみんなでひたすら翻訳するサービスブックマークサービスをPadrinoでつくったとのこと。ちなみに、Title:鯛 Transration:虎。</p>
+
+<p>軽量WebアプリケーションDSL(Domain Specific Language)としてRubyにはSinatoraがある。多言語用の似たものとして、PerlにはMojoliciousやDancer、PythonにはFlaskやJuno、PHPにはSlimやSilexなどがある。</p>
+
+<p><a href="http://www.padrinorb.com">Padrino</a>はSinatoraベース（Sinatoraを拡張）のWebアプリケーション作成フレームワーク。Sinatoraにロガー、ヘルパー、ジェネレータ、Rails風MVCの導入、メール配信機能、管理画面、View用ヘルパー、多言語対応など諸々の機能が追加されている。Webアプリでおなじみのディレクトリ構成をいちいち手動で作る必要がなく、必要な機能のみ選択して拡張可。</p>
+
+<p>小さなサービスをサクッと作るには良いフレームワークっぽい。
+Knohとか出てきてるし、今後記事翻訳系サービスが面白くなるかも的な話もあった。</p>
+
+<h3>CGIを軽量WAFにリプレースして捗った話 @aokcub</h3>
+
+<p>Padrinoに引き続き、WAF（Web Application Framework）の<a href="http://mojolicio.us">Mojolicious</a>のお話。これはPerl用。公式の日本語ドキュメントが充実していて、テンプレート、開発用サーバ・開発用SSL証明書、json、Websoketなどはデフォルトで用意されている。足りないところはCPANでカバーする。例えばデータベースやセッション管理など。</p>
+
+<p>Perlで小粒なアプリケーションをつくるならMojolicious一択！</p>
+
+<h3>Cinnamon @hayajo</h3>
+
+<p><a href="https://github.com/kentaro/cinnamon">Cinnamon</a>はPerl製のデプロイツール。複数ホストに対して、アプリケーションをガッとデプロイ。他言語の似たようなツールはCapistrano (Ruby)、Fabric (Python)などがある。</p>
+
+<p>Cinnamonの実態は、SSHでホストに接続してコマンド実行。Role x Task で柔軟に対応できる。</p>
+
+<p>同時実行たタスク・イン・タスクなどはこれから実装される？シンプルだけどまだまだこれからのようです。この手のツールは基本的に学習コスト高。</p>
+
+<p>Fabricよさげなので、Pythonに抵抗ない人はそっち使おう！というオチ。</p>
+
+<h3>Excel VBAのユニットテスト @bei_kan</h3>
+
+<p>XLUnitはわかりづらい。VBAUnitは手間がかかる割には使いづらい。そこでVBAUnit(jp)。日本語の関数名が使える、レッド/グリーンバーがある、関数を追加するだけでテスト追加、対象とテストのファイル分離可、対象のソースをあまり汚さないなど非常に使いやすい。</p>
+
+<p>VBAであまり組みたくないというオチ。</p>
+
+<h3>Introduction to Scala @joe_noh</h3>
+
+<p>Scala入門編。オブジェクト指向 ＋ 関数型 ≠ 関数型。オブジェクト指向で作っていい。副作用があってもいい。JavaにRubyを足した感じ。すべてオブジェクト（型も）。トレイトを使ってMix-in。Javaのライブラリが使え、より簡潔に書ける。型推論もある。並列処理や再帰が得意。などといった特徴がある。</p>
+
+<p>欠点はコンパイルとJVM起動がややもっさり。また言語仕様が複雑。例えばListのインスタンスメソッド名が<code>++ ++: +: /: :+</code> etc&#8230;のように名が体を表しておらず意味不明。</p>
+
+<p>拡張ライブラリにscalazというものがあるが、こういうことやるからScalaは怖い的なことを言われるので、最初は使わなくてもおｋらしい。</p>
+
+<p>関数型言語は興味あるので、そのうち触ってみるつもり。</p>
+
+<h3>OctopressとGithub Pages @salinger001101</h3>
+
+<p>発表してきました。LLと相性のいいブログだよ！資料は<a href="http://Salinger.github.com/data/niigatall_2013_03/Octopress.pdf">こちら</a>。</p>
+
+<h3>mruby @dictav</h3>
+
+<p><a href="http://www.digitalfukuoka.jp/events/6">MONO Ruby</a>とはmrubyともの作りのコラボイベント。３Dプリンタの話など、すでにmrubyが組み込まれた製品の話。</p>
+
+<p><a href="https://github.com/mruby/mruby">mruby</a>は組み込み向けの軽量ruby。日本語で参加可能なオープンソースプロジェクトでまだまだ発展途上。</p>
+
+<p>RubyのGemはmrubyではmrbgemsとなっている。mrubyを拡張する仕組みでmrubyコンパイル時にlimmrubyに機能を組み込む。基本的な組み込み関数もこれで提供されるので極限まで最適化可能。</p>
+
+<p>プロジェクトの規模は大きいけどソースコードはまだ小さい。もしかしたら、Matzのコードレビューが受けられるかも？今ならmrubyの先駆者になれる。さあLet&#8217;s pull request！</p>
+
+<h3>JS TDD (and Test) with your language @isiduca</h3>
+
+<p>基本的にJSのテスト駆動開発(TDD)の話。クライアント（ブラウザ）を使うテスト：PhantomJS、単体（ユニット）テスト：QUnit、コマンドライン上からのテスト：QUnit-TAP &amp; prove、更新に合わせたテストの自動実行：pfswatchなどが紹介された。</p>
+
+<p>コマンドが成功するか失敗するかによってその結果に対応した音声が流れるモジュールを利用して、テスト結果の通知を音声で通知するという面白い試みについての話<a href="http://d.hatena.ne.jp/moznion/20130305/1362467136">App::WithSound</a>もありました。</p>
+
+<p>一度TDDはしっかり勉強しないと…</p>
+
+<h3>PowerShellの話 @kasacchiful</h3>
+
+<p>PowerShellはWindows用のShell。Win7は2.0、Win8は3.0。MS製品との親和性が高い。例えばSQLServerとかActiveDirectoryとか。基本Shellだが、VBScriptの代替にも使える。</p>
+
+<p>lsって入力できる！エイリアスが登録できる（lsもdirもエイリアス）。csvファイルの読み書きが簡単。スクリプトファイルに保存、実行できる。.NET Frameworkのクラスライブラリが使える。パイプが使える。.NET Frameworkのオブジェクトが渡せる。オブジェクト指向プログラミングができる。IDEが標準で付属。サーバー管理機能。テストツール、例外処理、文字コード周りの処理などもちゃんとある。</p>
+
+<p>もはやなんでもあり。</p>
+
+<h3>Perlなめんな @neko_gata_s</h3>
+
+<p>祝電スライド2つ目。内容は<a href="https://gist.github.com/Shinpeim/5220843">こちら</a>。</p>
+
+<p>最近のPerlの可読性・オブジェクト指向（Mouse）や例外（Try::Lite）のお話。There&#8217;s More Than One Way To Do It. 「やりかたはひとつではない」的な観点に基づくと別にPerlにこだわりすぎる必要もない。</p>
+
+<h3>いままで作ったもののお話 @su8erlemon</h3>
+
+<p><a href="http://su8erlemon.com">ここ</a>にAdobe Airとか<a href="http://www.openframeworks.cc">openFrameworks</a>を使って制作したもののサンプルあり。<a href="http://su8erlemon.com/meme6/">ミーム DE ディスカッション</a>とか。</p>
+
+<p>プロジェクトマッピングとかのお話も。<a href="http://www.youtube.com/watch?feature=player_embedded&amp;v=lP7vGK0ap-k">こんな(YouTube)</a>感じで、かなりレベル高かった。今回一番の衝撃。</p>
+
+<p>この手の話は、普段あまり聞く機会がなかったので面白かった。もっと芸術的なセンス欲しい…</p>
+
+<h3>JO_RI_botの紹介 @shogo82148</h3>
+
+<p>@JO_RI_bot のお話。いわゆる人工無能。圧縮新聞とかしゅうまい君の仲間。Twitterでリプライを送るだけで様々な機能が利用可能。</p>
+
+<p>ぬるぽ->ガッ、タイマー、翻訳（Bing翻訳を利用）、多言語対応、Amazonの商品検索、本の感想（じょりくん：@JO_RI が読んだ本（主にラノベ）ならだいたい返ってくる）、キーワード検索、ユーザー検索、イベントの詳細、QA機能、etc..</p>
+
+<p>詳細は<a href="https://github.com/shogo82148/JO_RI_bot/wiki">ここ</a>読めばおｋ。</p>
+
+<h3>Scalaのパターンマッチング @jewel_x12 (2回目)</h3>
+
+<p>Scalaのパターンマッチングのお話。簡単に言うと豪華なCase文的なイメージ。定数パターン、シーケンスパターン、型付きパターン、コンストラクタパターン、抽出子（インスタンスの構成要素を分解してマッチング）など。</p>
+
+<p>色々できて便利！Scalaは多機能故に学習コスト高…</p>
+
+<p>普段使わない言語の考え方って面白い。</p>
+
+<h2>感想など</h2>
+
+<p>今回は飛び入りの発表者が多く、分量・内容ともかなり増し増しな感じでした。LLは用途的にもWeb開発系のフレームワークの話が多いかなと思ってたけど、そんなことはなかった。</p>
+
+<p>普段はほとんどPythonを使っているけれど、こういう場で学んだ他言語・他ツールとの共通部分・差異をもっと意識すれば、もうちょっとマシなプログラムが書けるはず。精進あるのみ。</p>
+
+<p>それから、普段見落としそうな所にもアンテナを向けるためには、「こんなんあるけど、どうよ？」と言ってくれる人がいる、情報を受動的に手に入れられる環境に定期的に顔出すのって重要なのを再認識しました。</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[RのProxy設定（Mac）]]></title>
