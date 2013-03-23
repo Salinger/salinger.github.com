@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Niigata.LLに参加して来ました"
+title: "Niigata.LLに参加してきました"
 date: 2013-03-23 20:00
 comments: true
 categories: Study Niigata.LL
