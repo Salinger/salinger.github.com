@@ -5,11 +5,12 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Category: Study - さりんじゃーのプログラミング日記</title>
+  <title>金貨の真贋を見分けよう 〜 SVM と R〜 - さりんじゃーのプログラミング日記</title>
   <meta name="author" content="Salinger">
 
   
-  <meta name="description" content="Category: Study">
+  <meta name="description" content="CodeIQ の機械学習に関する問題にチャレンジしてみた。 https://codeiq.jp/ace/naoyat/q105
+http://next.rikunabi.com/tech/docs/ct_s03600.jsp?p=002315&amp;tcs=kanren トレーニング用のデータ &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +19,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://Salinger.github.comblog/categories/study/">
+  <link rel="canonical" href="http://Salinger.github.com/blog/2013/06/03/1/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -75,50 +76,109 @@
   <div id="main">
     <div id="content">
       <div>
-<article role="article">
+<article class="hentry" role="article">
   
   <header>
-    <h1 class="entry-title">Category: Study</h1>
+    
+      <h1 class="entry-title">金貨の真贋を見分けよう 〜 SVM と R〜</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-06-03T20:14:00+09:00" pubdate data-updated="true">Jun 3<span>rd</span>, 2013</time>
+        
+         | <a href="#disqus_thread">Comments</a>
+        
+      </p>
     
   </header>
-  
-  <div id="blog-archives" class="category">
 
 
+<div class="entry-content"><p>CodeIQ の機械学習に関する問題にチャレンジしてみた。</p>
 
-  
-  <h2>2013</h2>
+<p>https://codeiq.jp/ace/naoyat/q105<br/>
+http://next.rikunabi.com/tech/docs/ct_s03600.jsp?p=002315&amp;tcs=kanren</p>
 
-<article>
-  
-<h1><a href="/blog/2013/03/23/1/">Niigata.LLに参加してきました</a></h1>
-<time datetime="2013-03-23T20:00:00+09:00" pubdate><span class='month'>Mar</span> <span class='day'>23</span> <span class='year'>2013</span></time>
-
-<footer>
-  <span class="categories">posted in <a class='category' href='/blog/categories/niigata-ll/'>Niigata.LL</a>, <a class='category' href='/blog/categories/study/'>Study</a></span>
-</footer>
+<!--more-->
 
 
-</article>
+<p>トレーニング用のデータ: &#8220;CodeIQ_auth.txt&#8221;<br/>
+分類するデータ: &#8220;CodeIQ_mycoins.txt&#8221;<br/>
+を上記のURLからダウンロード。</p>
+
+<p>以下ソースコード。</p>
+
+<div><script src='https://gist.github.com/5697523.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
 
 
-
-<article>
-  
-<h1><a href="/blog/2013/01/27/2/">NDS30:JAWS-UG-NGキックオフ に参加してきました</a></h1>
-<time datetime="2013-01-27T22:55:00+09:00" pubdate><span class='month'>Jan</span> <span class='day'>27</span> <span class='year'>2013</span></time>
-
-<footer>
-  <span class="categories">posted in <a class='category' href='/blog/categories/aws/'>AWS</a>, <a class='category' href='/blog/categories/nds/'>NDS</a>, <a class='category' href='/blog/categories/study/'>Study</a></span>
-</footer>
-
-
-</article>
-
+<p>きちっと線形分離できるので簡単な問題ですね。</p>
 </div>
 
+
+  <footer>
+    <p class="meta">
+      
   
+
+<span class="byline author vcard">Posted by <span class="fn">Salinger</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-06-03T20:14:00+09:00" pubdate data-updated="true">Jun 3<span>rd</span>, 2013</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/r/'>R</a>, <a class='category' href='/blog/categories/svm/'>SVM</a>, <a class='category' href='/blog/categories/機械学習/'>機械学習</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2013/03/23/1/" title="Previous Post: Niigata.LLに参加してきました">&laquo; Niigata.LLに参加してきました</a>
+      
+      
+    </p>
+  </footer>
 </article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
 
 </div>
 
@@ -226,7 +286,10 @@
       var disqus_shortname = 'salinger';
       
         
-        var disqus_script = 'count.js';
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://Salinger.github.com/blog/2013/06/03/1/';
+        var disqus_url = 'http://Salinger.github.com/blog/2013/06/03/1/';
+        var disqus_script = 'embed.js';
       
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
