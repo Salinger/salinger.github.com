@@ -1,0 +1,23 @@
+---
+layout: post
+title: "金貨の真贋を見分けよう 〜 SVM と R〜"
+date: 2013-06-03 20:14
+comments: true
+categories: R 機械学習 SVM
+---
+
+CodeIQ の機械学習に関する問題にチャレンジしてみた。
+
+https://codeiq.jp/ace/naoyat/q105  
+http://next.rikunabi.com/tech/docs/ct_s03600.jsp?p=002315&tcs=kanren
+
+<!--more-->
+トレーニング用のデータ: "CodeIQ_auth.txt"  
+分類するデータ: "CodeIQ_mycoins.txt"  
+を上記のURLからダウンロード。
+
+以下ソースコード。
+
+{% gist 5697523 %}
+
+きちっと線形分離できるので簡単な問題ですね。
