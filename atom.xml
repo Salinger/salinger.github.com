@@ -4,7 +4,7 @@
   <title><![CDATA[さりんじゃーのプログラミング日記]]></title>
   <link href="http://Salinger.github.com/atom.xml" rel="self"/>
   <link href="http://Salinger.github.com/"/>
-  <updated>2013-06-03T20:27:16+09:00</updated>
+  <updated>2013-07-08T15:01:41+09:00</updated>
   <id>http://Salinger.github.com/</id>
   <author>
     <name><![CDATA[Salinger]]></name>
@@ -12,6 +12,127 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[第32回 長岡IT開発者勉強会に参加してきました]]></title>
+    <link href="http://Salinger.github.com/blog/2013/07/06/1/"/>
+    <updated>2013-07-06T13:45:00+09:00</updated>
+    <id>http://Salinger.github.com/blog/2013/07/06/1</id>
+    <content type="html"><![CDATA[<p>2013/07/06に行われた<a href="http://nagaoka.techtalk.jp/no32">32回目のNDS</a>に参加しました。
+今回はGithubのハンズオン ＋ LT の構成。</p>
+
+<!-- more -->
+
+
+<h2>Githubハンズオン@</h2>
+
+<h3>github pages</h3>
+
+<p>username.github.io でリポジトリ作ってーって言われたけど、
+作るとこのブログが上書きされてしまうので、のんびり進行を眺めつつ過ごす。</p>
+
+<h3>SourceTreeの使い方</h3>
+
+<p>Mac版とWindows版の仕様の違いでトラブルが。
+Windows版の方が後発なので、まだまだこなれていない部分があるようです。
+普段コンソールからしか叩いてなかったので、この見やすさは便利。</p>
+
+<h2>LTセッション</h2>
+
+<h3>はじめてのnode.js @sasaplus1</h3>
+
+<p>nodebrew(node.jsのバージョン管理ツール)を使ってjode.jsとnpmをインストール<br/>
+node.jsを使ってスクリプト実行<br/>
+npmを使ってモジュールをインストール</p>
+
+<h3>趣味Git @ upinetree</h3>
+
+<p>趣味でもGitつかおうぜ。
+音楽データの差分どうするの？  <br/>
+画像の差分比較欲しい。<br/>
+-> 質疑で画像の差分はGithubで可能だよ！とのこと。<br/>
+マインクラフトのセーブデータ管理を実演。<br/>
+オートセーブの結果を上手いこと管理。<br/>
+セーブデータのPush！Fork！<br/>
+一番いいセーブデータを頼む。<br/>
+ソーシャルゲーム！</p>
+
+<h3>実録！とりあえずが生む悲劇。〜えッ！？修正なんて聞いてないんだけど…。 @植木さん</h3>
+
+<p>「とりあえず、修正して。」<br/>
+と…とりあえずってなにさ？<br/>
+「とりあえず、見たいんだけど。」<br/>
+とりあえずの連鎖<br/>
+とりあえずで進んだ結末<br/>
+解決法は(1)計画的に(2)面倒事に踏み込む<br/>
+ディレクションネタが好きな人を、募集中らしい。<br/>
+<a href="https://www.facebook.com/yoshihiro.ueki">https://www.facebook.com/yoshihiro.ueki</a></p>
+
+<p>ディレクション系のネタは大学にいるとほとんど聞く機会がなかったので新鮮でした。</p>
+
+<h3>高校生長岡ラーメン選手権の告知 @hiro55bs</h3>
+
+<p>皆さんラーメンはお好きですか？<br/>
+facebookページで広告してみた<br/>
+プロモーション方法の紹介<br/>
+「いいね！スポンサー記事」と「いいね！広告」<br/>
+1ヶ月$45で設定。急に大金の請求来る心配なし。<br/>
+結構トータルで安く済むっぽい。<br/>
+インプレッション数等確認可能。<br/>
+対象（オーディエンス）の指定が可能。何人ぐらいが見る可能性があるのかわかる。<br/>
+支払いはPaypalやクレカ等。1週間単位ぐらいで集金。</p>
+
+<p>Facebookのプライバシーの収集具合こわひ。<br/>
+結構細かいこと指定できるのね。</p>
+
+<h3>Keynote+Gimpでアイコン作成 @makomegane</h3>
+
+<p>アイコンの作成方法<br/>
+keynoteでもいけるんじゃね？<br/>
+keynoteでアイコン組み合わせまくり。グループ化。<br/>
+クリップボードにコピーしてGimpに貼り付け。<br/>
+お手軽！<br/>
+簡単な図形の組み合わせだけでも意外となんとかなる。<br/>
+画像の種類の少なさが逆に想像力を刺激する！<br/>
+必然的にフラットデザインになる。</p>
+
+<h3>Rでダイエット @salinger001101</h3>
+
+<p>私の発表。<br/>
+資料やコードは<a href="https://github.com/Salinger/R-diet">ここ</a>に。</p>
+
+<h3>VCS入門の作成 @masaru_b_cl</h3>
+
+<p>自分の理解しているVCSの情報を一旦全部出す。<br/>
+情報を整理し、足りない情報をWebで収集。<br/>
+情報を分類し文章の目的設定。</p>
+
+<p>書く利点は…<br/>
+(1)自分の知識が整理される<br/>
+(2)みんなに「すごい」って言ってもらえる<br/>
+(3)マサカリが飛んでくる</p>
+
+<h3>SmartArt @bnosuke</h3>
+
+<p>ver. &lt; Office 2007。 2003以前は残念。<br/>
+美しい。<br/>
+アウトライン式でテキストを追加した時レイアウトが自動で変更。<br/>
+面倒な関係を用意に記述可能。<br/>
+デザインとコンテンツを分離可能。<br/>
+Office365でも可能。</p>
+
+<h3>NDSからの大切なお知らせ @civic</h3>
+
+<p>前のネタと同じなので略。</p>
+
+<h2>感想・まとめ</h2>
+
+<p>今回は人数も部屋ぎっしりで、初参加の人もいっぱいいたっぽい。<br/>
+GithubハンズオンでGUIツールの見やすさを実感。コミットしたりするときはコンソールでいいかなと思うけど、過去の編集履歴確認するとき等は、今後SourceTree使うことにしよう。あと普段GitでForkすることがなかったので、いい経験になりました。</p>
+
+<p>LTセッションの多種多様な発表を見ると、自分のプレゼンはまだまだ工夫が足りないのを実感。もっと場数踏んで慣れないといけませんね。あと既存のものの組み合わせについて普段から考えねば。</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[金貨の真贋を見分けよう 〜 SVM と R〜]]></title>
