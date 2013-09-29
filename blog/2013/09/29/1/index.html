@@ -1,0 +1,364 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>第33回 長岡IT開発者勉強会 Scala入学式に参加してきました - さりんじゃーのプログラミング日記</title>
+  <meta name="author" content="Salinger">
+
+  
+  <meta name="description" content="はじめに 2013/09/28に行われたNDS33に参加してきました。今回はScalaのハンズオン＋LTの構成。 Scala入学式 Scala で Hello, World から Twitter bot を作成するまでのハンズオン形式のセミナー。講師は猫型さん(@neko_gata_s)。 &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://Salinger.github.com/blog/2013/09/29/1/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="さりんじゃーのプログラミング日記" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-39177183-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">さりんじゃーのプログラミング日記</a></h1>
+  
+    <h2>Salinger's programming diary</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:Salinger.github.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">第33回 長岡IT開発者勉強会 Scala入学式に参加してきました</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-09-29T15:50:00+09:00" pubdate data-updated="true">Sep 29<span>th</span>, 2013</time>
+        
+         | <a href="#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><h2>はじめに</h2>
+
+<p>2013/09/28に行われた<a href="http://nagaoka.techtalk.jp/no33">NDS33</a>に参加してきました。今回はScalaのハンズオン＋LTの構成。</p>
+
+<!--more-->
+
+
+<h2>Scala入学式</h2>
+
+<p>Scala で Hello, World から Twitter bot を作成するまでのハンズオン形式のセミナー。講師は猫型さん(@neko_gata_s)。</p>
+
+<p><a href="https://gist.github.com/Shinpeim/db00b073f7acd6d5b918">環境構築</a><br/>
+<a href="https://gist.github.com/Shinpeim/6740436">テキスト</a></p>
+
+<p>ScalaはJVMで動く強い静的型付き言語。Javaの資産も活用できる。</p>
+
+<p>事前に Twitter API の consumer key, consumer secret, access token, access token secret を取得を取得し、Scala開発環境のセットアップを行うまでが入学試験(?)でした。
+私はMacだったので、Scala と sbt は homebrew でインストールし、JDK や IntelliJ IDEA は公式からダウンロードし普通にインストール。
+実はsbt-ideaのインストールがうまいこといってなかったのがハンズオン中に発覚。
+build.sbtを <code>~/.sbt/plugins/build.sbt</code> に置けと公式ページに書いてあったが、正しくは<code>~/.sbt/0.13/plugins/build.sbt</code>だった。</p>
+
+<p>hello, world は無事出力され、次に文法周りの説明が。
+ifが最後に評価された値を返すのが地味に便利だったり、強力なパターンマッチもある。また、map、flatMap、filterあたりの関数型っぽい操作を味わったり、それらの高階関数＋Option型等を駆使することで、ぬるぽ回避を行う等なかなか興味深い手法も体験できた。</p>
+
+<p>最後に Twitter bot の作成。ぬるぽをタイムラインに発見したら、ガッする bot 。
+Java用の Twitter API ラッパの twitter4j を利用してサクッっと作成。
+twitter4j 触ったの初めてだったけど、設計しっかりしてて触りやすそうなライブラリだった。</p>
+
+<p>約5時間のハンズオンでしたが、Scala の魅力が十分伝わってくる良いハンズオンでした。
+これから Java の移行先として盛り上がってきそうな雰囲気もあるので、今後が楽しみな言語です。</p>
+
+<h2>LTセッション</h2>
+
+<p>Scalaのハンズオンに続いてLTセッション。</p>
+
+<h3>ライントレースの話 (@okashoi)</h3>
+
+<p>ETロボコンのお話。PID制御のお話も。
+光センサーでズレを検知して修正するが、モーター出力の個体差があるので、モーターーエンコーダ角度制御でも補正してやるとうまくいくらしい。最近はこの辺の制御やることもないので、なんだか懐かい気持ちになったLT。</p>
+
+<h3>開発者向け勉強会に使えるスペースができました (@nkzn)</h3>
+
+<p>もっとライトに新潟開発者向けの勉強会を開きたい。が、新潟市だと割とお金がかかる。駅から近い、利用許可がフットワーク軽い、お金がかからない、ネット回線、etc&#8230;が必要。ウォーターセル株式会社1F アグリノートカフェを勉強会向けに開放するらしい。基本的に祝休日のみで、開発者の勉強会orハッカソン、ウォーターセル社員が参加者にいることが条件らしい。今度機会を見つけて、遊びに行きたい。</p>
+
+<h3>草を回避するゲーム (@jewel_x12)</h3>
+
+<p>裏東京ゲームショウ2013 in 長岡レポート。かつて、突然死ぬゲームやPythonが主人公のシューティングゲーム等、なかなかユーモラスたっぷりなゲームを作ってきた@jewel_x12さんが、最新作のデモを公開。「草不可避」と言葉があんまり好きじゃなく、ｗｗｗｗの雰囲気を大事にしたいらしい。「草避ける気はあるのか？努力しろ社会は厳しい」。Backbone.jsを使って上から降ってくるツイッターのTLに現れる草を避けるブラウザゲーム。正式版公開が待ち望まれる。</p>
+
+<h3>電流と人間 (@moznion)</h3>
+
+<p>はてなサマーインターン2013により得られた見解（はてななんも関係ないよ！）。
+エンターキーによる騒音被害を軽減するためにエンターキーを押しにくくする必要あり。
+人間の電流に対する恐怖心は強いのでエンターキーに電流を流そう！という発想はなかった。実際に使ってもらったら騒音被害が減った。なぜならCtrl+Mを使い始めたから。その発想はなかった。次はデプロイ失敗で電流とかが目標らしい。</p>
+
+<h3>テストレベル？ (@two_pack)</h3>
+
+<p>コンポーネントテスト、統合テスト、システムテスト、受け入れテスト<br/>
+人や組織によっていろいろな呼び方がある。違いがあることを許容しましょう。同じ言葉で話すこともできるって素晴らしいですね。JSTQBシラバス読めとのこと。
+ここの用語集便利そうなのでとりあえずブックマークした。</p>
+
+<h3>近況報告 @upinetree</h3>
+
+<p>東京の某社に転職が決まったらしい。おめでとうございます。何故転職？という話から、前の会社でよりよい環境のためにやったこと、うまくいったこと、わかったことのお話。環境を変えるための大変さを改めて実感。自分にも活かせそうなお話もあった。</p>
+
+<h2>NDS33のまとめ</h2>
+
+<p>今回はテーマ的にプログラマ向けのハンズオンが主でしたが、なかなか充実した内容で楽しめました。新しい言語を触って新しい概念を学ぶと、普段使ってる言語での書き方も良くなることが多いので、積極的に他の言語の考え方も取り入れていきたいです。
+次回のNDS34はおそらく日程的に参加は厳しいですが、次々回やその次あたりは東京行く前に参加しておきたいです。</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Salinger</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-09-29T15:50:00+09:00" pubdate data-updated="true">Sep 29<span>th</span>, 2013</time>
+      
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2013/07/06/1/" title="Previous Post: 第32回 長岡IT開発者勉強会に参加してきました">&laquo; 第32回 長岡IT開発者勉強会に参加してきました</a>
+      
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>About</h1>
+  <p>
+    Name:  さりんじゃー<br />
+    Info:  雪国の大学院生。プログラミングなどの技術系の話をメインに。主にPythonを使います。専門分野は機械
+  </p>
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2013/09/29/1/">第33回 長岡IT開発者勉強会 Scala入学式に参加してきました</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/07/06/1/">第32回 長岡IT開発者勉強会に参加してきました</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/06/03/1/">金貨の真贋を見分けよう 〜 SVM と R〜</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/03/23/1/">Niigata.LLに参加してきました</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/03/20/1/">RのProxy設定（Mac）</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/Salinger">@Salinger</a> on GitHub
+  
+  <script type="text/javascript">
+    $.domReady(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'Salinger',
+            count: 5,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+<section>
+  <h1>Latest Tweets</h1>
+  <ul id="tweets">
+    <li class="loading">Status updating...</li>
+  </ul>
+  <script type="text/javascript">
+    $.domReady(function(){
+      getTwitterFeed("salinger001101", 5, false);
+    });
+  </script>
+  <script src="/javascripts/twitter.js" type="text/javascript"> </script>
+  
+    <a href="http://twitter.com/salinger001101" class="twitter-follow-button" data-show-count="false">Follow @salinger001101</a>
+  
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Salinger -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'salinger';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://Salinger.github.com/blog/2013/09/29/1/';
+        var disqus_url = 'http://Salinger.github.com/blog/2013/09/29/1/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>
