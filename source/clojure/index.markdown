@@ -6,9 +6,14 @@ comments: false
 sharing: true
 footer: false
 ---
+Clojure に関する情報の自分用まとめ(作成中)。
 
 ## 記事
-[1. Mac + Homebrew 環境で Hello, world!](/clojure/01-mac-homebrew-hello)
+[1. Mac + Homebrew 環境で Hello, world!](/clojure/01-mac-homebrew-hello) 2014/01/31
+
+[2. Clojure の特徴](/clojure/02-characteristic)
+
+
 
 ## 参考文献など
 1. Clojure 公式ページ, [http://clojure.org](http://clojure.org)
