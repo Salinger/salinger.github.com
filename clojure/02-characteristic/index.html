@@ -5,7 +5,7 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Macでvirtualenvの設定 - さりんじゃーのプログラミング日記</title>
+  <title>02-characteristic - さりんじゃーのプログラミング日記</title>
   <meta name="author" content="Salinger">
 
   
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://Salinger.github.com/blog/2013/01/16/2">
+  <link rel="canonical" href="http://Salinger.github.com/clojure/02-characteristic">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/bootstrap/bootstrap.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/stylesheets/bootstrap/responsive.css" media="screen, projection" rel="stylesheet" type="text/css">
@@ -104,16 +104,33 @@
   <div class="container">
     <div class="row-fluid">
       
-<article class="hentry span9" role="article">
+<article role="article" class="span9">
 
   
   <header class="page-header">
-    
-      <h1 class="entry-title">Macでvirtualenvの設定</h1>
-    
-    
+    <h1 class="entry-title">02-characteristic</h1>
+    <p class="meta">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-01-31T17:07:00+09:00" pubdate data-updated="true">Jan 31<span>st</span>, 2014</time></p>
+  </header>
+  
+  
+
+  
+    <footer>
       <p class="meta">
         
+        
 
 
 
@@ -125,193 +142,26 @@
   
 
 
-<time datetime="2013-01-16T17:41:00+09:00" pubdate data-updated="true">Jan 16<span>th</span>, 2013</time>
-        
-         | <a href="#disqus_thread">Comments</a>
+<time datetime="2014-01-31T17:07:00+09:00" pubdate data-updated="true">Jan 31<span>st</span>, 2014</time>
         
       </p>
-    
-  </header>
-
-
-<div class="entry-content"><p>virtualenvはPython用の仮想環境構築のためのモジュール。virtualenvwrapperはvirtualenvを楽に使うためのラッパー。とりあえずPython周りの環境は、基本的にPython自体をHomebrewで、モジュールはvirtualenv + virtualenvwrapper + pip で管理することにする。</p>
-
-<!-- more -->
-
-
-<h2>Pythonのインストール</h2>
-
-<p>必要な物をHomebrewでインストール。</p>
-
-<pre><code>$ python -V
-Python 2.7.2 # Macに標準で入ってるPython
-$ brew install readline sqlite gdbm
-$ brew install python --universal --framework
-$ python -V
-Python 2.7.2
-</code></pre>
-
-<p>あれっ？変化なし？
-bashだとPathは問題なく2.7.3が起動したけど、普段使ってるtmux + zshだと2.7.2が起動した。.zshrcに以下のようにPathの記述をする必要あり。</p>
-
-<pre><code>export PATH=/usr/local/bin:/usr/local/sbin:/sbin:/usr/sbin:${PATH}
-</code></pre>
-
-<p>.zshrcの再読み込み</p>
-
-<pre><code>$ source .zshrc
-$ python -V
-Python 2.7.3
-</code></pre>
-
-<p>これでPython2系最新版のインストールはOK。</p>
-
-<h2>virtualenvとvirtualenvwrapperのインストール</h2>
-
-<pre><code>$ which pip # インストール先の確認
-/usr/local/bin/pip # Homebrewでインストールした先になっているのを確認
-$ pip install virtualenv
-$ pip install virtualenvwrapper
-$ mkdir ~/.virtualenvs
-</code></pre>
-
-<p>.zshrcに</p>
-
-<pre><code>#virtualenv settings
-export WORKON_HOME=$HOME/.virtualenvs
-. /usr/local/share/python/virtualenvwrapper.sh
-</code></pre>
-
-<p>を記述。</p>
-
-<pre><code>$ source .zshrc # リロード
-virtualenvが見えない…
-</code></pre>
-
-<p>.zshrcに</p>
-
-<pre><code>export PATH=/usr/local/share/python:${PATH}
-</code></pre>
-
-<p>を追記。</p>
-
-<pre><code>$ source .zshrc
-</code></pre>
-
-<p>問題解決。</p>
-
-<h2>テスト</h2>
-
-<pre><code>$ pip freeze # 現在のモジュールの確認 (virtualenvなど)
-$ mkvirtualenv test1 # test1という環境を作成
-$ deactivate #環境から抜ける
-$ mkvirtualenv test2 # test2という環境を作成
-$ workon # 環境の一覧を確認
-test1
-test2
-$ workon test1 # testを選択
-$ pip install numpy # test1 にnumpyをインストール
-$ pip freeze # nuupyのインストールを確認
-$ deactivate 
-$ pip freeze # 元の環境に影響がないのを確認
-$ rmvirtualenv test1 # テスト環境を削除
-$ rmvirtualenv test2
-$ workon # 出力なし 削除完了
-</code></pre>
-
-<p>動作確認完了。モジュールの切り替えが非常に楽なので、今後の開発が捗りそう。</p>
-
-<h2>Octopressとzshのトラブル？</h2>
-
-<p>この記事を書こうとして、</p>
-
-<pre><code>$ rake new_post["2"]
-</code></pre>
-
-<p>を実行したら、</p>
-
-<pre><code>$ zsh: no matches found: new_post["2"]
-</code></pre>
-
-<p>というエラーが。何故だ？しかし、</p>
-
-<pre><code>$ rake new_post
-$ Enter a post title:2
-</code></pre>
-
-<p>作成できたぞ？今回Pathを弄ったのが原因か？<br/>
-この辺の動作がよくわからんので。また確認しとかないと。</p>
-
-<h3>追記</h3>
-
-<p>.zshrcに</p>
-
-<pre><code>alias rake="noglob rake"
-</code></pre>
-
-<p>を追記したらエラー消えました。ありがとうございます > shogo82148 。</p>
-</div>
-
-
-  <footer>
-    <p class="meta">
       
-  
-
-<span class="byline author vcard">Posted by <span class="fn">Salinger</span></span>
-
-      
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-01-16T17:41:00+09:00" pubdate data-updated="true">Jan 16<span>th</span>, 2013</time>
-      
-
-<span class="categories">
-  
-    <a class='category' href='/blog/categories/python/'>Python</a>
-  
-</span>
-
-
-    </p>
-    
-      <div class="sharing">
+        <div class="sharing">
   
   
   
 </div>
 
-    
-    
-    <section>
-      <h1>Comments</h1>
-      <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+      
+      
+      <section>
+        <h1>Comments</h1>
+        <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 </div>
-    </section>
-    
-    <ul class="pager">
+      </section>
       
-      <li class="previous"><a class="basic-alignment left"
-        href="/blog/2013/01/16/1/" title="Previous Post:
-        homebrew環境の構築">&laquo; homebrew環境の構築</a></li>
-      
-      <li><a href="/blog/archives">Blog Archives</a></li>
-      
-      <li class="next"><a class="basic-alignment right" href="/blog/2013/01/17/1/"
-        title="Next Post: Homebrew + virtualenv 環境でMeCabのインストール">Homebrew + virtualenv 環境でMeCabのインストール
-        &raquo;</a></li>
-      
-    </ul>
-  </footer>
+    </footer>
+  
 </article>
 
 <aside class="sidebar-nav span3">
@@ -409,8 +259,8 @@ $ Enter a post title:2
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://Salinger.github.com/blog/2013/01/16/2/';
-        var disqus_url = 'http://Salinger.github.com/blog/2013/01/16/2/';
+        var disqus_identifier = 'http://Salinger.github.com/clojure/02-characteristic/index.html';
+        var disqus_url = 'http://Salinger.github.com/clojure/02-characteristic/index.html';
         var disqus_script = 'embed.js';
       
     (function () {
