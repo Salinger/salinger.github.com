@@ -22,6 +22,8 @@ footer: true
 
 これで実行環境がインストールされた。
 
+------
+
 ## Hello, world! の出力
 REPL (Read-Eval-Print Loop): 対話型実行環境を起動して、画面にHello, world!を出力する。
 
@@ -29,7 +31,7 @@ REPL (Read-Eval-Print Loop): 対話型実行環境を起動して、画面にHel
     $ lein repl
     user=>
 
-### Hello, world! を出力。
+### Hello, world! を出力
 `user=>`となっているところに、
 
     (println "Hello, world!")

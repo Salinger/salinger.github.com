@@ -11,7 +11,7 @@ Clojure に関する情報の自分用まとめ(作成中)。
 ## 記事
 [1. Mac + Homebrew 環境で Hello, world!](/clojure/01-mac-homebrew-hello) 2014/01/31
 
-[2. Clojure の特徴](/clojure/02-characteristic)
+[2. Clojure の特徴](/clojure/02-characteristic) 2014/01/31
 
 
 
