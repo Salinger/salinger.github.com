@@ -5,11 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Category: SVM - さりんじゃーのプログラミング日記</title>
+  <title>3. フォーム - さりんじゃーのプログラミング日記</title>
   <meta name="author" content="Salinger">
 
   
-  <meta name="description" content="Category: SVM">
+  <meta name="description" content="">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://Salinger.github.comblog/categories/svm">
+  <link rel="canonical" href="http://Salinger.github.com/clojure/03-form">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/bootstrap/bootstrap.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/stylesheets/bootstrap/responsive.css" media="screen, projection" rel="stylesheet" type="text/css">
@@ -112,33 +112,192 @@
 
   
   <header class="page-header">
-    <h1 class="entry-title">Category: SVM</h1>
-    
+    <h1 class="entry-title">3. フォーム</h1>
+    <p class="meta">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-02-01T23:14:00+09:00" pubdate data-updated="true">Feb 1<span>st</span>, 2014</time></p>
   </header>
   
-  <div id="blog-archives" class="category">
+  <p>Clojure のコードはフォームという単位で処理される。以下の様な種類がある。</p>
+
+<table>
+<thead>
+<tr>
+<th align="left">フォーム</th>
+<th align="left">例</th>
+<th align="left">用途</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">Nil</td>
+<td align="left">nil</td>
+<td align="left">値が存在しないことを表現する</td>
+</tr>
+<tr>
+<td align="left">ブール値</td>
+<td align="left">true, false</td>
+<td align="left">ブール値の表現</td>
+</tr>
+<tr>
+<td align="left">数値</td>
+<td align="left">1, 2/5, 0.4</td>
+<td align="left">数値の表現</td>
+</tr>
+<tr>
+<td align="left">文字</td>
+<td align="left">\a </td>
+<td align="left"> Java の文字そのもの</td>
+</tr>
+<tr>
+<td align="left">文字列</td>
+<td align="left">&#8220;abc&#8221;</td>
+<td align="left">Javaの文字列そのもの</td>
+</tr>
+<tr>
+<td align="left">キーワード</td>
+<td align="left">:key</td>
+<td align="left">評価されると自分自身を返す。主にマップのキーとして使う。</td>
+</tr>
+<tr>
+<td align="left">シンボル</td>
+<td align="left">+, str, java.lang.String</td>
+<td align="left">ものの命名(関数、演算子、Javaクラス など)</td>
+</tr>
+<tr>
+<td align="left">リスト</td>
+<td align="left">(1 2 3), (str &#8220;abc&#8221; &#8220;def&#8221;)</td>
+<td align="left">データ構造の表現</td>
+</tr>
+<tr>
+<td align="left">ベクタ</td>
+<td align="left">[1 2 3]</td>
+<td align="left"> 一続きの整数値で索引付けしてあるデータ構造</td>
+</tr>
+<tr>
+<td align="left">マップ</td>
+<td align="left">{:type &#8220;Dog&#8221; :name &#8220;Taro&#8221;}</td>
+<td align="left">キーと値のペアを表現するためのデータ構造</td>
+</tr>
+<tr>
+<td align="left">セット</td>
+<td align="left">#{:Bob :Tom :Hickey}</td>
+<td align="left"> 集合を表現するためのデータ構造</td>
+</tr>
+</tbody>
+</table>
+
+
+<p>Clojure は基本的なフォーム以外にリーダマクロと呼ばれる構文も認識する。</p>
+
+<table>
+<thead>
+<tr>
+<th align="left">リーダマクロ</th>
+<th align="left">例</th>
+<th align="left">用途</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">クオート</td>
+<td align="left">&#8216;form => (quote form)</td>
+<td align="left">formを評価せずそのまま返す</td>
+</tr>
+<tr>
+<td align="left">構文クオート</td>
+<td align="left">`q</td>
+<td align="left">マクロで使用</td>
+</tr>
+<tr>
+<td align="left">アンクオート</td>
+<td align="left">~</td>
+<td align="left">マクロで使用</td>
+</tr>
+<tr>
+<td align="left">スプライシングアンクオート</td>
+<td align="left">~@</td>
+<td align="left">マクロで使用</td>
+</tr>
+<tr>
+<td align="left">varクオート</td>
+<td align="left">#&#8217;q => (var q)</td>
+<td align="left">var そのものを返す</td>
+</tr>
+<tr>
+<td align="left">無名関数</td>
+<td align="left">#(.toUpperCase %)</td>
+<td align="left">無名関数を定義する</td>
+</tr>
+<tr>
+<td align="left">コメント</td>
+<td align="left">; this is comment</td>
+<td align="left">コメントの記入</td>
+</tr>
+<tr>
+<td align="left">参照外し</td>
+<td align="left">@form => (deref form)</td>
+<td align="left">参照(ref)で定義したオブジェクトの中身を読み出す</td>
+</tr>
+<tr>
+<td align="left">メタデータ</td>
+<td align="left">^m form</td>
+<td align="left">メタデータを付加する際に用いる</td>
+</tr>
+<tr>
+<td align="left">正規表現パターン</td>
+<td align="left">#&#8221;pattern&#8221;</td>
+<td align="left">Javaの java.util.regex.Patern オブジェクトを生成</td>
+</tr>
+</tbody>
+</table>
+
+
+  
+    <footer>
+      <p class="meta">
+        
+        
+
+
+
+
+
 
 
 
   
-  <h1>2013</h1>
 
-<article>
-  <div class="well">
 
-<h2><a href="/blog/2013/06/03/1/">金貨の真贋を見分けよう 〜 SVM と R〜</a></h2>
-<time datetime="2013-06-03T20:14:00+09:00" pubdate><span class='month'>Jun</span> <span class='day'>03</span> <span class='year'>2013</span></time>
-
-<footer>
-  <span class="categories">posted in <a class='category' href='/blog/categories/r/'>R</a>, <a class='category' href='/blog/categories/svm/'>SVM</a>, <a class='category' href='/blog/categories/機械学習/'>機械学習</a></span>
-</footer>
-
+<time datetime="2014-02-01T23:14:00+09:00" pubdate data-updated="true">Feb 1<span>st</span>, 2014</time>
+        
+      </p>
+      
+        <div class="sharing">
+  
+  
+  
 </div>
 
-</article>
-
+      
+      
+      <section>
+        <h1>Comments</h1>
+        <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 </div>
-
+      </section>
+      
+    </footer>
   
 </article>
 
@@ -230,7 +389,10 @@
       var disqus_shortname = 'salinger';
       
         
-        var disqus_script = 'count.js';
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://Salinger.github.com/clojure/03-form/index.html';
+        var disqus_url = 'http://Salinger.github.com/clojure/03-form/index.html';
+        var disqus_script = 'embed.js';
       
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
