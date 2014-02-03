@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Python | さりんじゃーのプログラミング日記]]></title>
   <link href="http://Salinger.github.com/blog/categories/python/atom.xml" rel="self"/>
   <link href="http://Salinger.github.com/"/>
-  <updated>2014-02-03T21:53:21+09:00</updated>
+  <updated>2014-02-03T22:01:19+09:00</updated>
   <id>http://Salinger.github.com/</id>
   <author>
     <name><![CDATA[Salinger]]></name>
@@ -12,6 +12,15 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Python 2.7.X 入門者向けのまとめ]]></title>
+    <link href="http://Salinger.github.com/blog/2014/02/03/1/"/>
+    <updated>2014-02-03T21:57:00+09:00</updated>
+    <id>http://Salinger.github.com/blog/2014/02/03/1</id>
+    <content type="html"><![CDATA[<p>他言語を触っていると、Pythonでアレどう書くんだっけ？的なことが多いので、自分用によく使うであろう機能を<a href="/python/">ここ</a>にひと通りまとめた。プロジェクトの管理と、3系への移行についてもまとめ中。</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Raspberry Piに人工無脳搭載してみた]]></title>
@@ -422,130 +431,6 @@ while node:
 
 <p>の1行で長いコードを見やすい形式で貼れるのってかなり便利だ。
 Github + Octopress 快適すぎる。</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Macでvirtualenvの設定]]></title>
-    <link href="http://Salinger.github.com/blog/2013/01/16/2/"/>
-    <updated>2013-01-16T17:41:00+09:00</updated>
-    <id>http://Salinger.github.com/blog/2013/01/16/2</id>
-    <content type="html"><![CDATA[<p>virtualenvはPython用の仮想環境構築のためのモジュール。virtualenvwrapperはvirtualenvを楽に使うためのラッパー。とりあえずPython周りの環境は、基本的にPython自体をHomebrewで、モジュールはvirtualenv + virtualenvwrapper + pip で管理することにする。</p>
-
-<!-- more -->
-
-
-<h2>Pythonのインストール</h2>
-
-<p>必要な物をHomebrewでインストール。</p>
-
-<pre><code>$ python -V
-Python 2.7.2 # Macに標準で入ってるPython
-$ brew install readline sqlite gdbm
-$ brew install python --universal --framework
-$ python -V
-Python 2.7.2
-</code></pre>
-
-<p>あれっ？変化なし？
-bashだとPathは問題なく2.7.3が起動したけど、普段使ってるtmux + zshだと2.7.2が起動した。.zshrcに以下のようにPathの記述をする必要あり。</p>
-
-<pre><code>export PATH=/usr/local/bin:/usr/local/sbin:/sbin:/usr/sbin:${PATH}
-</code></pre>
-
-<p>.zshrcの再読み込み</p>
-
-<pre><code>$ source .zshrc
-$ python -V
-Python 2.7.3
-</code></pre>
-
-<p>これでPython2系最新版のインストールはOK。</p>
-
-<h2>virtualenvとvirtualenvwrapperのインストール</h2>
-
-<pre><code>$ which pip # インストール先の確認
-/usr/local/bin/pip # Homebrewでインストールした先になっているのを確認
-$ pip install virtualenv
-$ pip install virtualenvwrapper
-$ mkdir ~/.virtualenvs
-</code></pre>
-
-<p>.zshrcに</p>
-
-<pre><code>#virtualenv settings
-export WORKON_HOME=$HOME/.virtualenvs
-. /usr/local/share/python/virtualenvwrapper.sh
-</code></pre>
-
-<p>を記述。</p>
-
-<pre><code>$ source .zshrc # リロード
-virtualenvが見えない…
-</code></pre>
-
-<p>.zshrcに</p>
-
-<pre><code>export PATH=/usr/local/share/python:${PATH}
-</code></pre>
-
-<p>を追記。</p>
-
-<pre><code>$ source .zshrc
-</code></pre>
-
-<p>問題解決。</p>
-
-<h2>テスト</h2>
-
-<pre><code>$ pip freeze # 現在のモジュールの確認 (virtualenvなど)
-$ mkvirtualenv test1 # test1という環境を作成
-$ deactivate #環境から抜ける
-$ mkvirtualenv test2 # test2という環境を作成
-$ workon # 環境の一覧を確認
-test1
-test2
-$ workon test1 # testを選択
-$ pip install numpy # test1 にnumpyをインストール
-$ pip freeze # nuupyのインストールを確認
-$ deactivate 
-$ pip freeze # 元の環境に影響がないのを確認
-$ rmvirtualenv test1 # テスト環境を削除
-$ rmvirtualenv test2
-$ workon # 出力なし 削除完了
-</code></pre>
-
-<p>動作確認完了。モジュールの切り替えが非常に楽なので、今後の開発が捗りそう。</p>
-
-<h2>Octopressとzshのトラブル？</h2>
-
-<p>この記事を書こうとして、</p>
-
-<pre><code>$ rake new_post["2"]
-</code></pre>
-
-<p>を実行したら、</p>
-
-<pre><code>$ zsh: no matches found: new_post["2"]
-</code></pre>
-
-<p>というエラーが。何故だ？しかし、</p>
-
-<pre><code>$ rake new_post
-$ Enter a post title:2
-</code></pre>
-
-<p>作成できたぞ？今回Pathを弄ったのが原因か？<br/>
-この辺の動作がよくわからんので。また確認しとかないと。</p>
-
-<h3>追記</h3>
-
-<p>.zshrcに</p>
-
-<pre><code>alias rake="noglob rake"
-</code></pre>
-
-<p>を追記したらエラー消えました。ありがとうございます > shogo82148 。</p>
 ]]></content>
   </entry>
   

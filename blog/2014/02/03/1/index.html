@@ -5,7 +5,7 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>6. 数値 - さりんじゃーのプログラミング日記</title>
+  <title>Python 2.7.X 入門者向けのまとめ - さりんじゃーのプログラミング日記</title>
   <meta name="author" content="Salinger">
 
   
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://Salinger.github.com/python/06-num">
+  <link rel="canonical" href="http://Salinger.github.com/blog/2014/02/03/1">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/bootstrap/bootstrap.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/stylesheets/bootstrap/responsive.css" media="screen, projection" rel="stylesheet" type="text/css">
@@ -108,187 +108,16 @@
   <div class="container">
     <div class="row-fluid">
       
-<article role="article" class="span9">
+<article class="hentry span9" role="article">
 
   
   <header class="page-header">
-    <h1 class="entry-title">6. 数値</h1>
-    <p class="meta">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-02-03T16:19:00+09:00" pubdate data-updated="true">Feb 3<span>rd</span>, 2014</time></p>
-  </header>
-  
-  <h3>数値型の確認</h3>
-
-<p>intで収まらない場合は自動でlongに変換されるので、 数値が大きい場合もあまり心配はいらない。</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>#int 型
-</span><span class='line'>&gt;&gt;&gt; 100
-</span><span class='line'>100
-</span><span class='line'>100
-</span><span class='line'>
-</span><span class='line'>#float 型
-</span><span class='line'>&gt;&gt;&gt; 1.234
-</span><span class='line'>1.234
-</span><span class='line'>1.234
-</span><span class='line'>
-</span><span class='line'>#complex 型
-</span><span class='line'>&gt;&gt;&gt; 5 + 6j
-</span><span class='line'>5 + 6j
-</span><span class='line'>(5+6j)</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>算術演算子等</h3>
-
-<table>
-<thead>
-<tr>
-<th align="left">演算子</th>
-<th align="left">意味</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td align="left">x + y</td>
-<td align="left"> 和</td>
-</tr>
-<tr>
-<td align="left">x - y</td>
-<td align="left"> 差</td>
-</tr>
-<tr>
-<td align="left">x * y</td>
-<td align="left"> 積</td>
-</tr>
-<tr>
-<td align="left">x / y</td>
-<td align="left"> 商</td>
-</tr>
-<tr>
-<td align="left">x // y</td>
-<td align="left"> 商（切り下げ）</td>
-</tr>
-<tr>
-<td align="left">x % y</td>
-<td align="left"> 剰余</td>
-</tr>
-<tr>
-<td align="left">-x</td>
-<td align="left"> 符号反転</td>
-</tr>
-<tr>
-<td align="left">+ x</td>
-<td align="left">  符号そのまま</td>
-</tr>
-<tr>
-<td align="left">abs(x)</td>
-<td align="left"> 絶対値</td>
-</tr>
-<tr>
-<td align="left">int(x)</td>
-<td align="left"> 整数に変換</td>
-</tr>
-<tr>
-<td align="left">long(x)</td>
-<td align="left"> 長整数に変換</td>
-</tr>
-<tr>
-<td align="left">float(x)</td>
-<td align="left"> 浮動小数点に変換</td>
-</tr>
-<tr>
-<td align="left">complex(re, im)</td>
-<td align="left"> 虚数（実部 re, 虚部 im）に変換</td>
-</tr>
-<tr>
-<td align="left">c.conjugate()</td>
-<td align="left"> 複素数 c の共役複素数</td>
-</tr>
-<tr>
-<td align="left">divmod(x,y)</td>
-<td align="left"> (x // y, x % y)のペア</td>
-</tr>
-<tr>
-<td align="left">pow(x,y)</td>
-<td align="left"> x の y 乗</td>
-</tr>
-<tr>
-<td align="left">x ** y</td>
-<td align="left"> pow(x,y)と同義</td>
-</tr>
-</tbody>
-</table>
-
-
-<h3>ビット列演算</h3>
-
-<p>intおよびlong型ではビット列演算が可能。 負の数はその値の2の補数値として扱われる。</p>
-
-<table>
-<thead>
-<tr>
-<th align="left">演算子</th>
-<th align="left">意味</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td align="left">x &#124; y </td>
-<td align="left"> 論理和</td>
-</tr>
-<tr>
-<td align="left">x ^ y</td>
-<td align="left"> 排他的論理和</td>
-</tr>
-<tr>
-<td align="left">x &amp; y</td>
-<td align="left">  論理積</td>
-</tr>
-<tr>
-<td align="left">x &lt;&lt; n</td>
-<td align="left"> n ビット左シフト</td>
-</tr>
-<tr>
-<td align="left">x >> n</td>
-<td align="left"> n ビット右シフト</td>
-</tr>
-<tr>
-<td align="left">~x</td>
-<td align="left"> ビット反転</td>
-</tr>
-</tbody>
-</table>
-
-
-  
-    <footer>
+    
+      <h1 class="entry-title">Python 2.7.X 入門者向けのまとめ</h1>
+    
+    
       <p class="meta">
         
-        
 
 
 
@@ -300,20 +129,74 @@
   
 
 
-<time datetime="2014-02-03T16:19:00+09:00" pubdate data-updated="true">Feb 3<span>rd</span>, 2014</time>
+<time datetime="2014-02-03T21:57:00+09:00" pubdate data-updated="true">Feb 3<span>rd</span>, 2014</time>
+        
+         | <a href="#disqus_thread">Comments</a>
         
       </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>他言語を触っていると、Pythonでアレどう書くんだっけ？的なことが多いので、自分用によく使うであろう機能を<a href="/python/">ここ</a>にひと通りまとめた。プロジェクトの管理と、3系への移行についてもまとめ中。</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
       
-        <div class="sharing">
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Salinger</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-02-03T21:57:00+09:00" pubdate data-updated="true">Feb 3<span>rd</span>, 2014</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/python/'>Python</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
   
   
   
 </div>
 
+    
+    
+    <section>
+      <h1>Comments</h1>
+      <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+    </section>
+    
+    <ul class="pager">
       
+      <li class="previous"><a class="basic-alignment left"
+        href="/blog/2013/11/05/1/" title="Previous Post:
+        Mac で Vagrant 環境の整備">&laquo; Mac で Vagrant 環境の整備</a></li>
       
-    </footer>
-  
+      <li><a href="/blog/archives">Blog Archives</a></li>
+      
+    </ul>
+  </footer>
 </article>
 
 <aside class="sidebar-nav span3">
@@ -399,6 +282,22 @@
 
 </footer>
   
+
+<script type="text/javascript">
+      var disqus_shortname = 'salinger';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://Salinger.github.com/blog/2014/02/03/1/';
+        var disqus_url = 'http://Salinger.github.com/blog/2014/02/03/1/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
 
 
 

@@ -4,7 +4,7 @@
   <title><![CDATA[さりんじゃーのプログラミング日記]]></title>
   <link href="http://Salinger.github.com/atom.xml" rel="self"/>
   <link href="http://Salinger.github.com/"/>
-  <updated>2014-02-03T21:53:21+09:00</updated>
+  <updated>2014-02-03T22:01:19+09:00</updated>
   <id>http://Salinger.github.com/</id>
   <author>
     <name><![CDATA[Salinger]]></name>
@@ -12,6 +12,15 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Python 2.7.X 入門者向けのまとめ]]></title>
+    <link href="http://Salinger.github.com/blog/2014/02/03/1/"/>
+    <updated>2014-02-03T21:57:00+09:00</updated>
+    <id>http://Salinger.github.com/blog/2014/02/03/1</id>
+    <content type="html"><![CDATA[<p>他言語を触っていると、Pythonでアレどう書くんだっけ？的なことが多いので、自分用によく使うであろう機能を<a href="http://Salinger.github.com/python/">ここ</a>にひと通りまとめた。プロジェクトの管理と、3系への移行についてもまとめ中。</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Mac で Vagrant 環境の整備]]></title>
