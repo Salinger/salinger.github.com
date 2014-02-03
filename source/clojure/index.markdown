@@ -6,9 +6,11 @@ comments: false
 sharing: true
 footer: false
 ---
-Clojure に関する情報の自分用まとめ。
+Clojure に関する情報のまとめ。
 
 ## Clojure 入門
+現在学習中。自分用のメモ代わり。
+
 [1. Mac + Homebrew 環境で Hello, world!](/clojure/01-mac-homebrew-hello) 2014/01/31
 
 [2. Clojure の特徴](/clojure/02-characteristic) 2014/01/31

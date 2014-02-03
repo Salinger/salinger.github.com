@@ -13,7 +13,7 @@ footer: false
 ### [Blog](/blog)
 参加した勉強会・環境構築・作ったもの 等
 
-### [Python (作成中)](/python)
+### [Python](/python)
 Python に関する情報まとめ
 
 ### [R (作成中)](/r)
