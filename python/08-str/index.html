@@ -1,0 +1,636 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>8. 文字列 - さりんじゃーのプログラミング日記</title>
+  <meta name="author" content="Salinger">
+
+  
+  <meta name="description" content="">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://Salinger.github.com/python/08-str">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/bootstrap/bootstrap.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/stylesheets/bootstrap/responsive.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/stylesheets/syntax/syntax.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <style type="text/css">
+    body {
+      padding-bottom: 40px;
+    }
+    h1 {
+      margin-bottom: 15px;
+    }
+    img {
+      max-width: 100%;
+    }
+    .sharing, .meta, .pager {
+      margin: 20px 0px 20px 0px;
+    }
+    .page-footer p {
+      text-align: center;
+    }
+  </style>
+  <script src="/javascripts/libs/jquery.js"></script>
+  <script src="/javascripts/libs/modernizr-2.0.js"></script>
+  <script src="/javascripts/libs/bootstrap.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="さりんじゃーのプログラミング日記" type="application/atom+xml">
+  <link href="/stylesheets/data-table.css" rel="stylesheet" type="text/css" />
+  
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-39177183-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <nav role="navigation"><div class="navbar navbar-inverse">
+  <div class="navbar-inner">
+    <div class="container">
+      <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </a>
+
+      <a class="brand" href="/">さりんじゃーのプログラミング日記</a>
+
+      <div class="nav-collapse">
+        <ul class="nav">
+  <li><a href="/">Top</a></li>
+  <li><a href="/blog">Blog</a></li>
+  <li><a href="/python">Python</a></li>
+  <li><a href="/r">R</a></li>
+  <li><a href="/clojure">Clojure</a></li>
+  <li><a href="/ml">機械学習</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+
+        <ul class="nav pull-right" data-subscription="rss">
+          <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+          
+        </ul>
+
+        
+          <form class="pull-right navbar-search" action="http://google.com/search" method="get">
+            <fieldset role="search">
+              <input type="hidden" name="q" value="site:Salinger.github.com" />
+              <input class="search-query" type="text" name="q" results="0" placeholder="Search"/>
+            </fieldset>
+          </form>
+        
+      </div>
+    </div>
+  </div>
+</div>
+</nav>
+  <div class="container">
+    <div class="row-fluid">
+      
+<article role="article" class="span9">
+
+  
+  <header class="page-header">
+    <h1 class="entry-title">8. 文字列</h1>
+    <p class="meta">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-02-03T16:31:00+09:00" pubdate data-updated="true">Feb 3<span>rd</span>, 2014</time></p>
+  </header>
+  
+  <h2>文字列型について</h2>
+
+<p>(Python 3 系からはunicodeデフォルトに変更されているので注意)</p>
+
+<p>シーケンス型のうち str, unicode が文字列。文字列リテラル(str型)は</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>'xyz'</span></code></pre></td></tr></table></div></figure>
+
+
+<p>もしくは</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>"xyz"</span></code></pre></td></tr></table></div></figure>
+
+
+<p>のように表す。</p>
+
+<p>unicode文字列はほぼ文字列と同じ。マルチバイト文字を扱う場合はこの型を使うと、文字数等をうまいこと計算してくれる。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>u'あいう'</span></code></pre></td></tr></table></div></figure>
+
+
+<p>もしくは</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>u"えお"</span></code></pre></td></tr></table></div></figure>
+
+
+<p>のように表す。</p>
+
+<p>3重クオート</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>"""
+</span><span class='line'>Test1
+</span><span class='line'>Test2
+</span><span class='line'>Test3
+</span><span class='line'>"""</span></code></pre></td></tr></table></div></figure>
+
+
+<p>もしくは</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>'''
+</span><span class='line'>Test1
+</span><span class='line'>Test2
+</span><span class='line'>Test3
+</span><span class='line'>'''</span></code></pre></td></tr></table></div></figure>
+
+
+<p>中では改行文字がそのまま認識される。 改行文字をキャンセルする場合は\を文末に。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&gt;&gt;&gt; a = '''
+</span><span class='line'>&gt;&gt;&gt; This
+</span><span class='line'>&gt;&gt;&gt; is\
+</span><span class='line'>&gt;&gt;&gt; test!
+</span><span class='line'>&gt;&gt;&gt; """
+</span><span class='line'>'\nThis\nistest!\n'
+</span><span class='line'>    
+</span><span class='line'>&gt;&gt;&gt; s1 = 'あいうえお'
+</span><span class='line'>&gt;&gt;&gt; s2 = u'あいうえお'
+</span><span class='line'>&gt;&gt;&gt; len(s1)
+</span><span class='line'>15
+</span><span class='line'>&gt;&gt;&gt; len(s2)
+</span><span class='line'>5</span></code></pre></td></tr></table></div></figure>
+
+
+<p>基本的に、日本語を扱う場合はその流れをunicode型で統一するのがベスト。 ただし、一部のモジュール（MeCab等）はstr型以外で動作しない場合があるので、 そのときはstr型に変換してやる。</p>
+
+<p>ちなみにstr型とunicode型で同じ文字列「あいうえお」を==で比較した場合。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&gt;&gt;&gt;u"あいうえお" == "あいうえお"
+</span><span class='line'>False</span></code></pre></td></tr></table></div></figure>
+
+
+<p>となる。バグの原因になりやすいので注意。</p>
+
+<h2>エスケープシーケンス</h2>
+
+<p>文字列中では以下の文字は特別な意味を表す。</p>
+
+<p>よく使うのは</p>
+
+<p>記号 <code>\</code>, <code>'</code>, <code>"</code> のエスケープ、
+改行コード <code>\n</code> (*nix) <code>\r\n</code> (Windows)、
+タブ文字 <code>\t</code> あたり。</p>
+
+<table>
+<thead>
+<tr>
+<th align="left">エスケープシーケンス</th>
+<th align="left">意味</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">\</td>
+<td align="left"> バックスラッシュ()</td>
+</tr>
+<tr>
+<td align="left">&#39;</td>
+<td align="left"> 一重引用符(&#8216;)</td>
+</tr>
+<tr>
+<td align="left">&#34;</td>
+<td align="left"> 二重引用符(&#8220;)</td>
+</tr>
+<tr>
+<td align="left">\a</td>
+<td align="left"> ASCII 端末ベル</td>
+</tr>
+<tr>
+<td align="left">\b</td>
+<td align="left"> ASCII バックスペース</td>
+</tr>
+<tr>
+<td align="left">\f</td>
+<td align="left"> ASCII フォームフィード</td>
+</tr>
+<tr>
+<td align="left">\n</td>
+<td align="left"> ASCII 行送り</td>
+</tr>
+<tr>
+<td align="left">\N{name} </td>
+<td align="left"> Unicodeデータベースで名前nameを持つ文字 </td>
+</tr>
+<tr>
+<td align="left">\r</td>
+<td align="left"> ASCII 復帰</td>
+</tr>
+<tr>
+<td align="left">\t</td>
+<td align="left"> タブ文字</td>
+</tr>
+<tr>
+<td align="left">\uxxxx</td>
+<td align="left"> 16bit Unicode の 16進数値 xxxx を持つ文字</td>
+</tr>
+<tr>
+<td align="left">\Uxxxxxxxx</td>
+<td align="left"> 32bit Unicode の 16進数値 xxxxxxxx を持つ文字</td>
+</tr>
+<tr>
+<td align="left">\v</td>
+<td align="left"> ASCII 垂直タブ</td>
+</tr>
+<tr>
+<td align="left">\ooo</td>
+<td align="left"> 8進数値 ooo を持つ文字</td>
+</tr>
+<tr>
+<td align="left">\xhh</td>
+<td align="left"> 16進数値 hh を持つ文字</td>
+</tr>
+</tbody>
+</table>
+
+
+<h2>よく使う文字列メソッド</h2>
+
+<p>下記のメソッドと、シーケンス型の演算子でだいたいのことはできる。</p>
+
+<ul>
+<li>str.encode(encoding)
+
+<ul>
+<li>文字列をencoding(例. &#8220;utf-8&#8221;)でエンコードする。</li>
+</ul>
+</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&gt;&gt;&gt; u'あいうえお'.encode("utf-8")
+</span><span class='line'>'\xe3\x81\x82\xe3\x81\x84\xe3\x81\x86\xe3\x81\x88\xe3\x81\x8a'</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li> str.decode(encoding)
+
+<ul>
+<li>文字列をencoding(例. &#8220;utf-8&#8221;)でデコードする。</li>
+</ul>
+</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&gt;&gt;&gt; a = '\xe3\x81\x82\xe3\x81\x84\xe3\x81\x86\xe3\x81\x88\xe3\x81\x8a'
+</span><span class='line'>&gt;&gt;&gt; a.decode("utf-8")
+</span><span class='line'>あいうえお</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>str(x)
+
+<ul>
+<li>str型に変換する</li>
+</ul>
+</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&gt;&gt;&gt; str(10)
+</span><span class='line'>'10'</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>unicode(x)
+
+<ul>
+<li>unicode型に変換する</li>
+</ul>
+</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&gt;&gt;&gt;unicode("あいうえお")
+</span><span class='line'>&gt;&gt;&gt; u'\u3042\u3044\u3046\u3048\u304a'
+</span><span class='line'>&gt;&gt;&gt; print u'\u3042\u3044\u3046\u3048\u304a'
+</span><span class='line'>あいうえお</span></code></pre></td></tr></table></div></figure>
+
+
+<p><code>UnicodeDecodeError: 'ascii' codec can't decode byte XXXX in position Y: ordinal not in range(128)</code> というエラーが帰ってきた場合、システムの標準文字コードがasciiになっている。</p>
+
+<p>色々解決方法はあるが、一番手っ取り早い解決方法は、以下をプログラムの冒頭部分に記述する。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>#!/usr/bin/env python
+</span><span class='line'>#-*- coding:utf-8 -*-
+</span><span class='line'> 
+</span><span class='line'># ここから
+</span><span class='line'>import sys
+</span><span class='line'>reload(sys)
+</span><span class='line'>sys.setdefaultencoding('utf-8')
+</span><span class='line'># ここまで</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li><p>str.find(sub[, start[, end]])</p>
+
+<ul>
+<li>文字列のスライス s[start,end] (start、endは省略可)にsubが含まれる場合はその最小値のインデックス、そうでない場合は-1を返す。</li>
+</ul>
+</li>
+<li><p>str.join(iterable)</p>
+
+<ul>
+<li>iterable中の文字列をstrで結合した文字列を返す。</li>
+</ul>
+</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&gt;&gt;&gt; l = ['a','b','c']
+</span><span class='line'>&gt;&gt;&gt; ",".join(l)
+</span><span class='line'>'a,b,c'</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>str.lstrip([chars])
+
+<ul>
+<li>文字列の先頭部分を除去したコピーを返す。引数 chars は除去される文字集合を指定する文字列。省略した場合は空白文字を除去。</li>
+</ul>
+</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&gt;&gt;&gt; "   this is test.\n".lstrip()
+</span><span class='line'>"this is test.\n".</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>str.rstrip([chars])
+
+<ul>
+<li>文字列の末尾部分を除去したコピーを返す。引数 chars は除去される文字集合を指定する文字列。省略した場合は空白文字を除去。</li>
+</ul>
+</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&gt;&gt;&gt; "this is test.\n".rstrip()
+</span><span class='line'>"this is test."</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li><p>str.strip([chars])</p>
+
+<ul>
+<li>文字列の先頭および末尾部分を除去したコピーを返す。引数 chars は除去される文字集合を指定する文字列。省略した場合は空白文字を除去。</li>
+</ul>
+</li>
+<li><p>str.split([sep[, maxsplit]])</p>
+
+<ul>
+<li>sepを単語の境界として、文字列を単語に分解し、単語からなるリストを返す。maxsplitが与えられた場合、最大maxsplit回分割され、maxsplit + 1 の要素数のリストとなる。</li>
+</ul>
+</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&gt;&gt;&gt; '1,,2,3,4'.split(",")
+</span><span class='line'>['1', '', '2', '3', '4']</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>str.splitlines([keepends])
+
+<ul>
+<li>文字列を改行部分で分解し、各行からなるリストを返す。keepends が True の場合のみ改行コードを含んだままの文字列となる。</li>
+</ul>
+</li>
+</ul>
+
+
+  
+    <footer>
+      <p class="meta">
+        
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-02-03T16:31:00+09:00" pubdate data-updated="true">Feb 3<span>rd</span>, 2014</time>
+        
+      </p>
+      
+        <div class="sharing">
+  
+  
+  
+</div>
+
+      
+      
+    </footer>
+  
+</article>
+
+<aside class="sidebar-nav span3">
+  
+    <section>
+  <h1>About me</h1>
+  <p>Name: さりんじゃー</p>
+  <p>使用言語: Python (main), R (学習中), Clojure (学習中)</p>
+  <p>興味: 機械学習, データ分析, 自然言語処理, 情報検索 など</p>
+</section>
+<section class="well">
+  <ul id="recent_posts" class="nav nav-list">
+    <li class="nav-header">Recent Posts</li>
+    
+      <li class="post">
+        <a href="/blog/2013/11/05/1/">Mac で Vagrant 環境の整備</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/09/29/1/">第33回 長岡IT開発者勉強会 Scala入学式に参加してきました</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/07/06/1/">第32回 長岡IT開発者勉強会に参加してきました</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/06/03/1/">金貨の真贋を見分けよう 〜 SVM と R〜</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/03/23/1/">Niigata.LLに参加してきました</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section class="well">
+  <ul id="gh_repos" class="nav">
+    <li class="nav-header">GitHub Repos</li>
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/Salinger">@Salinger</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        github.showRepos({
+            user: 'Salinger',
+            count: 5,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/asides/github.js" type="text/javascript"> </script>
+</section>
+
+
+<section class="well">
+  <a class="twitter-timeline" href="https://twitter.com/salinger001101" data-widget-id="429220673311891456">
+    @salinger001101 からのツイート
+  </a>
+  <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
+  </script>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo" class="page-footer"><hr>
+<p>
+  Copyright &copy; 2014 - Salinger -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

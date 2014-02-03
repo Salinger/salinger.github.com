@@ -1,0 +1,590 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>17. モジュール - さりんじゃーのプログラミング日記</title>
+  <meta name="author" content="Salinger">
+
+  
+  <meta name="description" content="">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://Salinger.github.com/python/17-module">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/bootstrap/bootstrap.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/stylesheets/bootstrap/responsive.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/stylesheets/syntax/syntax.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <style type="text/css">
+    body {
+      padding-bottom: 40px;
+    }
+    h1 {
+      margin-bottom: 15px;
+    }
+    img {
+      max-width: 100%;
+    }
+    .sharing, .meta, .pager {
+      margin: 20px 0px 20px 0px;
+    }
+    .page-footer p {
+      text-align: center;
+    }
+  </style>
+  <script src="/javascripts/libs/jquery.js"></script>
+  <script src="/javascripts/libs/modernizr-2.0.js"></script>
+  <script src="/javascripts/libs/bootstrap.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="さりんじゃーのプログラミング日記" type="application/atom+xml">
+  <link href="/stylesheets/data-table.css" rel="stylesheet" type="text/css" />
+  
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-39177183-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <nav role="navigation"><div class="navbar navbar-inverse">
+  <div class="navbar-inner">
+    <div class="container">
+      <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </a>
+
+      <a class="brand" href="/">さりんじゃーのプログラミング日記</a>
+
+      <div class="nav-collapse">
+        <ul class="nav">
+  <li><a href="/">Top</a></li>
+  <li><a href="/blog">Blog</a></li>
+  <li><a href="/python">Python</a></li>
+  <li><a href="/r">R</a></li>
+  <li><a href="/clojure">Clojure</a></li>
+  <li><a href="/ml">機械学習</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+
+        <ul class="nav pull-right" data-subscription="rss">
+          <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+          
+        </ul>
+
+        
+          <form class="pull-right navbar-search" action="http://google.com/search" method="get">
+            <fieldset role="search">
+              <input type="hidden" name="q" value="site:Salinger.github.com" />
+              <input class="search-query" type="text" name="q" results="0" placeholder="Search"/>
+            </fieldset>
+          </form>
+        
+      </div>
+    </div>
+  </div>
+</div>
+</nav>
+  <div class="container">
+    <div class="row-fluid">
+      
+<article role="article" class="span9">
+
+  
+  <header class="page-header">
+    <h1 class="entry-title">17. モジュール</h1>
+    <p class="meta">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-02-03T16:33:00+09:00" pubdate data-updated="true">Feb 3<span>rd</span>, 2014</time></p>
+  </header>
+  
+  <h2>使用方法</h2>
+
+<p>Pythonでは標準で使用可能なモジュールとサードパーティ製のモジュールが存在する。
+基本的に使用する場合は、ソースコードの冒頭部分で</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>import module_name</span></code></pre></td></tr></table></div></figure>
+
+
+<p>でインポートできる。</p>
+
+<h2>from と as</h2>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>from A import B</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Aにはパッケージ名やモジュール名を指定する。</p>
+
+<p>Bには取り込みたいパッケージやモジュール名またはクラスや関数名、変数名なども指定できる。</p>
+
+<p>必要なもの以外をインポートすると、名前の衝突等予想外のトラブルが起こる場合があるので、必要なものだけインポートする方がbetter。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>from A import *</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Aに含まれるものをすべてインポート。Aにmethod_a()という関数がある場合、この方法ならmethod_a()と直接アクセスできるトラブルの元なので、この記法は何がインポートされるかわかっている場合以外は避けたほうが無難。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>import A.B.C as D</span></code></pre></td></tr></table></div></figure>
+
+
+<p>長い名前のパッケージに含まれているものにシンプルな名前でアクセスできる。別名は混乱の元なので、やたらめったら使うのは避けたほうが良い。</p>
+
+<h2>自作モジュールのインポート</h2>
+
+<p>モジュールは以下の順に調べて、最も最初に見つかったものがインポートされる。</p>
+
+<ol>
+<li>実行中のファイルと同じフォルダ</li>
+<li>カレントフォルダ</li>
+<li>環境変数「PYTHONPATH」に列挙したフォルダ</li>
+<li>sys.pathに登録してあるフォルダ</li>
+</ol>
+
+
+<p>同一ディレクトリにあるPythonのプログラムは以下のようにしてインポートできる。</p>
+
+<ul>
+<li>program_a.py</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>def aprint():
+</span><span class='line'>    print "This is from program_a.py"
+</span><span class='line'>    return</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>program_b.py</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>#!/usr/bin/env python
+</span><span class='line'>#-*- coding:utf-8 -*-
+</span><span class='line'>import program_a
+</span><span class='line'>    program_a.aprint()</span></code></pre></td></tr></table></div></figure>
+
+
+<p>実行してみる。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ python program_b.py
+</span><span class='line'>This is from program_a.py</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>モジュールのドキュメント</h2>
+
+<p>以下のように3重引用符で囲んだ文字列をクラスや関数の直後に記入しておくと、 pydoc等で確認した時にわかりやすい形でクラスや関数の説明を表示してくれる。 きちんと各コメントを書いておくと、後に救われること多々あり。</p>
+
+<p>以下の内容をtest.pyという名前で保存。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>#/usr/bin/env python
+</span><span class='line'>#-*- coding:utf-8 -*-
+</span><span class='line'>"""
+</span><span class='line'>File info
+</span><span class='line'>"""
+</span><span class='line'>    
+</span><span class='line'>__author__ = "author &lt;mail@example.com&gt;"
+</span><span class='line'>__status__ = "dev"
+</span><span class='line'>__version__ = "1.0.0"
+</span><span class='line'>__date__    = "03 Feb. 2014"
+</span><span class='line'>    
+</span><span class='line'>TOP_LEVLE_VAR = 'var'
+</span><span class='line'>    
+</span><span class='line'>class TestClass(object):
+</span><span class='line'>    """
+</span><span class='line'>    Abstract of this class
+</span><span class='line'>
+</span><span class='line'>    Details of this method ...
+</span><span class='line'>    """
+</span><span class='line'>        
+</span><span class='line'>    def test_method(self, x):
+</span><span class='line'>    """
+</span><span class='line'>    Abstract of this method
+</span><span class='line'>  
+</span><span class='line'>    Details of this method ...
+</span><span class='line'>    """
+</span><span class='line'>    return 5 * x * x + 2 * x + 1</span></code></pre></td></tr></table></div></figure>
+
+
+<p>test.py を保存したディレクトリでインタプリタを起動。インタプリタでhelp()を入力。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&gt;&gt;&gt; help()
+</span><span class='line'>   
+</span><span class='line'>help&gt; test
+</span><span class='line'>test
+</span><span class='line'>Help on module test:
+</span><span class='line'>   
+</span><span class='line'>NAME
+</span><span class='line'>    test - File info
+</span><span class='line'>
+</span><span class='line'>FILE
+</span><span class='line'>    /Users/hoge/fuga/piyo/test.py
+</span><span class='line'>    
+</span><span class='line'>CLASSES
+</span><span class='line'>    __builtin__.object
+</span><span class='line'>        TestClass
+</span><span class='line'>    
+</span><span class='line'>    class TestClass(__builtin__.object)
+</span><span class='line'>     |  Abstract of this class
+</span><span class='line'>     |  
+</span><span class='line'>     |  Details of this method ...
+</span><span class='line'>     |  
+</span><span class='line'>     |  Methods defined here:
+</span><span class='line'>     |  
+</span><span class='line'>     |  test_method(self, x)
+</span><span class='line'>     |      Abstract of this method
+</span><span class='line'>     |      
+</span><span class='line'>     |      Details of this method ...
+</span><span class='line'>     |  
+</span><span class='line'>     |  ----------------------------------------------------------------------
+</span><span class='line'>     |  Data descriptors defined here:
+</span><span class='line'>     |  
+</span><span class='line'>     |  __dict__
+</span><span class='line'>     |      dictionary for instance variables (if defined)
+</span><span class='line'>     |  
+</span><span class='line'>     |  __weakref__
+</span><span class='line'>     |      list of weak references to the object (if defined)
+</span><span class='line'>    
+</span><span class='line'>DATA
+</span><span class='line'>    TOP_LEVLE_VAR = 'var'
+</span><span class='line'>    __author__ = 'author &lt;mail@example.com&gt;'
+</span><span class='line'>    __date__ = '03 Feb. 2014'
+</span><span class='line'>    __status__ = 'dev'
+</span><span class='line'>    __version__ = '1.0.0'
+</span><span class='line'>    
+</span><span class='line'>VERSION
+</span><span class='line'>    1.0.0
+</span><span class='line'>    
+</span><span class='line'>DATE
+</span><span class='line'>    03 Feb. 2014
+</span><span class='line'>    
+</span><span class='line'>AUTHOR
+</span><span class='line'>    author &lt;mail@example.com&gt;</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>役立つモジュール</h2>
+
+<h3>標準モジュール</h3>
+
+<p>代表的なものをあげておく。ここであげたものはひと通り<a href="http://docs.python.jp/2.7/library/index.html">ドキュメント</a>に目を通しておくとよい。他にもいろいろある。</p>
+
+<ul>
+<li><a href="http://docs.python.jp/2.7/library/re.html">re</a>: 正規表現に関するモジュール</li>
+<li><a href="http://docs.python.jp/2.7/library/datetime.html">datetime</a>: 日付に関連するモジュール</li>
+<li><a href="http://docs.python.jp/2.7/library/calendar.html">calender</a>: カレンダーに関するモジュール</li>
+<li><a href="http://docs.python.jp/2.7/library/mutex.html">mutex</a>: 並列処理時の排他制御に関するモジュール</li>
+<li><a href="http://docs.python.jp/2.7/library/pprint.html">pprint</a>: 入れ子のリストやディレクトリの表示が見やすいprint</li>
+<li><a href="http://docs.python.jp/2.7/library/copy.html">copy</a>: 浅いコピーと深いコピーを扱うモジュール</li>
+<li><a href="http://docs.python.jp/2.7/library/math.html">math</a>: 数学関連のモジュール</li>
+<li><a href="http://docs.python.jp/2.7/library/random.html">random</a>: 乱数生成に関するモジュール</li>
+<li><a href="http://docs.python.jp/2.7/library/os.path.html">os.path</a>: ディレクトリ名やファイル名に関するモジュール</li>
+<li><a href="http://docs.python.jp/2.7/library/shutil.html">shutil</a>: 高レベルなファイル操作(圧縮ファイルの操作等も)</li>
+<li><a href="http://docs.python.jp/2.7/library/sqlite3.html">sqlite3</a>: SQLiteデータベース用モジュール</li>
+<li><a href="http://docs.python.jp/2.7/library/time.html">time</a>: 時刻データのためのモジュール</li>
+<li><a href="http://docs.python.jp/2.7/library/argparse.html">argparse</a>: コマンドラインオプション、引数などのパーサ</li>
+<li><a href="http://docs.python.jp/2.7/library/multiprocessing.html">multiprocessing</a>: 並列処理のためのモジュール</li>
+<li><a href="http://docs.python.jp/2.7/library/pickle.html#module-cPickle">cPickle</a>: データの永続化</li>
+<li><a href="http://docs.python.jp/2.7/library/json.html">json</a>: JSON形式のエンコードおよびデコード</li>
+<li><a href="http://docs.python.jp/2.7/library/urllib.html">urllib</a>: URLによる任意リソースへのアクセス</li>
+<li><a href="http://docs.python.jp/2.7/library/urllib2.html">urllib2</a>: URLを開くための拡張可能なライブラリ</li>
+<li><a href="http://docs.python.jp/2.7/library/sys.html">sys</a>: システムパラメータと関数</li>
+<li><a href="http://docs.python.jp/2.7/library/pydoc.html">pydoc</a>: 開発ドキュメント生成とオンラインヘルプに関するモジュール</li>
+<li><a href="http://docs.python.jp/2.7/library/unittest.html">unittest</a>: ユニットテストフレームワーク</li>
+<li><a href="http://docs.python.jp/2.7/library/pdb.html">pdb</a>: デバッグ用モジュール</li>
+</ul>
+
+
+<h3>サードパーティのプログラム&amp;Python用モジュール</h3>
+
+<p>個人的にお世話になったプログラムとそのバインディングモジュールたち。 詳細なインストール方法はそれぞれ異なるので各モジュールのページを参照のこと。 ただし、メジャーなモジュールはpip(Pythonのモジュール管理用プログラム)でインストール可能。 基本的にpipでインストール可能なものはpipでインストールすること。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ pip install modulename</span></code></pre></td></tr></table></div></figure>
+
+
+<p>検索する場合、</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ pip search modulename</span></code></pre></td></tr></table></div></figure>
+
+
+<p>もしpipがインストールされていない場合は、</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ easy_install pip</span></code></pre></td></tr></table></div></figure>
+
+
+<p>でインストールできるはず。ただし情報が古いかもしれないので、上手くいかない場合はググってください。また各モジュールの使い方は公式ドキュメントを見るかググってください。</p>
+
+<ul>
+<li><a href="http://mecab.googlecode.com/svn/trunk/mecab/doc/index.html">MeCab</a>: 日本語の形態素解析エンジンのモジュール。</li>
+<li><a href="http://code.google.com/p/cabocha/">CaboCha</a>: Support Vector Machines に基づく日本語係り受け解析器のモジュール。</li>
+<li><a href="http://www.csie.ntu.edu.tw/~cjlin/libsvm/">LIBSVM</a>: Support Vector Machine(SVM)に関するモジュール。</li>
+<li><a href="http://nltk.org/">NLTK</a>: 自然言語処理に関するモジュール。</li>
+<li><a href="http://docs.scipy.org/doc/">NumPy&amp;SciPy</a>: 数値計算・科学計算に関するモジュール。大規模な行列演算や、高速な計算アルゴリズムが使用できる。</li>
+<li><a href="http://www.pythonware.com/products/pil/">PLI</a>: Python Imaging Library 強力な画像処理用モジュール。</li>
+<li><a href="http://matplotlib.org/">Matplotlib</a>: 作図（主にグラフ）用のモジュール。</li>
+<li><a href="http://www.crummy.com/software/BeautifulSoup/">Beautiful Soup</a>: HTLMやXML等のパーサ。標準モジュールにある各種パーサよりもこちらを使うことを推奨します。</li>
+<li><a href="http://wwwsearch.sourceforge.net/mechanize/">mechanize</a>: Webから情報をクロールするときに超便利。</li>
+</ul>
+
+
+  
+    <footer>
+      <p class="meta">
+        
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-02-03T16:33:00+09:00" pubdate data-updated="true">Feb 3<span>rd</span>, 2014</time>
+        
+      </p>
+      
+        <div class="sharing">
+  
+  
+  
+</div>
+
+      
+      
+    </footer>
+  
+</article>
+
+<aside class="sidebar-nav span3">
+  
+    <section>
+  <h1>About me</h1>
+  <p>Name: さりんじゃー</p>
+  <p>使用言語: Python (main), R (学習中), Clojure (学習中)</p>
+  <p>興味: 機械学習, データ分析, 自然言語処理, 情報検索 など</p>
+</section>
+<section class="well">
+  <ul id="recent_posts" class="nav nav-list">
+    <li class="nav-header">Recent Posts</li>
+    
+      <li class="post">
+        <a href="/blog/2013/11/05/1/">Mac で Vagrant 環境の整備</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/09/29/1/">第33回 長岡IT開発者勉強会 Scala入学式に参加してきました</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/07/06/1/">第32回 長岡IT開発者勉強会に参加してきました</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/06/03/1/">金貨の真贋を見分けよう 〜 SVM と R〜</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/03/23/1/">Niigata.LLに参加してきました</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section class="well">
+  <ul id="gh_repos" class="nav">
+    <li class="nav-header">GitHub Repos</li>
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/Salinger">@Salinger</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        github.showRepos({
+            user: 'Salinger',
+            count: 5,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/asides/github.js" type="text/javascript"> </script>
+</section>
+
+
+<section class="well">
+  <a class="twitter-timeline" href="https://twitter.com/salinger001101" data-widget-id="429220673311891456">
+    @salinger001101 からのツイート
+  </a>
+  <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
+  </script>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo" class="page-footer"><hr>
+<p>
+  Copyright &copy; 2014 - Salinger -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

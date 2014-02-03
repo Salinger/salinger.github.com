@@ -1,0 +1,459 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>20. 関数型プログラミング - さりんじゃーのプログラミング日記</title>
+  <meta name="author" content="Salinger">
+
+  
+  <meta name="description" content="">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://Salinger.github.com/python/20-functional-prog">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/bootstrap/bootstrap.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/stylesheets/bootstrap/responsive.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/stylesheets/syntax/syntax.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <style type="text/css">
+    body {
+      padding-bottom: 40px;
+    }
+    h1 {
+      margin-bottom: 15px;
+    }
+    img {
+      max-width: 100%;
+    }
+    .sharing, .meta, .pager {
+      margin: 20px 0px 20px 0px;
+    }
+    .page-footer p {
+      text-align: center;
+    }
+  </style>
+  <script src="/javascripts/libs/jquery.js"></script>
+  <script src="/javascripts/libs/modernizr-2.0.js"></script>
+  <script src="/javascripts/libs/bootstrap.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="さりんじゃーのプログラミング日記" type="application/atom+xml">
+  <link href="/stylesheets/data-table.css" rel="stylesheet" type="text/css" />
+  
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-39177183-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <nav role="navigation"><div class="navbar navbar-inverse">
+  <div class="navbar-inner">
+    <div class="container">
+      <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </a>
+
+      <a class="brand" href="/">さりんじゃーのプログラミング日記</a>
+
+      <div class="nav-collapse">
+        <ul class="nav">
+  <li><a href="/">Top</a></li>
+  <li><a href="/blog">Blog</a></li>
+  <li><a href="/python">Python</a></li>
+  <li><a href="/r">R</a></li>
+  <li><a href="/clojure">Clojure</a></li>
+  <li><a href="/ml">機械学習</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+
+        <ul class="nav pull-right" data-subscription="rss">
+          <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+          
+        </ul>
+
+        
+          <form class="pull-right navbar-search" action="http://google.com/search" method="get">
+            <fieldset role="search">
+              <input type="hidden" name="q" value="site:Salinger.github.com" />
+              <input class="search-query" type="text" name="q" results="0" placeholder="Search"/>
+            </fieldset>
+          </form>
+        
+      </div>
+    </div>
+  </div>
+</div>
+</nav>
+  <div class="container">
+    <div class="row-fluid">
+      
+<article role="article" class="span9">
+
+  
+  <header class="page-header">
+    <h1 class="entry-title">20. 関数型プログラミング</h1>
+    <p class="meta">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-02-03T16:33:00+09:00" pubdate data-updated="true">Feb 3<span>rd</span>, 2014</time></p>
+  </header>
+  
+  <h2>関数型プログラミングとは</h2>
+
+<p>関数型: プログラミングは問題をいくつかの関数にわけて考える。</p>
+
+<p>理想的に言うと、関数は入力を受けて出力を吐くだけで、同じ入力に対して異なる出力をするような内部状態を一切持たない。有名な関数型言語には ML系言語(Standard ML, OCaml など) 、Lisp系言語(Common Lisp,Scheme, Clojure など)、 Haskell などがある。</p>
+
+<p>これをひと通り読めばわかるはず。<a href="http://docs.python.jp/2/howto/functional.html">関数型プログラミングHOWTO</a></p>
+
+<p>以下、読むのが面倒くさいあなたに。</p>
+
+<p>Pythonにおいて、この中でも特に重要なのが、</p>
+
+<ul>
+<li>イテレータ</li>
+<li>高階関数とlambda式</li>
+<li>リスト内包表記(map,filter,reduce)</li>
+</ul>
+
+
+<p>の考え方。</p>
+
+<h2>イテレータ</h2>
+
+<p>連続データを表現するオブジェクト。普段はリスト等を変換して、イテレータとして扱うことが多い(for 文等)。関数型プログラミングを行う際には、データの集合をイメージするといいかも。</p>
+
+<p>集合のすべての要素、もしくは特定の条件を満たす部分集合に対して、何らかの関数を適用し、新たな集合を作ることをイメージしながらデータを操作していく。</p>
+
+<h2>高階関数とlambda式</h2>
+
+<p>高階関数: 関数（手続き）を引数にしたり、戻り値にできる関数。以下の様な例を考えてみる。 まず関数を4つ定義する。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>def calc(x,y,method):
+</span><span class='line'>    return method(x,y)
+</span><span class='line'>    
+</span><span class='line'>def add(x,y):
+</span><span class='line'>    return x + y
+</span><span class='line'>    
+</span><span class='line'>def diff(x,y):
+</span><span class='line'>    return x - y
+</span><span class='line'>    
+</span><span class='line'>def pow(x,y):
+</span><span class='line'>    return x ** y</span></code></pre></td></tr></table></div></figure>
+
+
+<p>calc()に引数として関数を渡してみる。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&gt;&gt;&gt; calc(2,5,add)
+</span><span class='line'>7
+</span><span class='line'>&gt;&gt;&gt; calc(2,5,diff)
+</span><span class='line'>-3
+</span><span class='line'>&gt;&gt;&gt; calc(2,5,pow)
+</span><span class='line'>32</span></code></pre></td></tr></table></div></figure>
+
+
+<p>このようにPythonでは関数を引数として扱える。当然返り値にもできる。ほとんど同じ処理だが、微妙に違う関数を適用したい箇所がある場合、関数中でif文等を利用して条件分岐させるよりも、関数自体を引数として渡すほうが、スマートになる場合が多い。</p>
+
+<p>小さい関数を作成する場合、lambda式も利用できる。例えば、x を2乗して返す関数squareの場合、 次の2通りで書ける。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>def square (x):
+</span><span class='line'>    return x * x</span></code></pre></td></tr></table></div></figure>
+
+
+<p>もしくは</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>square = lambda x: x * x</span></code></pre></td></tr></table></div></figure>
+
+
+<p>どちらで書くかは好みの問題。</p>
+
+<h2>map, filter, reduce</h2>
+
+<ul>
+<li>map
+** リストの各要素に関数を適用した結果のリストを返す。リストの全要素を各々2乗したリストを作る場合。</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&gt;&gt;&gt; l = [1,2,3,4,5,6,7,8,9]
+</span><span class='line'>&gt;&gt;&gt; print map(lambda x: x * x, l)
+</span><span class='line'>[1, 4, 9, 16, 25, 36, 49, 64, 81]</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>filter
+** リストの部分集合からなるリストを返す。例えば、偶数からなるリストを作る場合。</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&gt;&gt;&gt; l = [1,2,3,4,5,6,7,8,9]
+</span><span class='line'>&gt;&gt;&gt; print filter(lambda x: x % 2 == 0, l)
+</span><span class='line'>[2, 4, 6, 8]</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>reduce
+** リスト全体に対する計算。リストの全要素の総和を求める場合。</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&gt;&gt;&gt; l = [1,2,3,4,5,6,7,8,9]
+</span><span class='line'>&gt;&gt;&gt; print reduce(lambda a,b: a + b, l)
+</span><span class='line'>45</span></code></pre></td></tr></table></div></figure>
+
+
+<p>イメージとしては<code>(1 + 2) + 3) + 4) + 5) ... + 9)</code>と考えればよい。</p>
+
+<p>リストの全要素の総乗を求める場合。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&gt;&gt;&gt; l = [1,2,3,4,5,6,7,8,9]
+</span><span class='line'>&gt;&gt;&gt; print reduce(lambda a,b: a * b, l)
+</span><span class='line'>362880</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>リスト内包表記</h2>
+
+<p>かなり便利なので使い方を覚えておくと良い。mapやfilterを使うより、こっちで書くほうがPythonぽい書き方。</p>
+
+<p>例えば、数値からなるリスト l から unicode 型に変換したリストを作る場合を考える。普通に書くとこうなる。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>l = [1,2,3,4,5,6,7,8,9]
+</span><span class='line'>    
+</span><span class='line'>def num_to_unicode(iter):
+</span><span class='line'>    r = []
+</span><span class='line'>    for x in iter:
+</span><span class='line'>        r.append(unicode(x))
+</span><span class='line'>    return r</span></code></pre></td></tr></table></div></figure>
+
+
+<p>これをリスト内包表記で書くとこうなる。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>l = [1,2,3,4,5,6,7,8,9]
+</span><span class='line'>u_list = [unicode(x) for x in l]</span></code></pre></td></tr></table></div></figure>
+
+
+<p>また、偶数のみを取り出したリストを返す場合を考える。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>even_list = [x for x in l if x % 2 == 0]</span></code></pre></td></tr></table></div></figure>
+
+
+<p>これでOK。unicode() や x % 2 == 0 の部分をもっと複雑な関数にすると、 かなりのことができるはず。</p>
+
+<h2>問題</h2>
+
+<p>(1) 文字列からなるリストの各要素末尾に改行コードを付加する関数を作成せよ。</p>
+
+<p>(2) 整数からなるリストを受け取り、各要素を「3の倍数ならfizz、5の倍数ならbuzz、15の倍数ならfizzbuzz、その他の場合はそのまま」に書き換えたリストを返す関数を作成せよ。</p>
+
+<p>(3) [[1,2,3],[4],[5,6],[7,8,9]]を[1,2,3,4,5,6,7,8,9] のように畳み込む関数を作成せよ。</p>
+
+  
+    <footer>
+      <p class="meta">
+        
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-02-03T16:33:00+09:00" pubdate data-updated="true">Feb 3<span>rd</span>, 2014</time>
+        
+      </p>
+      
+        <div class="sharing">
+  
+  
+  
+</div>
+
+      
+      
+    </footer>
+  
+</article>
+
+<aside class="sidebar-nav span3">
+  
+    <section>
+  <h1>About me</h1>
+  <p>Name: さりんじゃー</p>
+  <p>使用言語: Python (main), R (学習中), Clojure (学習中)</p>
+  <p>興味: 機械学習, データ分析, 自然言語処理, 情報検索 など</p>
+</section>
+<section class="well">
+  <ul id="recent_posts" class="nav nav-list">
+    <li class="nav-header">Recent Posts</li>
+    
+      <li class="post">
+        <a href="/blog/2013/11/05/1/">Mac で Vagrant 環境の整備</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/09/29/1/">第33回 長岡IT開発者勉強会 Scala入学式に参加してきました</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/07/06/1/">第32回 長岡IT開発者勉強会に参加してきました</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/06/03/1/">金貨の真贋を見分けよう 〜 SVM と R〜</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/03/23/1/">Niigata.LLに参加してきました</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section class="well">
+  <ul id="gh_repos" class="nav">
+    <li class="nav-header">GitHub Repos</li>
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/Salinger">@Salinger</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        github.showRepos({
+            user: 'Salinger',
+            count: 5,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/asides/github.js" type="text/javascript"> </script>
+</section>
+
+
+<section class="well">
+  <a class="twitter-timeline" href="https://twitter.com/salinger001101" data-widget-id="429220673311891456">
+    @salinger001101 からのツイート
+  </a>
+  <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
+  </script>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo" class="page-footer"><hr>
+<p>
+  Copyright &copy; 2014 - Salinger -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

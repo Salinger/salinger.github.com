@@ -5,7 +5,7 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Python - さりんじゃーのプログラミング日記</title>
+  <title>7. シーケンス - さりんじゃーのプログラミング日記</title>
   <meta name="author" content="Salinger">
 
   
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://Salinger.github.com/python">
+  <link rel="canonical" href="http://Salinger.github.com/python/07-seq">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/bootstrap/bootstrap.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/stylesheets/bootstrap/responsive.css" media="screen, projection" rel="stylesheet" type="text/css">
@@ -112,7 +112,7 @@
 
   
   <header class="page-header">
-    <h1 class="entry-title">Python</h1>
+    <h1 class="entry-title">7. シーケンス</h1>
     <p class="meta">
 
 
@@ -125,86 +125,102 @@
   
 
 
-<time datetime="2014-01-31T18:51:00+09:00" pubdate data-updated="true">Jan 31<span>st</span>, 2014</time></p>
+<time datetime="2014-02-03T16:29:00+09:00" pubdate data-updated="true">Feb 3<span>rd</span>, 2014</time></p>
   </header>
   
-  <p>Pythonに関する情報のまとめ。</p>
+  <p>シーケンス型には str, unicode, list, tuple, bytearray, buffer, xrange 型が存在する。</p>
 
-<hr />
+<p>これらには以下の演算子や比較演算子などが適用出来る。</p>
 
-<h2>Python 入門 (2.7.x)</h2>
-
-<p>他言語をある程度触ったことがある人向け。Pythonを一巡りするためのアレコレ。 [2014/02/03]</p>
-
-<p><a href="/python/01-intro">1. 下準備・はじめに</a></p>
-
-<p><a href="/python/02-type">2. 型</a></p>
-
-<p><a href="/python/03-var">3. 変数</a></p>
-
-<p><a href="/python/04-bool">4. ブール演算</a></p>
-
-<p><a href="/python/05-comp">5. 比較</a></p>
-
-<p><a href="/python/06-num">6. 数値演算</a></p>
-
-<p><a href="/python/07-seq">7. シーケンス型</a></p>
-
-<p><a href="/python/08-str">8. 文字列</a></p>
-
-<p><a href="/python/09-list">9. リスト</a></p>
-
-<p><a href="/python/10-tuple">10. タプル</a></p>
-
-<p><a href="/python/11-dict">11. ディクショナリ</a></p>
-
-<p><a href="/python/12-set">12. 集合型</a></p>
-
-<p><a href="/python/13-ctrlflow">13. 制御構文</a></p>
-
-<p><a href="/python/14-input">14. 標準入力</a></p>
-
-<p><a href="/python/15-file">15. ファイル操作</a></p>
-
-<p><a href="/python/16-func">16. 関数</a></p>
-
-<p><a href="/python/17-module">17. モジュール</a></p>
-
-<p><a href="/python/18-exception">18. 例外</a></p>
-
-<p><a href="/python/19-obj-oriented">19. オブジェクト指向プログラミング</a></p>
-
-<p><a href="/python/20-functional-prog">20. 関数型プログラミング</a></p>
-
-<hr />
-
-<h2>プロジェクトの管理</h2>
-
-<p>homebrew, virtualenv, pip によるPython本体と各モジュールのバージョン管理。</p>
-
-<p>作成中。</p>
-
-<h2>Python 2 系 から 3 系 への移行に関する諸々</h2>
-
-<p>Python 2 系の最終版 2.7.x から 3 系への移行の必要性が見えてきたので、色々と調査中。</p>
-
-<p>作成中。</p>
-
-<h2>各種便利なモジュールの使用方法</h2>
-
-<p>作成中。</p>
-
-<hr />
-
-<h2>参考文献など</h2>
-
-<ol>
-<li>公式サイト(日), <a href="http://www.python.jp">http://www.python.jp</a></li>
-<li>公式サイト(英), <a href="http://www.python.org">http://www.python.org</a></li>
-<li>PythonRecipe, <a href="http://lightson.dip.jp/zope/ZWiki/PythonRecipe">http://lightson.dip.jp/zope/ZWiki/PythonRecipe</a></li>
-</ol>
+<table>
+<thead>
+<tr>
+<th align="left">演算子</th>
+<th align="left">意味</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">x in s</td>
+<td align="left">  s のある要素が x と等しい場合 True 、そうでなければ False 。</td>
+</tr>
+<tr>
+<td align="left">x not in s</td>
+<td align="left"> s のある要素が x と等しい場合 True 、そうでなければ False 。</td>
+</tr>
+<tr>
+<td align="left">s + t</td>
+<td align="left"> s と t の結合</td>
+</tr>
+<tr>
+<td align="left">s * n, n * s</td>
+<td align="left"> s の浅いコピー n 個からなる結合</td>
+</tr>
+<tr>
+<td align="left">s[i]</td>
+<td align="left"> s の 0 から数えて i 番目の要素</td>
+</tr>
+<tr>
+<td align="left">s[i:j]</td>
+<td align="left"> s の i 番目から j 番目までのスライス</td>
+</tr>
+<tr>
+<td align="left">s[i:j:k]</td>
+<td align="left"> s の i 番目から j 番目まで、k 毎のスライス</td>
+</tr>
+<tr>
+<td align="left">len(s)</td>
+<td align="left"> s の長さ</td>
+</tr>
+<tr>
+<td align="left">min(s)</td>
+<td align="left"> s の最小の要素</td>
+</tr>
+<tr>
+<td align="left">max(s)</td>
+<td align="left"> s の最大の要素</td>
+</tr>
+<tr>
+<td align="left">s.index(i)</td>
+<td align="left"> s の中で最初にiが現れる場所のインデックス</td>
+</tr>
+<tr>
+<td align="left">s.count(i)</td>
+<td align="left"> s の中にiが現れる数</td>
+</tr>
+</tbody>
+</table>
 
 
+  
+    <footer>
+      <p class="meta">
+        
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-02-03T16:29:00+09:00" pubdate data-updated="true">Feb 3<span>rd</span>, 2014</time>
+        
+      </p>
+      
+        <div class="sharing">
+  
+  
+  
+</div>
+
+      
+      
+    </footer>
   
 </article>
 
