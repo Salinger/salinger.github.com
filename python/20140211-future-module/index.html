@@ -1,0 +1,598 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>__future__ モジュールについて - さりんじゃーのプログラミング日記</title>
+  <meta name="author" content="Salinger">
+
+  
+  <meta name="description" content="">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://Salinger.github.com/python/20140211-future-module">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/bootstrap/bootstrap.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/stylesheets/bootstrap/responsive.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/stylesheets/syntax/syntax.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <style type="text/css">
+    body {
+      padding-bottom: 40px;
+    }
+    h1 {
+      margin-bottom: 15px;
+    }
+    img {
+      max-width: 100%;
+    }
+    .sharing, .meta, .pager {
+      margin: 20px 0px 20px 0px;
+    }
+    .page-footer p {
+      text-align: center;
+    }
+  </style>
+  <script src="/javascripts/libs/jquery.js"></script>
+  <script src="/javascripts/libs/modernizr-2.0.js"></script>
+  <script src="/javascripts/libs/bootstrap.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="さりんじゃーのプログラミング日記" type="application/atom+xml">
+  <link href="/stylesheets/data-table.css" rel="stylesheet" type="text/css" />
+  
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-39177183-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <nav role="navigation"><div class="navbar navbar-inverse">
+  <div class="navbar-inner">
+    <div class="container">
+      <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </a>
+
+      <a class="brand" href="/">さりんじゃーのプログラミング日記</a>
+
+      <div class="nav-collapse">
+        <ul class="nav">
+  <li><a href="/">Top</a></li>
+  <li><a href="/blog">Blog</a></li>
+  <li><a href="/python">Python</a></li>
+  <li><a href="/r">R</a></li>
+  <li><a href="/clojure">Clojure</a></li>
+  <li><a href="/ml">機械学習</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+
+        <ul class="nav pull-right" data-subscription="rss">
+          <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+          
+        </ul>
+
+        
+          <form class="pull-right navbar-search" action="http://google.com/search" method="get">
+            <fieldset role="search">
+              <input type="hidden" name="q" value="site:Salinger.github.com" />
+              <input class="search-query" type="text" name="q" results="0" placeholder="Search"/>
+            </fieldset>
+          </form>
+        
+      </div>
+    </div>
+  </div>
+</div>
+</nav>
+  <div class="container">
+    <div class="row-fluid">
+      
+<article role="article" class="span9">
+
+  
+  <header class="page-header">
+    <h1 class="entry-title">__future__ モジュールについて</h1>
+    <p class="meta">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-02-11T22:27:00+09:00" pubdate data-updated="true">Feb 11<span>th</span>, 2014</time></p>
+  </header>
+  
+  <p>いきなり 3 系に移行するのはちょっと心配…という場合、まず2 系 + <code>__future__</code> モジュールを使うのが良さそう。<code>__future__</code> モジュールは Python 2 系用のモジュール。Python 3 系に実装されている Python 2 系 と互換性の無い機能をPython 2 系で使用できるようにする。</p>
+
+<p>以下、<code>__future__</code> モジュールに実装されている機能を利用しつつ、Python 3 系での大きな変更点を確認してゆく。</p>
+
+<h2>print_function</h2>
+
+<p>3系では <code>print</code> は文から関数 <code>print()</code>になった。また予約語からも削除された。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&gt;&gt;&gt; from __future__ import print_function
+</span><span class='line'>from __future__ import print_function
+</span><span class='line'>&gt;&gt;&gt; print('abc')
+</span><span class='line'>print('abc')
+</span><span class='line'>abc
+</span><span class='line'>&gt;&gt;&gt; print('abc','def','ghi')
+</span><span class='line'>print('abc','def','ghi')
+</span><span class='line'>abc def ghi</span></code></pre></td></tr></table></div></figure>
+
+
+<p>2系で改行文字を出力しない場合は <code>print "hoge",</code> のように記述していたが、3系ではもっと汎用的に記述できる。<code>end=''</code>の<code>''</code>の部分を任意の文字列で置き換えられる。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&gt;&gt;&gt; print('abc', end='')
+</span><span class='line'>print('abc', end='')
+</span><span class='line'>abc&gt;&gt;&gt;</span></code></pre></td></tr></table></div></figure>
+
+
+<p>また、ファイルへの出力も引数で指定すれば可能。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&gt;&gt;&gt; f = open("test.txt", "w")
+</span><span class='line'>f = open("test.txt", "w")
+</span><span class='line'>&gt;&gt;&gt; print("Spam and Egg and Spam", file=f)
+</span><span class='line'>print("HogeHoge, PiyoPiyo", file=f)</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>unicode_literals</h2>
+
+<p>Python 3 系では文字列は基本的にすべてユニコードとして扱う。日本語等の扱いが相当楽になる。<code>u'日本語'</code>と書いていたものは全て<code>'日本語'</code>と書けば良い。逆に以前の通常の文字列を取り扱いたい場合<code>b'日本語'</code>のように<code>b''</code>の形で書く(byte列表現)。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&gt;&gt;&gt; from __future__ import unicode_literals
+</span><span class='line'>from __future__ import unicode_literals
+</span><span class='line'>&gt;&gt;&gt; "abc"
+</span><span class='line'>"abc"
+</span><span class='line'>u'abc'
+</span><span class='line'>&gt;&gt;&gt; b'abc'
+</span><span class='line'>b'abc'
+</span><span class='line'>'abc'
+</span><span class='line'>&gt;&gt;&gt; </span></code></pre></td></tr></table></div></figure>
+
+
+<p>注意：</p>
+
+<p>byte列表現を取り扱う際、インデックスの参照結果が2系と3系で異なる。詳しくは<a href="http://docs.python.jp/3.3/howto/pyporting.html#bytes-literals">ここ</a>を参照。</p>
+
+<h3>division</h3>
+
+<p>2系では割り算の演算子 <code>/</code> は小数点以下切り捨てだったが、3系では小数点以下をそのまま扱える。</p>
+
+<p>切り捨てたい場合、新演算子の <code>//</code> を利用する。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&gt;&gt;&gt; from __future__ import division
+</span><span class='line'>from __future__ import division
+</span><span class='line'>&gt;&gt;&gt; 1/2
+</span><span class='line'>1/2
+</span><span class='line'>0.5
+</span><span class='line'>&gt;&gt;&gt; 1//2
+</span><span class='line'>1//2
+</span><span class='line'>0</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>future_builtins</h2>
+
+<p>このモジュールは、Python 3 系 では異なった動作をする Python 2 系 のビルトイン名前空間に追加できない関数を提供する(<a href="http://docs.python.jp/2/library/future_builtins.html">future_builtins — Python 3 のビルトイン</a>)。</p>
+
+<ul>
+<li>ascii(object)
+
+<ul>
+<li>引数で与えた値と等価なリテラル表記文字列を返す。つまり repr() と同じ値。Python 3 では、 repr() は表示可能なUnicode文字をエスケープせずに返し、 ascii() はその文字列をバックスラッシュでエスケープする。repr() の代わりに利用することで、ASCII文字列を必要としていることを明示できる。</li>
+</ul>
+</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&gt;&gt;&gt; from future_builtins import *
+</span><span class='line'>from future_builtins import *
+</span><span class='line'>&gt;&gt;&gt; from __future__ import unicode_literals
+</span><span class='line'>from __future__ import unicode_literals
+</span><span class='line'>&gt;&gt;&gt; ascii("text")
+</span><span class='line'>ascii("text")
+</span><span class='line'>"u'text'"
+</span><span class='line'>&gt;&gt;&gt; ascii("テスト")
+</span><span class='line'>ascii("テスト")
+</span><span class='line'>"u'\\u30c6\\u30b9\\u30c8'"</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>map(function, iterables, &#8230;)
+
+<ul>
+<li>iterables の要素を引数として funtion を呼び出すイテレータを作成する。function が None の場合、引数のタプルを返す。itertools.imap() と同じ動作。</li>
+</ul>
+</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&gt;&gt;&gt; from future_builtins import *
+</span><span class='line'>from future_builtins import *
+</span><span class='line'>&gt;&gt;&gt; map(lambda x: x ** 2, range(10))
+</span><span class='line'>map(lambda x: x ** 2, range(10))
+</span><span class='line'>&lt;itertools.imap object at 0x1017cd4d0&gt;
+</span><span class='line'>&gt;&gt;&gt; list(map(lambda x: x ** 2, range(10)))
+</span><span class='line'>list(map(lambda x: x ** 2, range(10)))
+</span><span class='line'>[0, 1, 4, 9, 16, 25, 36, 49, 64, 81]</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>filter(function, iterable)
+
+<ul>
+<li>function が True となる要素だけを返すイテレータを作成する。function が None の場合、値が真のものだけを返す。itertools.ifilter() と同じ動作。</li>
+</ul>
+</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&gt;&gt;&gt; from future_builtins import *
+</span><span class='line'>from future_builtins import *
+</span><span class='line'>&gt;&gt;&gt; filter(lambda x: x%2, range(10))
+</span><span class='line'>filter(lambda x: x%2, range(10))
+</span><span class='line'>&lt;itertools.ifilter object at 0x1017cd790&gt;
+</span><span class='line'>&gt;&gt;&gt; list(filter(lambda x: x%2, range(10)))
+</span><span class='line'>list(filter(lambda x: x%2, range(10)))
+</span><span class='line'>[1, 3, 5, 7, 9]</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>zip(iterables, &#8230;)
+
+<ul>
+<li>各 iterable の要素をまとめるイテレータを作成する。itertools.izip() と同じ動作。</li>
+</ul>
+</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&gt;&gt;&gt; zip([1, 2, 3, 4, 5],[5, 4, 3, 2, 1])
+</span><span class='line'>zip([1, 2, 3, 4, 5],[5, 4, 3, 2, 1])
+</span><span class='line'>&lt;itertools.izip object at 0x1017ccb48&gt;
+</span><span class='line'>&gt;&gt;&gt; list(zip([1, 2, 3, 4, 5],[5, 4, 3, 2, 1]))
+</span><span class='line'>list(zip([1, 2, 3, 4, 5],[5, 4, 3, 2, 1]))
+</span><span class='line'>[(1, 5), (2, 4), (3, 3), (4, 2), (5, 1)]</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li><p>hex(object)</p>
+
+<ul>
+<li>ビルトイン hex() と同じように動作するが、 <code>__hex__()</code> の代わりに、 <code>__index__()</code> メソッドを利用して整数を取得し、それを16進数文字列に変換する。</li>
+</ul>
+</li>
+<li><p>oct(object)</p>
+
+<ul>
+<li>ビルトイン oct() と同じように動作するが、 <code>__oct__()</code> の代わりに、 <code>__index__()</code> メソッドを利用して整数を取得し、それを16進数文字列に変換する。</li>
+</ul>
+</li>
+</ul>
+
+
+<h2>absolute_import</h2>
+
+<p>Python 3 では相対インポートではなく、絶対インポート優先になる。標準モジュールと同名のモジュールがカレントディレクトリにある場合、Python 2 系ではカレントディレクトリのモジュールが優先されていたので、これを使うことで標準モジュールを意図せず上書きしてしまう可能性がなくなる。</p>
+
+<p>以下のディレクトリ構成を仮定する。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>top_dir
+</span><span class='line'>|--__init__.py
+</span><span class='line'>|--main.py
+</span><span class='line'>|--modules1
+</span><span class='line'>|   |--foo.py
+</span><span class='line'>|   |--bar.py
+</span><span class='line'>|
+</span><span class='line'>|--modules2
+</span><span class='line'>    |--hoge.py
+</span><span class='line'>    |--piyo.py</span></code></pre></td></tr></table></div></figure>
+
+
+<p><code>piyo.py</code>から<code>hoge.py</code>と<code>foo.py</code>の相対インポートを明示的に行いたい場合、</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&gt;&gt;&gt; from __future__ import absolute_import
+</span><span class='line'>&gt;&gt;&gt; from . import hoge.py
+</span><span class='line'>&gt;&gt;&gt; from ..modules1 import foo.py</span></code></pre></td></tr></table></div></figure>
+
+
+<p>のようにする。</p>
+
+<h2>with_statement</h2>
+
+<p>with 構文はPython 2.6 以降ではデフォルトで有効。Python 2.5 を使っている場合にこれを import してやる必要がある。</p>
+
+<p>以下のコードのようにファイル読み込みの際に with 構文を使うと、close()を自分で呼び出す必要がなく、ブロックを抜けると自動でclose()を呼ぶ。例外処理等を行いやすいので読み書きする際には with 構文を使うべき。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>with open('test.txt', 'w') as f:
+</span><span class='line'>    f.write("This is test!\n")</span></code></pre></td></tr></table></div></figure>
+
+
+<p></p>
+
+<p>with 構文についての細かい解説<a href="http://d.hatena.ne.jp/reiki4040/20130331/1364723288">このページ</a>が詳しい。</p>
+
+<h2>nested_scopes</h2>
+
+<p>Python 2.0 から 2.1 でスコープルールに大きな変更点があった。2.1以降のバージョンを使っている場合問題になることはないので説明は略 (<a href="http://docs.python.jp/3.3/whatsnew/2.1.html#pep-227-nested-scopes">PEP 227</a>)。</p>
+
+<h2>最後にまとめ</h2>
+
+<p>現状の2系最新版 Python 2.7 を使う場合、出来る限り <code>__future__</code> モジュールを import しておいて3系の機能に今のうちから慣れておきましょう。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>from __future__ import print_function
+</span><span class='line'>from __future__ import unicode_literals
+</span><span class='line'>from __future__ import absolute_import
+</span><span class='line'>from __future__ import generators
+</span><span class='line'>from __future__ import division</span></code></pre></td></tr></table></div></figure>
+
+
+  
+    <footer>
+      <p class="meta">
+        
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-02-11T22:27:00+09:00" pubdate data-updated="true">Feb 11<span>th</span>, 2014</time>
+        
+      </p>
+      
+        <div class="sharing">
+  
+  
+  
+</div>
+
+      
+      
+      <section>
+        <h1>Comments</h1>
+        <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+      </section>
+      
+    </footer>
+  
+</article>
+
+<aside class="sidebar-nav span3">
+  
+    <section>
+  <h1>About me</h1>
+  <p>Name: さりんじゃー</p>
+  <p>使用言語: Python (main), R (学習中), Clojure (学習中)</p>
+  <p>興味: 機械学習, データ分析, 自然言語処理, 情報検索 など</p>
+</section>
+<section class="well">
+  <ul id="recent_posts" class="nav nav-list">
+    <li class="nav-header">Recent Posts</li>
+    
+      <li class="post">
+        <a href="/blog/2014/02/03/1/">Python 2.7.X 入門者向けのまとめ</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/11/05/1/">Mac で Vagrant 環境の整備</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/09/29/1/">第33回 長岡IT開発者勉強会 Scala入学式に参加してきました</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/07/06/1/">第32回 長岡IT開発者勉強会に参加してきました</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/06/03/1/">金貨の真贋を見分けよう 〜 SVM と R〜</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section class="well">
+  <ul id="gh_repos" class="nav">
+    <li class="nav-header">GitHub Repos</li>
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/Salinger">@Salinger</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        github.showRepos({
+            user: 'Salinger',
+            count: 5,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/asides/github.js" type="text/javascript"> </script>
+</section>
+
+
+<section class="well">
+  <a class="twitter-timeline" href="https://twitter.com/salinger001101" data-widget-id="429220673311891456">
+    @salinger001101 からのツイート
+  </a>
+  <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
+  </script>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo" class="page-footer"><hr>
+<p>
+  Copyright &copy; 2014 - Salinger -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'salinger';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://Salinger.github.com/python/20140211-future-module/index.html';
+        var disqus_url = 'http://Salinger.github.com/python/20140211-future-module/index.html';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

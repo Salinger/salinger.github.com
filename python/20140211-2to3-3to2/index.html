@@ -5,7 +5,7 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Python - さりんじゃーのプログラミング日記</title>
+  <title>2to3 と 3to2 - さりんじゃーのプログラミング日記</title>
   <meta name="author" content="Salinger">
 
   
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://Salinger.github.com/python">
+  <link rel="canonical" href="http://Salinger.github.com/python/20140211-2to3-3to2">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/bootstrap/bootstrap.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/stylesheets/bootstrap/responsive.css" media="screen, projection" rel="stylesheet" type="text/css">
@@ -112,7 +112,7 @@
 
   
   <header class="page-header">
-    <h1 class="entry-title">Python</h1>
+    <h1 class="entry-title">2to3 と 3to2</h1>
     <p class="meta">
 
 
@@ -125,100 +125,72 @@
   
 
 
-<time datetime="2014-01-31T18:51:00+09:00" pubdate data-updated="true">Jan 31<span>st</span>, 2014</time></p>
+<time datetime="2014-02-11T22:28:00+09:00" pubdate data-updated="true">Feb 11<span>th</span>, 2014</time></p>
   </header>
   
-  <p>Pythonに関する情報のまとめ。</p>
+  <h2>2to3</h2>
 
-<hr />
+<p><a href="http://docs.python.jp/3.3/library/2to3.html#module-lib2to3">2to3</a> は Python 2.x のソースコードを読み込み、一連の 変換プログラム を適用して Python 3.x のコードに変換するプログラムです。Python 2.6 以降に含まれています。</p>
 
-<h2>Python 入門 (2.7.x)</h2>
-
-<p>他言語をある程度触ったことがある人向け。Pythonを一巡りするためのアレコレ。 [2014/02/03]</p>
-
-<p><a href="/python/01-intro">1. 下準備・はじめに</a></p>
-
-<p><a href="/python/02-type">2. 型</a></p>
-
-<p><a href="/python/03-var">3. 変数</a></p>
-
-<p><a href="/python/04-bool">4. ブール演算</a></p>
-
-<p><a href="/python/05-comp">5. 比較</a></p>
-
-<p><a href="/python/06-num">6. 数値演算</a></p>
-
-<p><a href="/python/07-seq">7. シーケンス型</a></p>
-
-<p><a href="/python/08-str">8. 文字列</a></p>
-
-<p><a href="/python/09-list">9. リスト</a></p>
-
-<p><a href="/python/10-tuple">10. タプル</a></p>
-
-<p><a href="/python/11-dict">11. ディクショナリ</a></p>
-
-<p><a href="/python/12-set">12. 集合型</a></p>
-
-<p><a href="/python/13-ctrlflow">13. 制御構文</a></p>
-
-<p><a href="/python/14-input">14. 標準入力</a></p>
-
-<p><a href="/python/15-file">15. ファイル操作</a></p>
-
-<p><a href="/python/16-func">16. 関数</a></p>
-
-<p><a href="/python/17-module">17. モジュール</a></p>
-
-<p><a href="/python/18-exception">18. 例外</a></p>
-
-<p><a href="/python/19-obj-oriented">19. オブジェクト指向プログラミング</a></p>
-
-<p><a href="/python/20-functional-prog">20. 関数型プログラミング</a></p>
-
-<hr />
-
-<h2>Python のバージョンとパッケージの管理</h2>
-
-<p>homebrew, virtualenv, pip によるPython本体と各モジュールのバージョン管理。</p>
-
-<p><a href="/python/20140208-virtpy23">1. Python 3 系移行のための仮想環境構築(MacOSX + Homebrew + virtualenv)</a> [2014/02/08]</p>
-
-<p><a href="/python/20140208-pipvirt">2. pip 1.5 + virtualenv によるパッケージの管理</a> [2014/02/08]</p>
-
-<hr />
-
-<h2>Python 2 系 から 3 系 への移行に関する諸々</h2>
-
-<p>Python 2 系の最終版 2.7.x から 3 系への移行の必要性が見えてきたので、調査してみた。</p>
-
-<p><a href="/python/20140211-2to3intro">1. はじめに</a> [2014/02/12]</p>
-
-<p><a href="/python/20140211-future-module">2. __future__ モジュール</a> [2014/02/12]</p>
-
-<p><a href="/python/20140211-3details">3. 3 系での変更点覚書</a> [2014/02/12]</p>
-
-<p><a href="/python/20140211-2to3-3to2">4. 2to3 と 3to2</a> [2014/02/12]</p>
-
-<p>[5. モジュール対応状況] 今後追加予定</p>
-
-<hr />
-
-<h2>各種便利なモジュールの使用方法</h2>
-
-<p>作成中。</p>
-
-<hr />
-
-<h2>参考文献など</h2>
-
-<ol>
-<li>公式サイト(日), <a href="http://www.python.jp">http://www.python.jp</a></li>
-<li>公式サイト(英), <a href="http://www.python.org">http://www.python.org</a></li>
-<li>PythonRecipe, <a href="http://lightson.dip.jp/zope/ZWiki/PythonRecipe">http://lightson.dip.jp/zope/ZWiki/PythonRecipe</a></li>
-</ol>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ 2to3 example.py</span></code></pre></td></tr></table></div></figure>
 
 
+<p>を実行すると、ソースの差分が表示される。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ 2to3 -w example.py</span></code></pre></td></tr></table></div></figure>
+
+
+<p>で変更点をソースコードに上書きする(オリジナルのバックアップも作成される)。</p>
+
+<p>具体的な内部処理の説明は<a href="http://docs.python.jp/2.7/library/2to3.html">このページ</a>が詳しい。</p>
+
+<p><code>__future__</code> モジュールを利用して、Python 2 系のプログラムを作成すれば、比較的楽に変換できるはず。ただし、文字列周り(byte列の扱い)でトラブりやすいので注意。</p>
+
+<h2>3to2</h2>
+
+<p><a href="https://bitbucket.org/amentajo/lib3to2/overview">3to2</a> は有志作成のプログラムです。Python 3.x のソースコードを読み込み、一連の 変換プログラム を適用して Python 2.x のコードに変換するプログラムです。</p>
+
+<h2>まとめ</h2>
+
+<p>これらのモジュールを使うと、1つのソースコードで両バージョン対応のプログラムを作成することが出来る。が、既存のものを全自動でというわけにもいかない。</p>
+
+  
+    <footer>
+      <p class="meta">
+        
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-02-11T22:28:00+09:00" pubdate data-updated="true">Feb 11<span>th</span>, 2014</time>
+        
+      </p>
+      
+        <div class="sharing">
+  
+  
+  
+</div>
+
+      
+      
+      <section>
+        <h1>Comments</h1>
+        <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+      </section>
+      
+    </footer>
   
 </article>
 
@@ -305,6 +277,22 @@
 
 </footer>
   
+
+<script type="text/javascript">
+      var disqus_shortname = 'salinger';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://Salinger.github.com/python/20140211-2to3-3to2/index.html';
+        var disqus_url = 'http://Salinger.github.com/python/20140211-2to3-3to2/index.html';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
 
 
 

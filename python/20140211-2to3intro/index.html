@@ -5,7 +5,7 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Python - さりんじゃーのプログラミング日記</title>
+  <title>はじめに - さりんじゃーのプログラミング日記</title>
   <meta name="author" content="Salinger">
 
   
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://Salinger.github.com/python">
+  <link rel="canonical" href="http://Salinger.github.com/python/20140211-2to3intro">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/bootstrap/bootstrap.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/stylesheets/bootstrap/responsive.css" media="screen, projection" rel="stylesheet" type="text/css">
@@ -112,7 +112,7 @@
 
   
   <header class="page-header">
-    <h1 class="entry-title">Python</h1>
+    <h1 class="entry-title">はじめに</h1>
     <p class="meta">
 
 
@@ -125,100 +125,52 @@
   
 
 
-<time datetime="2014-01-31T18:51:00+09:00" pubdate data-updated="true">Jan 31<span>st</span>, 2014</time></p>
+<time datetime="2014-02-11T22:27:00+09:00" pubdate data-updated="true">Feb 11<span>th</span>, 2014</time></p>
   </header>
   
-  <p>Pythonに関する情報のまとめ。</p>
+  <p>Python 2 から Python 3 へのメジャーバージョンアップの際に、後方互換性を大きく損なうような機能追加や仕様変更が実装されています。</p>
 
-<hr />
+<p><a href="http://www.atmarkit.co.jp/ait/articles/0901/31/news017.html">Python 3が後方互換性を捨ててでも求めたもの</a> にもあるように、Python の設計思想をより高次元で実現するためにはこのような大規模な変更が必要らしい。</p>
 
-<h2>Python 入門 (2.7.x)</h2>
+<p>2 系から 3 系への移行の際に一番参考になるドキュメントは公式の Python 2 から Python 3 への移植(<a href="http://docs.python.jp/3.3/howto/pyporting.html">日本語</a> / <a href="http://docs.python.org/3.3/howto/pyporting.html">英語</a> ) でしょう。また、<a href="http://diveintopython3-ja.rdy.jp/porting-code-to-python-3-with-2to3.html">Dive into Python 3 (日本語版): 2to3を使ってコードをPython 3に移植する</a>も参考になります。</p>
 
-<p>他言語をある程度触ったことがある人向け。Pythonを一巡りするためのアレコレ。 [2014/02/03]</p>
+<p>以後のページに Python 2 から Python 3 への移植から重要そうな内容をまとめておきます。</p>
 
-<p><a href="/python/01-intro">1. 下準備・はじめに</a></p>
-
-<p><a href="/python/02-type">2. 型</a></p>
-
-<p><a href="/python/03-var">3. 変数</a></p>
-
-<p><a href="/python/04-bool">4. ブール演算</a></p>
-
-<p><a href="/python/05-comp">5. 比較</a></p>
-
-<p><a href="/python/06-num">6. 数値演算</a></p>
-
-<p><a href="/python/07-seq">7. シーケンス型</a></p>
-
-<p><a href="/python/08-str">8. 文字列</a></p>
-
-<p><a href="/python/09-list">9. リスト</a></p>
-
-<p><a href="/python/10-tuple">10. タプル</a></p>
-
-<p><a href="/python/11-dict">11. ディクショナリ</a></p>
-
-<p><a href="/python/12-set">12. 集合型</a></p>
-
-<p><a href="/python/13-ctrlflow">13. 制御構文</a></p>
-
-<p><a href="/python/14-input">14. 標準入力</a></p>
-
-<p><a href="/python/15-file">15. ファイル操作</a></p>
-
-<p><a href="/python/16-func">16. 関数</a></p>
-
-<p><a href="/python/17-module">17. モジュール</a></p>
-
-<p><a href="/python/18-exception">18. 例外</a></p>
-
-<p><a href="/python/19-obj-oriented">19. オブジェクト指向プログラミング</a></p>
-
-<p><a href="/python/20-functional-prog">20. 関数型プログラミング</a></p>
-
-<hr />
-
-<h2>Python のバージョンとパッケージの管理</h2>
-
-<p>homebrew, virtualenv, pip によるPython本体と各モジュールのバージョン管理。</p>
-
-<p><a href="/python/20140208-virtpy23">1. Python 3 系移行のための仮想環境構築(MacOSX + Homebrew + virtualenv)</a> [2014/02/08]</p>
-
-<p><a href="/python/20140208-pipvirt">2. pip 1.5 + virtualenv によるパッケージの管理</a> [2014/02/08]</p>
-
-<hr />
-
-<h2>Python 2 系 から 3 系 への移行に関する諸々</h2>
-
-<p>Python 2 系の最終版 2.7.x から 3 系への移行の必要性が見えてきたので、調査してみた。</p>
-
-<p><a href="/python/20140211-2to3intro">1. はじめに</a> [2014/02/12]</p>
-
-<p><a href="/python/20140211-future-module">2. __future__ モジュール</a> [2014/02/12]</p>
-
-<p><a href="/python/20140211-3details">3. 3 系での変更点覚書</a> [2014/02/12]</p>
-
-<p><a href="/python/20140211-2to3-3to2">4. 2to3 と 3to2</a> [2014/02/12]</p>
-
-<p>[5. モジュール対応状況] 今後追加予定</p>
-
-<hr />
-
-<h2>各種便利なモジュールの使用方法</h2>
-
-<p>作成中。</p>
-
-<hr />
-
-<h2>参考文献など</h2>
-
-<ol>
-<li>公式サイト(日), <a href="http://www.python.jp">http://www.python.jp</a></li>
-<li>公式サイト(英), <a href="http://www.python.org">http://www.python.org</a></li>
-<li>PythonRecipe, <a href="http://lightson.dip.jp/zope/ZWiki/PythonRecipe">http://lightson.dip.jp/zope/ZWiki/PythonRecipe</a></li>
-</ol>
+  
+    <footer>
+      <p class="meta">
+        
+        
 
 
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-02-11T22:27:00+09:00" pubdate data-updated="true">Feb 11<span>th</span>, 2014</time>
+        
+      </p>
+      
+        <div class="sharing">
+  
+  
+  
+</div>
+
+      
+      
+      <section>
+        <h1>Comments</h1>
+        <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+      </section>
+      
+    </footer>
   
 </article>
 
@@ -305,6 +257,22 @@
 
 </footer>
   
+
+<script type="text/javascript">
+      var disqus_shortname = 'salinger';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://Salinger.github.com/python/20140211-2to3intro/index.html';
+        var disqus_url = 'http://Salinger.github.com/python/20140211-2to3intro/index.html';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
 
 
 
