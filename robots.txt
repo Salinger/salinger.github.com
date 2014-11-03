@@ -1,4 +1,3 @@
 User-agent: *
 Disallow: 
-
 Sitemap: http://Salinger.github.com/sitemap.xml 
