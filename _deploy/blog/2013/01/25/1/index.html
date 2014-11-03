@@ -1,0 +1,368 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Raspberry PiとキャラクタLCDで遊んでみた - さりんじゃーのプログラミング日記</title>
+  <meta name="author" content="Salinger">
+
+  
+  <meta name="description" content="">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://Salinger.github.com/blog/2013/01/25/1">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/bootstrap/bootstrap.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/stylesheets/bootstrap/responsive.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/stylesheets/syntax/syntax.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <style type="text/css">
+    body {
+      padding-bottom: 40px;
+    }
+    h1 {
+      margin-bottom: 15px;
+    }
+    img {
+      max-width: 100%;
+    }
+    .sharing, .meta, .pager {
+      margin: 20px 0px 20px 0px;
+    }
+    .page-footer p {
+      text-align: center;
+    }
+  </style>
+  <script src="/javascripts/libs/jquery.js"></script>
+  <script src="/javascripts/libs/modernizr-2.0.js"></script>
+  <script src="/javascripts/libs/bootstrap.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="さりんじゃーのプログラミング日記" type="application/atom+xml">
+  <link href="/stylesheets/data-table.css" rel="stylesheet" type="text/css" />
+  
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-39177183-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <nav role="navigation"><div class="navbar navbar-inverse">
+  <div class="navbar-inner">
+    <div class="container">
+      <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </a>
+
+      <a class="brand" href="/">さりんじゃーのプログラミング日記</a>
+
+      <div class="nav-collapse">
+        <ul class="nav">
+  <li><a href="/">Top</a></li>
+  <li><a href="/blog">Blog</a></li>
+  <li><a href="/python">Python</a></li>
+  <li><a href="/r">R</a></li>
+  <li><a href="/clojure">Clojure</a></li>
+  <li><a href="/ml">機械学習</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+
+        <ul class="nav pull-right" data-subscription="rss">
+          <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+          
+        </ul>
+
+        
+          <form class="pull-right navbar-search" action="http://google.com/search" method="get">
+            <fieldset role="search">
+              <input type="hidden" name="q" value="site:Salinger.github.com" />
+              <input class="search-query" type="text" name="q" results="0" placeholder="Search"/>
+            </fieldset>
+          </form>
+        
+      </div>
+    </div>
+  </div>
+</div>
+</nav>
+  <div class="container">
+    <div class="row-fluid">
+      
+<article class="hentry span9" role="article">
+
+  
+  <header class="page-header">
+    
+      <h1 class="entry-title">Raspberry PiとキャラクタLCDで遊んでみた</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-01-25T16:46:00+09:00" pubdate data-updated="true">Jan 25<span>th</span>, 2013</time>
+        
+         | <a href="#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>せっかくGPIOがあるんだから、ここに何かをくっつけて遊んでみたくなった。という訳で、キャラクタLCDを接続してみました。Raspberry Piの電源はGPIOへ直接入力してます。</p>
+
+<p><img src="/images/2013-01-25/LCD.jpg" alt="Raspberry Pi 画像" /></p>
+
+<!-- more -->
+
+
+<h2>用意したもの</h2>
+
+<p><a href="http://akizukidenshi.com/catalog/default.aspx">秋月電子</a>で以下のものを購入。
+・SD1602HUOB 16x2 キャラクタLCD x 1
+・GF12-US0520 5V2A ACアダプタ x 1
+・半固定抵抗器 50Ω x 1
+・ピンソケット (メス) 2x13 (26P) x 1
+・ブレッドボード用DCジャックDIP化キット x 1
+・トグルスイッチ3P x 1
+・ユニバーサル基板 (両面スルーホール) 72x47 x 1</p>
+
+<p>合計して約2000円。配線は以前からの余りを流用。</p>
+
+<h2>LCD用基板の作成</h2>
+
+<p>今回使用したLCDはHD44780の互換品なので以下の作業は<a href="http://www.raspberrypi-spy.co.uk/2012/07/16x2-lcd-module-control-using-python/">このページ</a>を参考にして行いました。</p>
+
+<p>GPIOとLCDのピンの接続は、基本的に参考ページの通りに接続。基本的には問題ないのですが、注意点が１つ。参考サイトではLCDの3番ピン(Contrast)がGNDに接続されてますが、今回使用したキャラクタLCDはここに可変抵抗器を入れないと、コントラストの関係で液晶に四角い塊が出力される状態になる(斜めから見るとギリギリ文字が読める)。可変抵抗器で分圧してやれば、コントラストの調節ができるようになり、無事文字が読めるようになりました。</p>
+
+<p>また、Raspberry Piには電源スイッチがないので、電源ON/OFFのためのスイッチも追加しました。これでリセット時にACアダプタを抜き差しする必要がなくなった。</p>
+
+<h2>LCD出力用のプログラム</h2>
+
+<p>参考用ページにアルファベットを出力するための、Pythonのプログラムがあったが、日本語(半角カナ・記号)をLCDに出力するために少々書き換えました。GPIO用のモジュール:RPi.GPIO はeasy_installやpipで適当にインストールしてください。<br/>
+Github:<a href="https://github.com/Salinger/Raspberry-Pi-LCD-HD44780">Raspberry-Pi-LCD-HD44780</a><br/>
+このプログラムを使えば、日本語（ひらがな・カタカナ・一部記号）とアルファベットの混じった文字列ををunicodeで渡してやれば、いい感じに変換して出力してくれます。この記事TOPの画像は、このプログラムを動かしたときのものです。</p>
+
+<p>実行する際の注意点として、このプログラムはroot権限で動かす必要があります(GPIO使う場合は必須なのか？)。</p>
+
+<pre><code>$ sudo python lcd.py
+</code></pre>
+
+<h2>まとめ</h2>
+
+<p>これで文字列を生成するPythonのプログラムから、自由にLCDへ出力できるようになりました。電源はRaspberry PiとLCDどちらもACアダプタからの入力で動作します。あと地味に電源スイッチが便利です。次はPythonで文字列を生成するプログラムを書いてこいつに乗っけます。</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Salinger</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-01-25T16:46:00+09:00" pubdate data-updated="true">Jan 25<span>th</span>, 2013</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/python/'>Python</a>, <a class='category' href='/blog/categories/raspberrypi/'>RaspberryPi</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  
+  
+</div>
+
+    
+    
+    <section>
+      <h1>Comments</h1>
+      <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+    </section>
+    
+    <ul class="pager">
+      
+      <li class="previous"><a class="basic-alignment left"
+        href="/blog/2013/01/24/1/" title="Previous Post:
+        Laspberry Piについて">&laquo; Laspberry Piについて</a></li>
+      
+      <li><a href="/blog/archives">Blog Archives</a></li>
+      
+      <li class="next"><a class="basic-alignment right" href="/blog/2013/01/27/1/"
+        title="Next Post: Raspberry Piに人工無脳搭載してみた">Raspberry Piに人工無脳搭載してみた
+        &raquo;</a></li>
+      
+    </ul>
+  </footer>
+</article>
+
+<aside class="sidebar-nav span3">
+  
+    <section>
+  <h1>About me</h1>
+  <p>Name: さりんじゃー</p>
+  <p>使用言語: Python (main), R (学習中), Clojure (学習中)</p>
+  <p>興味: 機械学習, データ分析, 自然言語処理, 情報検索 など</p>
+</section>
+<section class="well">
+  <ul id="recent_posts" class="nav nav-list">
+    <li class="nav-header">Recent Posts</li>
+    
+      <li class="post">
+        <a href="/blog/2014/11/03/1/">Vagrant で 始める CDH5 + Hive + Impala 入門</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/02/03/1/">Python 2.7.X 入門者向けのまとめ</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/11/05/1/">Mac で Vagrant 環境の整備</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/09/29/1/">第33回 長岡IT開発者勉強会 Scala入学式に参加してきました</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/07/06/1/">第32回 長岡IT開発者勉強会に参加してきました</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section class="well">
+  <ul id="gh_repos" class="nav">
+    <li class="nav-header">GitHub Repos</li>
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/Salinger">@Salinger</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        github.showRepos({
+            user: 'Salinger',
+            count: 5,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/asides/github.js" type="text/javascript"> </script>
+</section>
+
+
+<section class="well">
+  <a class="twitter-timeline" href="https://twitter.com/salinger001101" data-widget-id="429220673311891456">
+    @salinger001101 からのツイート
+  </a>
+  <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
+  </script>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo" class="page-footer"><hr>
+<p>
+  Copyright &copy; 2014 - Salinger -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'salinger';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://Salinger.github.com/blog/2013/01/25/1/';
+        var disqus_url = 'http://Salinger.github.com/blog/2013/01/25/1/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

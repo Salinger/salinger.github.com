@@ -1,0 +1,503 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Study | さりんじゃーのプログラミング日記]]></title>
+  <link href="http://Salinger.github.com/blog/categories/study/atom.xml" rel="self"/>
+  <link href="http://Salinger.github.com/"/>
+  <updated>2014-11-03T23:31:09+09:00</updated>
+  <id>http://Salinger.github.com/</id>
+  <author>
+    <name><![CDATA[Salinger]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[第33回 長岡IT開発者勉強会 Scala入学式に参加してきました]]></title>
+    <link href="http://Salinger.github.com/blog/2013/09/29/1/"/>
+    <updated>2013-09-29T15:50:00+09:00</updated>
+    <id>http://Salinger.github.com/blog/2013/09/29/1</id>
+    <content type="html"><![CDATA[<h2>はじめに</h2>
+
+<p>2013/09/28に行われた<a href="http://nagaoka.techtalk.jp/no33">NDS33</a>に参加してきました。今回はScalaのハンズオン＋LTの構成。</p>
+
+<!--more-->
+
+
+<h2>Scala入学式</h2>
+
+<p>Scala で Hello, World から Twitter bot を作成するまでのハンズオン形式のセミナー。講師は猫型さん(@neko_gata_s)。</p>
+
+<p><a href="https://gist.github.com/Shinpeim/db00b073f7acd6d5b918">環境構築</a><br/>
+<a href="https://gist.github.com/Shinpeim/6740436">テキスト</a></p>
+
+<p>ScalaはJVMで動く強い静的型付き言語。Javaの資産も活用できる。</p>
+
+<p>事前に Twitter API の consumer key, consumer secret, access token, access token secret を取得を取得し、Scala開発環境のセットアップを行うまでが入学試験(?)でした。
+私はMacだったので、Scala と sbt は homebrew でインストールし、JDK や IntelliJ IDEA は公式からダウンロードし普通にインストール。
+実はsbt-ideaのインストールがうまいこといってなかったのがハンズオン中に発覚。
+build.sbtを <code>~/.sbt/plugins/build.sbt</code> に置けと公式ページに書いてあったが、正しくは<code>~/.sbt/0.13/plugins/build.sbt</code>だった。</p>
+
+<p>hello, world は無事出力され、次に文法周りの説明が。
+ifが最後に評価された値を返すのが地味に便利だったり、強力なパターンマッチもある。また、map、flatMap、filterあたりの関数型っぽい操作を味わったり、それらの高階関数＋Option型等を駆使することで、ぬるぽ回避を行う等なかなか興味深い手法も体験できた。</p>
+
+<p>最後に Twitter bot の作成。ぬるぽをタイムラインに発見したら、ガッする bot 。
+Java用の Twitter API ラッパの twitter4j を利用してサクッっと作成。
+twitter4j 触ったの初めてだったけど、設計しっかりしてて触りやすそうなライブラリだった。</p>
+
+<p>約5時間のハンズオンでしたが、Scala の魅力が十分伝わってくる良いハンズオンでした。
+これから Java の移行先として盛り上がってきそうな雰囲気もあるので、今後が楽しみな言語です。</p>
+
+<h2>LTセッション</h2>
+
+<p>Scalaのハンズオンに続いてLTセッション。</p>
+
+<h3>ライントレースの話 (@okashoi)</h3>
+
+<p>ETロボコンのお話。PID制御のお話も。
+光センサーでズレを検知して修正するが、モーター出力の個体差があるので、モーターーエンコーダ角度制御でも補正してやるとうまくいくらしい。最近はこの辺の制御やることもないので、なんだか懐かい気持ちになったLT。</p>
+
+<h3>開発者向け勉強会に使えるスペースができました (@nkzn)</h3>
+
+<p>もっとライトに新潟開発者向けの勉強会を開きたい。が、新潟市だと割とお金がかかる。駅から近い、利用許可がフットワーク軽い、お金がかからない、ネット回線、etc...が必要。ウォーターセル株式会社1F アグリノートカフェを勉強会向けに開放するらしい。基本的に祝休日のみで、開発者の勉強会orハッカソン、ウォーターセル社員が参加者にいることが条件らしい。今度機会を見つけて、遊びに行きたい。</p>
+
+<h3>草を回避するゲーム (@jewel_x12)</h3>
+
+<p>裏東京ゲームショウ2013 in 長岡レポート。かつて、突然死ぬゲームやPythonが主人公のシューティングゲーム等、なかなかユーモラスたっぷりなゲームを作ってきた@jewel_x12さんが、最新作のデモを公開。「草不可避」と言葉があんまり好きじゃなく、ｗｗｗｗの雰囲気を大事にしたいらしい。「草避ける気はあるのか？努力しろ社会は厳しい」。Backbone.jsを使って上から降ってくるツイッターのTLに現れる草を避けるブラウザゲーム。正式版公開が待ち望まれる。</p>
+
+<h3>電流と人間 (@moznion)</h3>
+
+<p>はてなサマーインターン2013により得られた見解（はてななんも関係ないよ！）。
+エンターキーによる騒音被害を軽減するためにエンターキーを押しにくくする必要あり。
+人間の電流に対する恐怖心は強いのでエンターキーに電流を流そう！という発想はなかった。実際に使ってもらったら騒音被害が減った。なぜならCtrl+Mを使い始めたから。その発想はなかった。次はデプロイ失敗で電流とかが目標らしい。</p>
+
+<h3>テストレベル？ (@two_pack)</h3>
+
+<p>コンポーネントテスト、統合テスト、システムテスト、受け入れテスト<br/>
+人や組織によっていろいろな呼び方がある。違いがあることを許容しましょう。同じ言葉で話すこともできるって素晴らしいですね。JSTQBシラバス読めとのこと。
+ここの用語集便利そうなのでとりあえずブックマークした。</p>
+
+<h3>近況報告 @upinetree</h3>
+
+<p>東京の某社に転職が決まったらしい。おめでとうございます。何故転職？という話から、前の会社でよりよい環境のためにやったこと、うまくいったこと、わかったことのお話。環境を変えるための大変さを改めて実感。自分にも活かせそうなお話もあった。</p>
+
+<h2>NDS33のまとめ</h2>
+
+<p>今回はテーマ的にプログラマ向けのハンズオンが主でしたが、なかなか充実した内容で楽しめました。新しい言語を触って新しい概念を学ぶと、普段使ってる言語での書き方も良くなることが多いので、積極的に他の言語の考え方も取り入れていきたいです。
+次回のNDS34はおそらく日程的に参加は厳しいですが、次々回やその次あたりは東京行く前に参加しておきたいです。</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[第32回 長岡IT開発者勉強会に参加してきました]]></title>
+    <link href="http://Salinger.github.com/blog/2013/07/06/1/"/>
+    <updated>2013-07-06T13:45:00+09:00</updated>
+    <id>http://Salinger.github.com/blog/2013/07/06/1</id>
+    <content type="html"><![CDATA[<p>2013/07/06に行われた<a href="http://nagaoka.techtalk.jp/no32">32回目のNDS</a>に参加しました。
+今回はGithubのハンズオン ＋ LT の構成。</p>
+
+<!-- more -->
+
+
+<h2>Githubハンズオン@</h2>
+
+<h3>github pages</h3>
+
+<p>username.github.io でリポジトリ作ってーって言われたけど、
+作るとこのブログが上書きされてしまうので、のんびり進行を眺めつつ過ごす。</p>
+
+<h3>SourceTreeの使い方</h3>
+
+<p>Mac版とWindows版の仕様の違いでトラブルが。
+Windows版の方が後発なので、まだまだこなれていない部分があるようです。
+普段コンソールからしか叩いてなかったので、この見やすさは便利。</p>
+
+<h2>LTセッション</h2>
+
+<h3>はじめてのnode.js @sasaplus1</h3>
+
+<p>nodebrew(node.jsのバージョン管理ツール)を使ってjode.jsとnpmをインストール<br/>
+node.jsを使ってスクリプト実行<br/>
+npmを使ってモジュールをインストール</p>
+
+<h3>趣味Git @ upinetree</h3>
+
+<p>趣味でもGitつかおうぜ。
+音楽データの差分どうするの？  <br/>
+画像の差分比較欲しい。<br/>
+-> 質疑で画像の差分はGithubで可能だよ！とのこと。<br/>
+マインクラフトのセーブデータ管理を実演。<br/>
+オートセーブの結果を上手いこと管理。<br/>
+セーブデータのPush！Fork！<br/>
+一番いいセーブデータを頼む。<br/>
+ソーシャルゲーム！</p>
+
+<h3>実録！とりあえずが生む悲劇。〜えッ！？修正なんて聞いてないんだけど…。 @植木さん</h3>
+
+<p>「とりあえず、修正して。」<br/>
+と…とりあえずってなにさ？<br/>
+「とりあえず、見たいんだけど。」<br/>
+とりあえずの連鎖<br/>
+とりあえずで進んだ結末<br/>
+解決法は(1)計画的に(2)面倒事に踏み込む<br/>
+ディレクションネタが好きな人を、募集中らしい。<br/>
+<a href="https://www.facebook.com/yoshihiro.ueki">https://www.facebook.com/yoshihiro.ueki</a></p>
+
+<p>ディレクション系のネタは大学にいるとほとんど聞く機会がなかったので新鮮でした。</p>
+
+<h3>高校生長岡ラーメン選手権の告知 @hiro55bs</h3>
+
+<p>皆さんラーメンはお好きですか？<br/>
+facebookページで広告してみた<br/>
+プロモーション方法の紹介<br/>
+「いいね！スポンサー記事」と「いいね！広告」<br/>
+1ヶ月$45で設定。急に大金の請求来る心配なし。<br/>
+結構トータルで安く済むっぽい。<br/>
+インプレッション数等確認可能。<br/>
+対象（オーディエンス）の指定が可能。何人ぐらいが見る可能性があるのかわかる。<br/>
+支払いはPaypalやクレカ等。1週間単位ぐらいで集金。</p>
+
+<p>Facebookのプライバシーの収集具合こわひ。<br/>
+結構細かいこと指定できるのね。</p>
+
+<h3>Keynote+Gimpでアイコン作成 @makomegane</h3>
+
+<p>アイコンの作成方法<br/>
+keynoteでもいけるんじゃね？<br/>
+keynoteでアイコン組み合わせまくり。グループ化。<br/>
+クリップボードにコピーしてGimpに貼り付け。<br/>
+お手軽！<br/>
+簡単な図形の組み合わせだけでも意外となんとかなる。<br/>
+画像の種類の少なさが逆に想像力を刺激する！<br/>
+必然的にフラットデザインになる。</p>
+
+<h3>Rでダイエット @salinger001101</h3>
+
+<p>私の発表。<br/>
+資料やコードは<a href="https://github.com/Salinger/R-diet">ここ</a>に。</p>
+
+<h3>VCS入門の作成 @masaru_b_cl</h3>
+
+<p>自分の理解しているVCSの情報を一旦全部出す。<br/>
+情報を整理し、足りない情報をWebで収集。<br/>
+情報を分類し文章の目的設定。</p>
+
+<p>書く利点は…<br/>
+(1)自分の知識が整理される<br/>
+(2)みんなに「すごい」って言ってもらえる<br/>
+(3)マサカリが飛んでくる</p>
+
+<h3>SmartArt @bnosuke</h3>
+
+<p>ver. &lt; Office 2007。 2003以前は残念。<br/>
+美しい。<br/>
+アウトライン式でテキストを追加した時レイアウトが自動で変更。<br/>
+面倒な関係を用意に記述可能。<br/>
+デザインとコンテンツを分離可能。<br/>
+Office365でも可能。</p>
+
+<h3>NDSからの大切なお知らせ @civic</h3>
+
+<p>前のネタと同じなので略。</p>
+
+<h2>感想・まとめ</h2>
+
+<p>今回は人数も部屋ぎっしりで、初参加の人もいっぱいいたっぽい。<br/>
+GithubハンズオンでGUIツールの見やすさを実感。コミットしたりするときはコンソールでいいかなと思うけど、過去の編集履歴確認するとき等は、今後SourceTree使うことにしよう。あと普段GitでForkすることがなかったので、いい経験になりました。</p>
+
+<p>LTセッションの多種多様な発表を見ると、自分のプレゼンはまだまだ工夫が足りないのを実感。もっと場数踏んで慣れないといけませんね。あと既存のものの組み合わせ方についても普段から意識的に考えねば。</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Niigata.LLに参加してきました]]></title>
+    <link href="http://Salinger.github.com/blog/2013/03/23/1/"/>
+    <updated>2013-03-23T20:00:00+09:00</updated>
+    <id>http://Salinger.github.com/blog/2013/03/23/1</id>
+    <content type="html"><![CDATA[<p>本日行われた<a href="http://atnd.org/events/36394">Niigata.LL</a>に参加してきました。LL(Lightweight Language)と言っても、どの言語がLLなのかは各自の判断に任されたので、様々な言語・プロダクトについての話がありました。</p>
+
+<p>以下今日の発表の簡単なまとめです。</p>
+
+<!--more-->
+
+
+<h2>発表まとめ</h2>
+
+<p>@~ はTwitterのid</p>
+
+<h3>SL4Aでとび森を捗らせたかった @nekokusa</h3>
+
+<p><a href="http://docs.solab.jp/sl4a/">SL4A(Scripting Layer for Android)</a>を利用すると、Android上でPython Perl RubyなどのScript言語が動く。これとQRコードスキャナを組み合わせて、「とびだせ どうぶつの森」のマイデザインのQRコードを生成する。</p>
+
+<p>…はずが失敗。マイデザインのQRコードの中身は独自形式のバイナリデータだったため。Unicode文字列で表示できない文字が&lt;?>に。この部分を改善すればどうにかなるのか？</p>
+
+<h3>C#はLLですが何か？ @masaru_b_cl</h3>
+
+<p>祝電スライド1つ目。内容は<a href="http://www.slideshare.net/masaru_b_cl/lightweight-c">こちら</a> 。</p>
+
+<p><a href="http://ltsv.org/">LTSV（Labeled Tab-separated Values）</a> とは <code>hoge:foo\tbar:baz\n</code>のような形式のデータストラクチャ。</p>
+
+<p><a href="https://github.com/masaru-b-cl/DynamicLTSV">DynamicLTSV</a>：LTSVライブラリを作ったよという話。これからLTSV流行る？</p>
+
+<h3>ガベージコレクションについて @mihyaeru21</h3>
+
+<p><a href="http://ja.wikipedia.org/wiki/%e3%82%ac%e3%83%99%e3%83%bc%e3%82%b8%e3%82%b3%e3%83%ac%e3%82%af%e3%82%bf">ガベージコレクション</a>の基本的なアルゴリズムのお話。基本的なマーク・アンド・スイープ、参照カウント、コピーGCに加え、３つを組み合わせたもの、世代別GCなどの発展的なものの話もあり。最強のGCは無いっぽい。</p>
+
+<h3>Groovyの紹介 @toby55kij</h3>
+
+<p><a href="http://groovy.codehaus.org/">Groovy</a>はJavaVM上で動作する動的なプログラミング言語。Javaのコードがほぼそのまま動くのでJavaとの相性が良い。クロージャー、演算子オーバーロード、Groovy JDK （GDK）、便利なライブラリ(Groovy API)など、Javaを強化する機能が盛り沢山。</p>
+
+<p>開発を効率化するために、Webアプリフレームワークの「Grails」、デスクトップアプリケーションフレームワークの「Griffon」、ビルドツール「Gradle」、常駐化で高速起動「GroobyServ」、その他「Gaelyk」、「Gpars」、「GroovyFX」などのフレームワークやライブラリ群などがある。
+　
+パフォーマンスはそのままだとそこまで良くないが、最近実装された静的な型チェックや静的コンパイル機能を使ってやると結構早い。Javaより少し遅い程度かも？</p>
+
+<p><a href="http://www.jggug.org/">日本Grails/Groovyユーザーグループ</a>に日本語情報あり。</p>
+
+<h3>Padrinoでオンラインブックマークサービスを作った @jewel_x12 (1回目)</h3>
+
+<p><a href="http://titra.herokuapp.com">鯛虎</a>という、Web記事タイトルをみんなでひたすら翻訳するサービスブックマークサービスをPadrinoでつくったとのこと。ちなみに、Title:鯛 Transration:虎。</p>
+
+<p>軽量WebアプリケーションDSL(Domain Specific Language)としてRubyにはSinatoraがある。多言語用の似たものとして、PerlにはMojoliciousやDancer、PythonにはFlaskやJuno、PHPにはSlimやSilexなどがある。</p>
+
+<p><a href="http://www.padrinorb.com">Padrino</a>はSinatoraベース（Sinatoraを拡張）のWebアプリケーション作成フレームワーク。Sinatoraにロガー、ヘルパー、ジェネレータ、Rails風MVCの導入、メール配信機能、管理画面、View用ヘルパー、多言語対応など諸々の機能が追加されている。Webアプリでおなじみのディレクトリ構成をいちいち手動で作る必要がなく、必要な機能のみ選択して拡張可。</p>
+
+<p>小さなサービスをサクッと作るには良いフレームワークっぽい。
+Knohとか出てきてるし、今後記事翻訳系サービスが面白くなるかも的な話もあった。</p>
+
+<h3>CGIを軽量WAFにリプレースして捗った話 @aokcub</h3>
+
+<p>Padrinoに引き続き、WAF（Web Application Framework）の<a href="http://mojolicio.us">Mojolicious</a>のお話。これはPerl用。公式の日本語ドキュメントが充実していて、テンプレート、開発用サーバ・開発用SSL証明書、json、Websoketなどはデフォルトで用意されている。足りないところはCPANでカバーする。例えばデータベースやセッション管理など。</p>
+
+<p>Perlで小粒なアプリケーションをつくるならMojolicious一択！</p>
+
+<h3>Cinnamon @hayajo</h3>
+
+<p><a href="https://github.com/kentaro/cinnamon">Cinnamon</a>はPerl製のデプロイツール。複数ホストに対して、アプリケーションをガッとデプロイ。他言語の似たようなツールはCapistrano (Ruby)、Fabric (Python)などがある。</p>
+
+<p>Cinnamonの実態は、SSHでホストに接続してコマンド実行。Role x Task で柔軟に対応できる。</p>
+
+<p>同時実行たタスク・イン・タスクなどはこれから実装される？シンプルだけどまだまだこれからのようです。この手のツールは基本的に学習コスト高。</p>
+
+<p>Fabricよさげなので、Pythonに抵抗ない人はそっち使おう！というオチ。</p>
+
+<h3>Excel VBAのユニットテスト @bei_kan</h3>
+
+<p>XLUnitはわかりづらい。VBAUnitは手間がかかる割には使いづらい。そこでVBAUnit(jp)。日本語の関数名が使える、レッド/グリーンバーがある、関数を追加するだけでテスト追加、対象とテストのファイル分離可、対象のソースをあまり汚さないなど非常に使いやすい。</p>
+
+<p>VBAであまり組みたくないというオチ。</p>
+
+<h3>Introduction to Scala @joe_noh</h3>
+
+<p>Scala入門編。オブジェクト指向 ＋ 関数型 ≠ 関数型。オブジェクト指向で作っていい。副作用があってもいい。JavaにRubyを足した感じ。すべてオブジェクト（型も）。トレイトを使ってMix-in。Javaのライブラリが使え、より簡潔に書ける。型推論もある。並列処理や再帰が得意。などといった特徴がある。</p>
+
+<p>欠点はコンパイルとJVM起動がややもっさり。また言語仕様が複雑。例えばListのインスタンスメソッド名が<code>++ ++: +: /: :+</code> etc...のように名が体を表しておらず意味不明。</p>
+
+<p>拡張ライブラリにscalazというものがあるが、こういうことやるからScalaは怖い的なことを言われるので、最初は使わなくてもおｋらしい。</p>
+
+<p>関数型言語は興味あるので、そのうち触ってみるつもり。</p>
+
+<h3>OctopressとGithub Pages @salinger001101</h3>
+
+<p>発表してきました。LLと相性のいいブログだよ！資料は<a href="/data/niigatall_2013_03/Octopress.pdf">こちら</a>。</p>
+
+<h3>mruby @dictav</h3>
+
+<p><a href="http://www.digitalfukuoka.jp/events/6">MONO Ruby</a>とはmrubyともの作りのコラボイベント。３Dプリンタの話など、すでにmrubyが組み込まれた製品の話。</p>
+
+<p><a href="https://github.com/mruby/mruby">mruby</a>は組み込み向けの軽量ruby。日本語で参加可能なオープンソースプロジェクトでまだまだ発展途上。</p>
+
+<p>RubyのGemはmrubyではmrbgemsとなっている。mrubyを拡張する仕組みでmrubyコンパイル時にlimmrubyに機能を組み込む。基本的な組み込み関数もこれで提供されるので極限まで最適化可能。</p>
+
+<p>プロジェクトの規模は大きいけどソースコードはまだ小さい。もしかしたら、Matzのコードレビューが受けられるかも？今ならmrubyの先駆者になれる。さあLet's pull request！</p>
+
+<h3>JS TDD (and Test) with your language @isiduca</h3>
+
+<p>基本的にJSのテスト駆動開発(TDD)の話。クライアント（ブラウザ）を使うテスト：PhantomJS、単体（ユニット）テスト：QUnit、コマンドライン上からのテスト：QUnit-TAP &amp; prove、更新に合わせたテストの自動実行：pfswatchなどが紹介された。</p>
+
+<p>コマンドが成功するか失敗するかによってその結果に対応した音声が流れるモジュールを利用して、テスト結果の通知を音声で通知するという面白い試みについての話<a href="http://d.hatena.ne.jp/moznion/20130305/1362467136">App::WithSound</a>もありました。</p>
+
+<p>一度TDDはしっかり勉強しないと…</p>
+
+<h3>PowerShellの話 @kasacchiful</h3>
+
+<p>PowerShellはWindows用のShell。Win7は2.0、Win8は3.0。MS製品との親和性が高い。例えばSQLServerとかActiveDirectoryとか。基本Shellだが、VBScriptの代替にも使える。</p>
+
+<p>lsって入力できる！エイリアスが登録できる（lsもdirもエイリアス）。csvファイルの読み書きが簡単。スクリプトファイルに保存、実行できる。.NET Frameworkのクラスライブラリが使える。パイプが使える。.NET Frameworkのオブジェクトが渡せる。オブジェクト指向プログラミングができる。IDEが標準で付属。サーバー管理機能。テストツール、例外処理、文字コード周りの処理などもちゃんとある。</p>
+
+<p>もはやなんでもあり。</p>
+
+<h3>Perlなめんな @neko_gata_s</h3>
+
+<p>祝電スライド2つ目。内容は<a href="https://gist.github.com/Shinpeim/5220843">こちら</a>。</p>
+
+<p>最近のPerlの可読性・オブジェクト指向（Mouse）や例外（Try::Lite）のお話。There's More Than One Way To Do It. 「やりかたはひとつではない」的な観点に基づくと別にPerlにこだわりすぎる必要もない。</p>
+
+<h3>いままで作ったもののお話 @su8erlemon</h3>
+
+<p><a href="http://su8erlemon.com">ここ</a>にAdobe Airとか<a href="http://www.openframeworks.cc">openFrameworks</a>を使って制作したもののサンプルあり。<a href="http://su8erlemon.com/meme6/">ミーム DE ディスカッション</a>とか。</p>
+
+<p>プロジェクトマッピングとかのお話も。<a href="http://www.youtube.com/watch?feature=player_embedded&amp;v=lP7vGK0ap-k">こんな(YouTube)</a>感じで、かなりレベル高かった。今回一番の衝撃。</p>
+
+<p>この手の話は、普段あまり聞く機会がなかったので面白かった。もっと芸術的なセンス欲しい…</p>
+
+<h3>JO_RI_botの紹介 @shogo82148</h3>
+
+<p>@JO_RI_bot のお話。いわゆる人工無能。圧縮新聞とかしゅうまい君の仲間。Twitterでリプライを送るだけで様々な機能が利用可能。</p>
+
+<p>ぬるぽ->ガッ、タイマー、翻訳（Bing翻訳を利用）、多言語対応、Amazonの商品検索、本の感想（じょりくん：@JO_RI が読んだ本（主にラノベ）ならだいたい返ってくる）、キーワード検索、ユーザー検索、イベントの詳細、QA機能、etc..</p>
+
+<p>詳細は<a href="https://github.com/shogo82148/JO_RI_bot/wiki">ここ</a>読めばおｋ。</p>
+
+<h3>Scalaのパターンマッチング @jewel_x12 (2回目)</h3>
+
+<p>Scalaのパターンマッチングのお話。簡単に言うと豪華なCase文的なイメージ。定数パターン、シーケンスパターン、型付きパターン、コンストラクタパターン、抽出子（インスタンスの構成要素を分解してマッチング）など。</p>
+
+<p>色々できて便利！Scalaは多機能故に学習コスト高…</p>
+
+<p>普段使わない言語の考え方って面白い。</p>
+
+<h2>感想など</h2>
+
+<p>今回は飛び入りの発表者が多く、分量・内容ともかなり増し増しな感じでした。LLは用途的にもWeb開発系のフレームワークの話が多いかなと思ってたけど、そんなことはなかった。</p>
+
+<p>普段はほとんどPythonを使っているけれど、こういう場で学んだ他言語・他ツールとの共通部分・差異をもっと意識すれば、もうちょっとマシなプログラムが書けるはず。精進あるのみ。</p>
+
+<p>それから、普段見落としそうな所にもアンテナを向けるためには、「こんなんあるけど、どうよ？」と言ってくれる人がいる、情報を受動的に手に入れられる環境に定期的に顔出すのって重要なのを再認識しました。</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[NDS30:JAWS-UG-NGキックオフ に参加してきました]]></title>
+    <link href="http://Salinger.github.com/blog/2013/01/27/2/"/>
+    <updated>2013-01-27T22:55:00+09:00</updated>
+    <id>http://Salinger.github.com/blog/2013/01/27/2</id>
+    <content type="html"><![CDATA[<p>2013年1月26日に行われた<a href="http://nagaoka.techtalk.jp/no30">長岡開発者勉強会(NDS)</a>に参加してきました。今回は第30回でメインテーマはAmazon Web Service(AWS)のハンズオン。前回はWindows Azureのハンズオンだったので、2回連続で講師のもと、クラウド関連のサービスに触れる貴重な機会となりました。</p>
+
+<!-- more -->
+
+
+<h2>JAWS-UG-NG発足の儀</h2>
+
+<p>JAWS-UG は AWS User Group - Japan 最後のNGは 新潟 or 長岡。31番目の支部らしい。</p>
+
+<h2>AWSハンズオン</h2>
+
+<p>VPC(Virtual Private Cloud)の作成から始まって、EC2インスタンスを作成してアプリケーションサーバの構築、DBインスタンスを作成してEC2インスタンス内で動かしてたデータベースを移行、ロードバランサの追加という流れで進んでいった。</p>
+
+<p>小規模なWebサービスを立ち上げて、トラフィックの増加に従い、システムリソースの拡張を行う際の流れをひと通り経験出来た。システムの可用性の向上、セキュリティ面で注意すべきことなどの話もきちんとあり、AWS未経験の人間でも数時間でそれなりのシステムが組めるようになった(気がする)。</p>
+
+<p>今回のハンズオンでAWSに以下の様な印象を持った。</p>
+
+<ul>
+<li>低コスト
+
+<ul>
+<li>時間やマシンスペックなどこちらの方が割安</li>
+</ul>
+</li>
+<li><a href="http://aws.amazon.com/jp/products/">豊富なサービス</a>が用意されている
+
+<ul>
+<li>一番気になったのは、<a href="http://aws.amazon.com/jp/elasticmapreduce/">Amazon Elastic MapReduce(EMR)</a>。Hadoopクラスタのセットアップ &amp; 計算量に応じた計算機の確保が容易に出来そう。今後のために使い方勉強しておいたほうが良さそうだ。</li>
+<li><a href="http://aws.amazon.com/jp/glacier/">Amazon Glacier</a>も気になった。データの取り出しに時間が必要だが1ヶ月あたり0.01USD/GBと、大容量のデータを安価にバックアップできる。</li>
+</ul>
+</li>
+<li>細かいルールや設定の管理・適用がしやすい</li>
+</ul>
+
+
+<p>Azureも悪くはないが、個人で利用する場合は少しコスト面が気になる。ネットワーク周りやディスクアクセス周りは、両者で実際にそれなりのサービスを動かして比較してみないとなんとも言えませんね。AWSで今後使う可能性がありそうなサービスは、EC2で簡易なWebサービスのホスト、Amazon Glacierで重要であまり変更が行われないデータのバックアップあたりかな？将来的にはHadoop関連のサービスあたりも使うかも。1年間の無料枠があるので、その間にもう少しいじってみる予定。</p>
+
+<h2>LT(ライトニングトーク)</h2>
+
+<p>一人あたり約5分程度の枠で合計約1時間程度の発表。</p>
+
+<h3>5min de Heroku (@dictav)</h3>
+
+<p><a href="https://gist.github.com/4640042">https://gist.github.com/4640042</a><br/>
+Webサービスが簡単に作れる。<br/>
+スケーリングも簡単にできるが、お金も必要。<br/>
+簡易な処理で済むサービス動かすならいい感じ。<br/>
+家で調べてみたらこのブログで使ってるOctopressもHerokuにデプロイ可能なようだ。</p>
+
+<h3>音をグリッチしてモテたい話 (@neko_gata_s)</h3>
+
+<p><a href="https://github.com/Shinpeim/WaveZutaZuta">https://github.com/Shinpeim/WaveZutaZuta</a><br/>
+いけてるほうのねこがたさん<br/>
+音を分割して繋いでリミックス<br/>
+くーる！<br/>
+えんじにあにはもててた</p>
+
+<h3>高齢者テスター事業構想について (@muromav)</h3>
+
+<p>NPOが実施している高齢者向けパソコン教室の受講者の高齢者のみささんにテスターをやってもらおうという試み。<br/>
+「自助」災害時に自力で情報収集 ＋「共助」高齢者の友達の輪<br/>
+開発者は若年層が多いので、高齢者向けのデザインはあまり考慮されてないものが多い。高齢者にも優しいプロダクトを。<br/>
+多少なりとも報酬を。高齢者のPC学習のモチベーション向上に。</p>
+
+<h3>Raspberry PiでLチカ(aokcub)</h3>
+
+<p>Raspberry Piネタ1人目。<br/>
+<a href="https://github.com/aokcub/PiGPIO">https://github.com/aokcub/PiGPIO</a><br/>
+Lチカ。LEDチカチカ。マイコンのHello, World!<br/>
+Perlで制御。PWM制御も実装。<br/>
+もてそう。</p>
+
+<h3>Raspberry Piについてのなにか (@yutacar)</h3>
+
+<p>Raspberry Piネタ2人目。<br/>
+USB温度センサーで部屋の温度取得。<br/>
+Matplotlibでグラフ化<br/>
+将来はエアコンの管理も？</p>
+
+<h3>Raspberry PiとキャラクタLCDで遊んでみた。 (@salinger001101)</h3>
+
+<p>私が発表しました。このBlogに書いたRaspberry Piネタ(概要・キャラクタLCD・人工無能)を話しました。<br/>
+<a href="/data/nds30/20130127.pdf">発表スライドのPDF</a><br/>
+<a href="https://gist.github.com/4640042">LCD制御用のプログラム</a><br/>
+<a href="https://github.com/Salinger/MunouChan-onRaspberryPi">人工無能: MunouChan</a></p>
+
+<h3>High Performance Web Server (@wokamoto)</h3>
+
+<p>Webサービスの高速化についてのお話。</p>
+
+<ol>
+<li>HipHop VM for PHP
+
+<ul>
+<li>PHPをC++に自動変換して高速化。VMで動的に。</li>
+</ul>
+</li>
+<li>mod_pagespeed
+
+<ul>
+<li>GoogleのWebサイト高速化モジュール。Apacheサーバに。余計なコード(コメントなど)を自動的に除去。ngx_pagespeedもあるのでnginxでも問題なし。</li>
+</ul>
+</li>
+<li>SPDY
+
+<ul>
+<li>通信プロトコル。接続の高速化。ブラウザが対応してないとダメ。最新版のChrome、Firefox、Operaはデフォルトで対応済み。つまりIEはダメ。</li>
+<li>Multiplexed streams、Request prioritization、HTTP header compression、Server push、Server hintなど。</li>
+</ul>
+</li>
+</ol>
+
+
+<h3>AWSとTitaniumの新しい関係 (@NPoi)</h3>
+
+<p>Titanium Mobile: JavaScriptでiOS・Androidのアプリが書ける。<br/>
+Appcelerator Cloud Services(ACS) -> AWS上で動いている<br/>
+BaaS Backend as a Service<br/>
+あらかじめ用意された機能群から必要な機能を選択できる。<br/>
+サーバーサイド、バックエンド側の知識が少なくてもどうにかなるように。<br/>
+非常に高い堅牢性。</p>
+
+<h2>まとめ</h2>
+
+<p>短時間でAWSでのWebサービス構築方法を学べたので非常に有意義だった。LTも普段触れない技術に触れることの出来る良い機会でした。そろそろLTで言語処理関連の話や機械学習の話もしたいですね。</p>
+]]></content>
+  </entry>
+  
+</feed>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: 機械学習 | さりんじゃーのプログラミング日記]]></title>
+  <link href="http://Salinger.github.com/blog/categories/機械学習/atom.xml" rel="self"/>
+  <link href="http://Salinger.github.com/"/>
+  <updated>2014-11-03T23:31:09+09:00</updated>
+  <id>http://Salinger.github.com/</id>
+  <author>
+    <name><![CDATA[Salinger]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[金貨の真贋を見分けよう 〜 SVM と R〜]]></title>
+    <link href="http://Salinger.github.com/blog/2013/06/03/1/"/>
+    <updated>2013-06-03T20:14:00+09:00</updated>
+    <id>http://Salinger.github.com/blog/2013/06/03/1</id>
+    <content type="html"><![CDATA[<p>CodeIQ の機械学習に関する問題にチャレンジしてみた。</p>
+
+<p>https://codeiq.jp/ace/naoyat/q105<br/>
+http://next.rikunabi.com/tech/docs/ct_s03600.jsp?p=002315&amp;tcs=kanren</p>
+
+<!--more-->
+
+
+<p>トレーニング用のデータ: "CodeIQ_auth.txt"<br/>
+分類するデータ: "CodeIQ_mycoins.txt"<br/>
+を上記のURLからダウンロード。</p>
+
+<p>以下ソースコード。</p>
+
+<p><div><script src='https://gist.github.com/5697523.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+
+<p>きちっと線形分離できるので簡単な問題ですね。</p>
+]]></content>
+  </entry>
+  
+</feed>

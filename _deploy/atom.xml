@@ -1,0 +1,2067 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[さりんじゃーのプログラミング日記]]></title>
+  <link href="http://Salinger.github.com/atom.xml" rel="self"/>
+  <link href="http://Salinger.github.com/"/>
+  <updated>2014-11-03T23:31:09+09:00</updated>
+  <id>http://Salinger.github.com/</id>
+  <author>
+    <name><![CDATA[Salinger]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Vagrant で 始める CDH5 + Hive + Impala 入門]]></title>
+    <link href="http://Salinger.github.com/blog/2014/11/03/1/"/>
+    <updated>2014-11-03T23:04:00+09:00</updated>
+    <id>http://Salinger.github.com/blog/2014/11/03/1</id>
+    <content type="html"><![CDATA[<p>以下の記事を参考にしつつテスト環境を作る。</p>
+
+<p><a href="http://blog.cloudera.com/blog/2014/06/how-to-install-a-virtual-apache-hadoop-cluster-with-vagrant-and-cloudera-manager/">how-to-install-a-virtual-apache-hadoop-cluster-with-vagrant-and-cloudera-manager</a></p>
+
+<p>なお、仮想マシン用に合計10GBはメモリが必要になるので、メインメモリ 16GB 以上詰んでるマシンで作業するのを推奨。</p>
+
+<!-- more -->
+
+
+<h2>VirtualBox のインストール</h2>
+
+<p>以下から最新版をインストール。</p>
+
+<p><a href="https://www.virtualbox.org/wiki/Downloads">https://www.virtualbox.org/wiki/Downloads</a></p>
+
+<h2>Vagrant のインストール</h2>
+
+<p>以下から最新版をインストール。</p>
+
+<p><a href="http://www.vagrantup.com/downloads">http://www.vagrantup.com/downloads</a></p>
+
+<h2>Vagrant によるクラスタ環境構築</h2>
+
+<p>ホストのコンソールで次のコマンドを実行。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ mkdir ~/vagrant
+</span><span class='line'>$ cd ~/vagrant/
+</span><span class='line'>$ vagrant plugin install vagrant-hostmanager
+</span><span class='line'>$ git clone https://github.com/DandyDev/virtual-hadoop-cluster.git
+</span><span class='line'>$ cd virtual-hadoop-cluster
+</span><span class='line'>$ vagrant up</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Cloudera Manager によるクラスタ環境設定</h2>
+
+<p>ブラウザで以下にアクセス。</p>
+
+<p><a href="http://vm-cluster-node1:7180">http://vm-cluster-node1:7180</a></p>
+
+<p>Cloudera Manager 5 の画面にアクセスできるはず</p>
+
+<ul>
+<li>admin / admin でログイン。</li>
+<li>Cloudera Express を選んで「続行」をクリック。</li>
+<li>CDHクラスタインストールのホストを指定。
+  *vm-cluster-node[1-4] と入力して「検索」をクリックすると4台のノードが検索できる。</li>
+<li>クラスタのインストール > リポジトリの選択
+
+<ul>
+<li>デフォルトのまま「続行」をクリック。</li>
+</ul>
+</li>
+<li>クラスタのインストール > JDK インストールオプション
+
+<ul>
+<li>デフォルトのまま「続行」をクリック。</li>
+</ul>
+</li>
+<li>クラスタのインストール >　SSH ログインの資格情報を入力してください。
+
+<ul>
+<li>別のユーザー: vagrant パスワード: vagrant パスワードの確認:vagrant を入力。これでクラスタのインストール作業が進む。
+
+<ul>
+<li>途中で1台のみインストールが進行しなくなったので一度中止をクリックした後、もう一度インストールを進めたら問題なく進行。「続行」をクリック。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>クラスタのインストール > 選択した Parcel のインストール
+
+<ul>
+<li>各種パッケージがインストールされるのを待つ。終わったら「続行」をクリック。</li>
+</ul>
+</li>
+<li>クラスタのインストール > ホストが正常かどうかの検査
+
+<ul>
+<li>インストール状況を確認できる。「続行」をクリック。</li>
+</ul>
+</li>
+<li>クラスタのセットアップ > クラスタにインストールする CDH 5 サービスを選択してください。
+  *「すべてのサービス」を選んで「続行」をクリック。</li>
+<li>クラスタのセットアップ > ロール割り当てのカスタマイズ デフォルトのまま「続行」をクリック。</li>
+<li>クラスタのセットアップ > データベースセットアップ
+
+<ul>
+<li>デフォルトのまま「続行」をクリック。</li>
+</ul>
+</li>
+<li>クラスタのセットアップ > 変更の確認
+
+<ul>
+<li>デフォルトのまま「続行」をクリック。</li>
+</ul>
+</li>
+<li>クラスタのセットアップ > 進行状況
+
+<ul>
+<li>全てインストールされるのを待ち「続行」をクリック。</li>
+</ul>
+</li>
+</ul>
+
+
+<p>これで Cloudera Manager のホーム画面にアクセス出来る。</p>
+
+<h2>Impala のインストール</h2>
+
+<p><a href="http://gyazo.com/f606d5ead7ffe1152e9353ae6f1f1204">http://gyazo.com/f606d5ead7ffe1152e9353ae6f1f1204</a></p>
+
+<p>この図の6になっている部分をクリックし、Impalaをダウンロード。</p>
+
+<p>画面下部の Cluster 1 の部分の配布ボタンをクリック。</p>
+
+<h2>作成したクラスタにログイン</h2>
+
+<p>ホストのコンソールで次のコマンドを実行。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ ssh vagrant@vm-cluster-node1</span></code></pre></td></tr></table></div></figure>
+
+
+<p>PASS は vagrant</p>
+
+<h2>YARN で MapReduce 処理の動作チェック</h2>
+
+<p>vagrant@vm-cluster-node1 で作業。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ sudo su - hdfs
+</span><span class='line'>$ hadoop jar /opt/cloudera/parcels/CDH-5.2.0-1.cdh5.2.0.p0.36/lib/hadoop-mapreduce/hadoop-mapreduce-examples.jar pi 4 100</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Job の実行状況は下記URLで確認できる。
+<a href="http://vm-cluster-node1:8088/cluster">http://vm-cluster-node1:8088/cluster</a></p>
+
+<h3>実行結果</h3>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+<span class='line-number'>67</span>
+<span class='line-number'>68</span>
+<span class='line-number'>69</span>
+<span class='line-number'>70</span>
+<span class='line-number'>71</span>
+<span class='line-number'>72</span>
+<span class='line-number'>73</span>
+<span class='line-number'>74</span>
+<span class='line-number'>75</span>
+<span class='line-number'>76</span>
+<span class='line-number'>77</span>
+<span class='line-number'>78</span>
+<span class='line-number'>79</span>
+<span class='line-number'>80</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>Number of Maps  = 4
+</span><span class='line'>Samples per Map = 100
+</span><span class='line'>Wrote input for Map #0
+</span><span class='line'>Wrote input for Map #1
+</span><span class='line'>Wrote input for Map #2
+</span><span class='line'>Wrote input for Map #3
+</span><span class='line'>Starting Job
+</span><span class='line'>14/11/03 11:44:03 INFO client.RMProxy: Connecting to ResourceManager at vm-cluster-node1/10.211.55.100:8032
+</span><span class='line'>14/11/03 11:44:04 INFO input.FileInputFormat: Total input paths to process : 4
+</span><span class='line'>14/11/03 11:44:04 INFO mapreduce.JobSubmitter: number of splits:4
+</span><span class='line'>14/11/03 11:44:05 INFO mapreduce.JobSubmitter: Submitting tokens for job: job_1415003058856_0001
+</span><span class='line'>14/11/03 11:44:05 INFO impl.YarnClientImpl: Submitted application application_1415003058856_0001
+</span><span class='line'>14/11/03 11:44:05 INFO mapreduce.Job: The url to track the job: http://vm-cluster-node1:8088/proxy/application_1415003058856_0001/
+</span><span class='line'>14/11/03 11:44:05 INFO mapreduce.Job: Running job: job_1415003058856_0001
+</span><span class='line'>14/11/03 11:44:25 INFO mapreduce.Job: Job job_1415003058856_0001 running in uber mode : false
+</span><span class='line'>14/11/03 11:44:25 INFO mapreduce.Job:  map 0% reduce 0%
+</span><span class='line'>14/11/03 11:44:39 INFO mapreduce.Job:  map 25% reduce 0%
+</span><span class='line'>14/11/03 11:44:40 INFO mapreduce.Job:  map 50% reduce 0%
+</span><span class='line'>14/11/03 11:44:50 INFO mapreduce.Job:  map 100% reduce 0%
+</span><span class='line'>14/11/03 11:45:01 INFO mapreduce.Job:  map 100% reduce 100%
+</span><span class='line'>14/11/03 11:45:02 INFO mapreduce.Job: Job job_1415003058856_0001 completed successfully
+</span><span class='line'>14/11/03 11:45:02 INFO mapreduce.Job: Counters: 49
+</span><span class='line'>         File System Counters
+</span><span class='line'>              FILE: Number of bytes read=62
+</span><span class='line'>                    FILE: Number of bytes written=532213
+</span><span class='line'>                          FILE: Number of read operations=0
+</span><span class='line'>                                FILE: Number of large read operations=0
+</span><span class='line'>                                      FILE: Number of write operations=0
+</span><span class='line'>                                            HDFS: Number of bytes read=1084
+</span><span class='line'>                                                  HDFS: Number of bytes written=215
+</span><span class='line'>                                                        HDFS: Number of read operations=19
+</span><span class='line'>                                                              HDFS: Number of large read operations=0
+</span><span class='line'>                                                                    HDFS: Number of write operations=3
+</span><span class='line'>                                                                    Job Counters 
+</span><span class='line'>                                                                        Launched map tasks=4
+</span><span class='line'>                                                                                 Launched reduce tasks=1
+</span><span class='line'>                                                                                          Data-local map tasks=4
+</span><span class='line'>                                                                                                     Total time spent by all maps in occupied slots (ms)=40475
+</span><span class='line'>                                                                                                           Total time spent by all reduces in occupied slots (ms)=5994
+</span><span class='line'>                                                                                                                 Total time spent by all map tasks (ms)=40475
+</span><span class='line'>                                                                                                                       Total time spent by all reduce tasks (ms)=5994
+</span><span class='line'>                                                                                                                             Total vcore-seconds taken by all map tasks=40475
+</span><span class='line'>                                                                                                                                   Total vcore-seconds taken by all reduce tasks=5994
+</span><span class='line'>                                                                                                                                         Total megabyte-seconds taken by all map tasks=41446400
+</span><span class='line'>                                                                                                                                               Total megabyte-seconds taken by all reduce tasks=6137856
+</span><span class='line'>                                                                                                                                               Map-Reduce Framework
+</span><span class='line'>                                                                                                                                                          Map input records=4
+</span><span class='line'>                                                                                                                                                              Map output records=8
+</span><span class='line'>                                                                                                                                                                  Map output bytes=72
+</span><span class='line'>                                                                                                                                                                      Map output materialized bytes=136
+</span><span class='line'>                                                                                                                                                                          Input split bytes=612
+</span><span class='line'>                                                                                                                                                                                Combine input records=0
+</span><span class='line'>                                                                                                                                                                                        Combine output records=0
+</span><span class='line'>                                                                                                                                                                                                Reduce input groups=2
+</span><span class='line'>                                                                                                                                                                                                       Reduce shuffle bytes=136
+</span><span class='line'>                                                                                                                                                                                                              Reduce input records=8
+</span><span class='line'>                                                                                                                                                                                                                     Reduce output records=0
+</span><span class='line'>                                                                                                                                                                                                                            Spilled Records=16
+</span><span class='line'>                                                                                                                                                                                                                                    Shuffled Maps =4
+</span><span class='line'>                                                                                                                                                                                                                                             Failed Shuffles=0
+</span><span class='line'>                                                                                                                                                                                                                                                    Merged Map outputs=4
+</span><span class='line'>                                                                                                                                                                                                                                                           GC time elapsed (ms)=211
+</span><span class='line'>                                                                                                                                                                                                                                                              CPU time spent (ms)=5230
+</span><span class='line'>                                                                                                                                                                                                                                                                  Physical memory (bytes) snapshot=1845346304
+</span><span class='line'>                                                                                                                                                                                                                                                                           Virtual memory (bytes) snapshot=8395341824
+</span><span class='line'>                                                                                                                                                                                                                                                                                   Total committed heap usage (bytes)=1530396672
+</span><span class='line'>                                                                                                                                                                                                                                                                                   Shuffle Errors
+</span><span class='line'>                                                                                                                                                                                                                                                                                           BAD_ID=0
+</span><span class='line'>                                                                                                                                                                                                                                                                                            CONNECTION=0
+</span><span class='line'>                                                                                                                                                                                                                                                                                             IO_ERROR=0
+</span><span class='line'>                                                                                                                                                                                                                                                                                              WRONG_LENGTH=0
+</span><span class='line'>                                                                                                                                                                                                                                                                                               WRONG_MAP=0
+</span><span class='line'>                                                                                                                                                                                                                                                                                                WRONG_REDUCE=0
+</span><span class='line'>                                                                                                                                                                                                                                                                                                File Input Format Counters 
+</span><span class='line'>                                                                                                                                                                                                                                                                                                     Bytes Read=472
+</span><span class='line'>                                                                                                                                                                                                                                                                                                     File Output Format Counters 
+</span><span class='line'>                                                                                                                                                                                                                                                                                                          Bytes Written=97
+</span><span class='line'>Job Finished in 59.247 seconds
+</span><span class='line'>Estimated value of Pi is 3.17000000000000000000
+</span><span class='line'>hdfs@vm-cluster-node1:~$ </span></code></pre></td></tr></table></div></figure>
+
+
+<p>MapReduce の Job が YARN で実行できた。</p>
+
+<h2>Hive の動作確認</h2>
+
+<p>vagrant@vm-cluster-node1 で作業。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ hive
+</span><span class='line'>hive&gt; SHOW databases;
+</span><span class='line'>OK
+</span><span class='line'>default
+</span><span class='line'>Time taken: 0.388 seconds, Fetched: 1 row(s)
+</span><span class='line'>hive&gt; CREATE DATABASE IF NOT EXISTS sample_logs;
+</span><span class='line'>OK
+</span><span class='line'>Time taken: 0.408 seconds
+</span><span class='line'>hive&gt; USE sample_logs;          
+</span><span class='line'>OK
+</span><span class='line'>Time taken: 0.54 seconds
+</span><span class='line'>hive&gt; CREATE TABLE logs(id INT, created_at STRING) row format delimited fields terminated by ',' lines terminated by '\n';
+</span><span class='line'>OK
+</span><span class='line'>Time taken: 0.771 seconds
+</span><span class='line'>hive&gt;</span></code></pre></td></tr></table></div></figure>
+
+
+<p>
+動作した。</p>
+
+<h2>Impala の動作確認</h2>
+
+<p>次のURLにアクセスすると Impala の WebUI にアクセスできる。
+<a href="http://vm-cluster-node1:25010">http://vm-cluster-node1:25010</a></p>
+
+<p>vm-cluster-node1 で下記コマンドを実行し、シェルの起動。ノード2 ~ 4 のどれかにログイン。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ impala-shell -i vm-cluster-node2 </span></code></pre></td></tr></table></div></figure>
+
+
+<p>操作してみる。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>[vm-cluster-node2:21000] &gt; SHOW databases;
+</span><span class='line'>[vm-cluster-node2:21000] &gt; CREATE DATABASE IF NOT EXISTS sample_logs;
+</span><span class='line'>[vm-cluster-node2:21000] &gt; USE sample_logs;
+</span><span class='line'>[vm-cluster-node2:21000] &gt; CREATE TABLE logs(id INT, created_at STRING) row format delimited fields terminated by ',' lines terminated by '\n';
+</span><span class='line'>[vm-cluster-node2:21000] &gt; SHOW tables;
+</span><span class='line'>Query: show tables
+</span><span class='line'>+------+
+</span><span class='line'>| name |
+</span><span class='line'>+------+
+</span><span class='line'>| logs |
+</span><span class='line'>+------+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>動作した。</p>
+
+<p>サーバーからログアウトして、</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ vagrant halt</span></code></pre></td></tr></table></div></figure>
+
+
+<p>でクラスタの全サーバーをシャットダウン。</p>
+
+<p>とりあえず、ここまででテスト用の CDH5 の Hadoop (HDFS + YARN によるMapReduce)環境、Hive、Impala環境が構築できた。</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Python 2.7.X 入門者向けのまとめ]]></title>
+    <link href="http://Salinger.github.com/blog/2014/02/03/1/"/>
+    <updated>2014-02-03T21:57:00+09:00</updated>
+    <id>http://Salinger.github.com/blog/2014/02/03/1</id>
+    <content type="html"><![CDATA[<p>他言語を触っていると、Pythonでアレどう書くんだっけ？的なことが多いので、自分用によく使うであろう機能を<a href="http://Salinger.github.com/python/">ここ</a>にひと通りまとめた。プロジェクトの管理と、3系への移行についてもまとめ中。</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Mac で Vagrant 環境の整備]]></title>
+    <link href="http://Salinger.github.com/blog/2013/11/05/1/"/>
+    <updated>2013-11-05T22:23:00+09:00</updated>
+    <id>http://Salinger.github.com/blog/2013/11/05/1</id>
+    <content type="html"><![CDATA[<h2>Vagrant とは</h2>
+
+<p>仮想的なマシンをインストールしたPC上に作成できる VirtualBox のフロントエンド。Ruby 製。ゲストOSのインストールや必要なソフトのインストール等、面倒くさい設定を省くことができ、いきなり目的の作業することができる。</p>
+
+<!-- more -->
+
+
+<h2>VirtualBox のインストール</h2>
+
+<p>最初に Mac 版のVirtualBox の最新版をインストールしておく。</p>
+
+<p><a href="https://www.virtualbox.org/wiki/Downloads">VirtualBox binaries</a></p>
+
+<h2>Vagrant のインストール</h2>
+
+<p>今回は最新版のV1.3.5をインストール
+<a href="http://downloads.vagrantup.com">Vagrant</a></p>
+
+<h2>boxファイルのダウンロードと追加</h2>
+
+<p>予め用意された仮想マシンのテンプレートをダウンロードしてくる。CentOSやUbuntu等のメジャーなLinux系のbox以外にも、OpenBSDなんかのboxもある。</p>
+
+<p><a href="http://www.vagrantbox.es/">http://www.vagrantbox.es/</a></p>
+
+<p>他にもGithub等で検索すれば、多種多様なboxファイルをダウンロードできる。今回はCentOS 6.4 x86_64 Minimal (VirtualBox Guest Additions 4.2.16, Chef 11.6.4, Puppet 3.2.3)をインストールすることにする。</p>
+
+<p>boxファイルの追加は以下のようにすればOK。下記のように。最後の部分にURLを指定すると自動的にダウンロードが開始されるが、boxファイルを事前にダウンロードしておいて、そのファイルのPathを指定してもOK。</p>
+
+<pre><code>$ vagrant box add ceontos6.4 http://developer.nrel.gov/downloads/vagrant-boxes/CentOS-6.4-x86_64-v20130731.box
+</code></pre>
+
+<h2>仮想サーバーの起動</h2>
+
+<p>まず仮想マシン作成先に移動する。</p>
+
+<pre><code>$ mkdir ~/vagrant/centos6.4
+$ cd ~/vagrant/centos6.4
+</code></pre>
+
+<p>下記のようにすれば、仮想マシンが作成されサーバーが起動する。</p>
+
+<pre><code>$ vagrant init ceontos6.4
+$ vagrant up
+</code></pre>
+
+<p>次に下記のようにすると、起動したサーバーにsshで接続できる。</p>
+
+<pre><code>$ vagrant ssh
+</code></pre>
+
+<p>接続を切断する際はコンソールにexitと入力すればOK。シャットダウンする際は、下記のようにする。</p>
+
+<pre><code>$ vagrant halt
+</code></pre>
+
+<h2>その他の Vagrant のコマンド</h2>
+
+<p>サスペンド</p>
+
+<pre><code>$ vagrant suspend
+</code></pre>
+
+<p>レジューム(サスペンド状態から復帰)</p>
+
+<pre><code>$ vagrant resume
+</code></pre>
+
+<p>追加済みのboxの一覧を表示</p>
+
+<pre><code>$ vagrant box list
+</code></pre>
+
+<p>boxの削除</p>
+
+<pre><code>$ vagrant box remove {box名}
+</code></pre>
+
+<p>仮想マシンの状況確認</p>
+
+<pre><code>$ vagrant status
+</code></pre>
+
+<p>仮想マシン削除</p>
+
+<pre><code>$ vagrant destroy
+</code></pre>
+
+<p>仮想マシンからboxを作成</p>
+
+<pre><code>$ vagrant package
+</code></pre>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[第33回 長岡IT開発者勉強会 Scala入学式に参加してきました]]></title>
+    <link href="http://Salinger.github.com/blog/2013/09/29/1/"/>
+    <updated>2013-09-29T15:50:00+09:00</updated>
+    <id>http://Salinger.github.com/blog/2013/09/29/1</id>
+    <content type="html"><![CDATA[<h2>はじめに</h2>
+
+<p>2013/09/28に行われた<a href="http://nagaoka.techtalk.jp/no33">NDS33</a>に参加してきました。今回はScalaのハンズオン＋LTの構成。</p>
+
+<!--more-->
+
+
+<h2>Scala入学式</h2>
+
+<p>Scala で Hello, World から Twitter bot を作成するまでのハンズオン形式のセミナー。講師は猫型さん(@neko_gata_s)。</p>
+
+<p><a href="https://gist.github.com/Shinpeim/db00b073f7acd6d5b918">環境構築</a><br/>
+<a href="https://gist.github.com/Shinpeim/6740436">テキスト</a></p>
+
+<p>ScalaはJVMで動く強い静的型付き言語。Javaの資産も活用できる。</p>
+
+<p>事前に Twitter API の consumer key, consumer secret, access token, access token secret を取得を取得し、Scala開発環境のセットアップを行うまでが入学試験(?)でした。
+私はMacだったので、Scala と sbt は homebrew でインストールし、JDK や IntelliJ IDEA は公式からダウンロードし普通にインストール。
+実はsbt-ideaのインストールがうまいこといってなかったのがハンズオン中に発覚。
+build.sbtを <code>~/.sbt/plugins/build.sbt</code> に置けと公式ページに書いてあったが、正しくは<code>~/.sbt/0.13/plugins/build.sbt</code>だった。</p>
+
+<p>hello, world は無事出力され、次に文法周りの説明が。
+ifが最後に評価された値を返すのが地味に便利だったり、強力なパターンマッチもある。また、map、flatMap、filterあたりの関数型っぽい操作を味わったり、それらの高階関数＋Option型等を駆使することで、ぬるぽ回避を行う等なかなか興味深い手法も体験できた。</p>
+
+<p>最後に Twitter bot の作成。ぬるぽをタイムラインに発見したら、ガッする bot 。
+Java用の Twitter API ラッパの twitter4j を利用してサクッっと作成。
+twitter4j 触ったの初めてだったけど、設計しっかりしてて触りやすそうなライブラリだった。</p>
+
+<p>約5時間のハンズオンでしたが、Scala の魅力が十分伝わってくる良いハンズオンでした。
+これから Java の移行先として盛り上がってきそうな雰囲気もあるので、今後が楽しみな言語です。</p>
+
+<h2>LTセッション</h2>
+
+<p>Scalaのハンズオンに続いてLTセッション。</p>
+
+<h3>ライントレースの話 (@okashoi)</h3>
+
+<p>ETロボコンのお話。PID制御のお話も。
+光センサーでズレを検知して修正するが、モーター出力の個体差があるので、モーターーエンコーダ角度制御でも補正してやるとうまくいくらしい。最近はこの辺の制御やることもないので、なんだか懐かい気持ちになったLT。</p>
+
+<h3>開発者向け勉強会に使えるスペースができました (@nkzn)</h3>
+
+<p>もっとライトに新潟開発者向けの勉強会を開きたい。が、新潟市だと割とお金がかかる。駅から近い、利用許可がフットワーク軽い、お金がかからない、ネット回線、etc&#8230;が必要。ウォーターセル株式会社1F アグリノートカフェを勉強会向けに開放するらしい。基本的に祝休日のみで、開発者の勉強会orハッカソン、ウォーターセル社員が参加者にいることが条件らしい。今度機会を見つけて、遊びに行きたい。</p>
+
+<h3>草を回避するゲーム (@jewel_x12)</h3>
+
+<p>裏東京ゲームショウ2013 in 長岡レポート。かつて、突然死ぬゲームやPythonが主人公のシューティングゲーム等、なかなかユーモラスたっぷりなゲームを作ってきた@jewel_x12さんが、最新作のデモを公開。「草不可避」と言葉があんまり好きじゃなく、ｗｗｗｗの雰囲気を大事にしたいらしい。「草避ける気はあるのか？努力しろ社会は厳しい」。Backbone.jsを使って上から降ってくるツイッターのTLに現れる草を避けるブラウザゲーム。正式版公開が待ち望まれる。</p>
+
+<h3>電流と人間 (@moznion)</h3>
+
+<p>はてなサマーインターン2013により得られた見解（はてななんも関係ないよ！）。
+エンターキーによる騒音被害を軽減するためにエンターキーを押しにくくする必要あり。
+人間の電流に対する恐怖心は強いのでエンターキーに電流を流そう！という発想はなかった。実際に使ってもらったら騒音被害が減った。なぜならCtrl+Mを使い始めたから。その発想はなかった。次はデプロイ失敗で電流とかが目標らしい。</p>
+
+<h3>テストレベル？ (@two_pack)</h3>
+
+<p>コンポーネントテスト、統合テスト、システムテスト、受け入れテスト<br/>
+人や組織によっていろいろな呼び方がある。違いがあることを許容しましょう。同じ言葉で話すこともできるって素晴らしいですね。JSTQBシラバス読めとのこと。
+ここの用語集便利そうなのでとりあえずブックマークした。</p>
+
+<h3>近況報告 @upinetree</h3>
+
+<p>東京の某社に転職が決まったらしい。おめでとうございます。何故転職？という話から、前の会社でよりよい環境のためにやったこと、うまくいったこと、わかったことのお話。環境を変えるための大変さを改めて実感。自分にも活かせそうなお話もあった。</p>
+
+<h2>NDS33のまとめ</h2>
+
+<p>今回はテーマ的にプログラマ向けのハンズオンが主でしたが、なかなか充実した内容で楽しめました。新しい言語を触って新しい概念を学ぶと、普段使ってる言語での書き方も良くなることが多いので、積極的に他の言語の考え方も取り入れていきたいです。
+次回のNDS34はおそらく日程的に参加は厳しいですが、次々回やその次あたりは東京行く前に参加しておきたいです。</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[第32回 長岡IT開発者勉強会に参加してきました]]></title>
+    <link href="http://Salinger.github.com/blog/2013/07/06/1/"/>
+    <updated>2013-07-06T13:45:00+09:00</updated>
+    <id>http://Salinger.github.com/blog/2013/07/06/1</id>
+    <content type="html"><![CDATA[<p>2013/07/06に行われた<a href="http://nagaoka.techtalk.jp/no32">32回目のNDS</a>に参加しました。
+今回はGithubのハンズオン ＋ LT の構成。</p>
+
+<!-- more -->
+
+
+<h2>Githubハンズオン@</h2>
+
+<h3>github pages</h3>
+
+<p>username.github.io でリポジトリ作ってーって言われたけど、
+作るとこのブログが上書きされてしまうので、のんびり進行を眺めつつ過ごす。</p>
+
+<h3>SourceTreeの使い方</h3>
+
+<p>Mac版とWindows版の仕様の違いでトラブルが。
+Windows版の方が後発なので、まだまだこなれていない部分があるようです。
+普段コンソールからしか叩いてなかったので、この見やすさは便利。</p>
+
+<h2>LTセッション</h2>
+
+<h3>はじめてのnode.js @sasaplus1</h3>
+
+<p>nodebrew(node.jsのバージョン管理ツール)を使ってjode.jsとnpmをインストール<br/>
+node.jsを使ってスクリプト実行<br/>
+npmを使ってモジュールをインストール</p>
+
+<h3>趣味Git @ upinetree</h3>
+
+<p>趣味でもGitつかおうぜ。
+音楽データの差分どうするの？  <br/>
+画像の差分比較欲しい。<br/>
+-> 質疑で画像の差分はGithubで可能だよ！とのこと。<br/>
+マインクラフトのセーブデータ管理を実演。<br/>
+オートセーブの結果を上手いこと管理。<br/>
+セーブデータのPush！Fork！<br/>
+一番いいセーブデータを頼む。<br/>
+ソーシャルゲーム！</p>
+
+<h3>実録！とりあえずが生む悲劇。〜えッ！？修正なんて聞いてないんだけど…。 @植木さん</h3>
+
+<p>「とりあえず、修正して。」<br/>
+と…とりあえずってなにさ？<br/>
+「とりあえず、見たいんだけど。」<br/>
+とりあえずの連鎖<br/>
+とりあえずで進んだ結末<br/>
+解決法は(1)計画的に(2)面倒事に踏み込む<br/>
+ディレクションネタが好きな人を、募集中らしい。<br/>
+<a href="https://www.facebook.com/yoshihiro.ueki">https://www.facebook.com/yoshihiro.ueki</a></p>
+
+<p>ディレクション系のネタは大学にいるとほとんど聞く機会がなかったので新鮮でした。</p>
+
+<h3>高校生長岡ラーメン選手権の告知 @hiro55bs</h3>
+
+<p>皆さんラーメンはお好きですか？<br/>
+facebookページで広告してみた<br/>
+プロモーション方法の紹介<br/>
+「いいね！スポンサー記事」と「いいね！広告」<br/>
+1ヶ月$45で設定。急に大金の請求来る心配なし。<br/>
+結構トータルで安く済むっぽい。<br/>
+インプレッション数等確認可能。<br/>
+対象（オーディエンス）の指定が可能。何人ぐらいが見る可能性があるのかわかる。<br/>
+支払いはPaypalやクレカ等。1週間単位ぐらいで集金。</p>
+
+<p>Facebookのプライバシーの収集具合こわひ。<br/>
+結構細かいこと指定できるのね。</p>
+
+<h3>Keynote+Gimpでアイコン作成 @makomegane</h3>
+
+<p>アイコンの作成方法<br/>
+keynoteでもいけるんじゃね？<br/>
+keynoteでアイコン組み合わせまくり。グループ化。<br/>
+クリップボードにコピーしてGimpに貼り付け。<br/>
+お手軽！<br/>
+簡単な図形の組み合わせだけでも意外となんとかなる。<br/>
+画像の種類の少なさが逆に想像力を刺激する！<br/>
+必然的にフラットデザインになる。</p>
+
+<h3>Rでダイエット @salinger001101</h3>
+
+<p>私の発表。<br/>
+資料やコードは<a href="https://github.com/Salinger/R-diet">ここ</a>に。</p>
+
+<h3>VCS入門の作成 @masaru_b_cl</h3>
+
+<p>自分の理解しているVCSの情報を一旦全部出す。<br/>
+情報を整理し、足りない情報をWebで収集。<br/>
+情報を分類し文章の目的設定。</p>
+
+<p>書く利点は…<br/>
+(1)自分の知識が整理される<br/>
+(2)みんなに「すごい」って言ってもらえる<br/>
+(3)マサカリが飛んでくる</p>
+
+<h3>SmartArt @bnosuke</h3>
+
+<p>ver. &lt; Office 2007。 2003以前は残念。<br/>
+美しい。<br/>
+アウトライン式でテキストを追加した時レイアウトが自動で変更。<br/>
+面倒な関係を用意に記述可能。<br/>
+デザインとコンテンツを分離可能。<br/>
+Office365でも可能。</p>
+
+<h3>NDSからの大切なお知らせ @civic</h3>
+
+<p>前のネタと同じなので略。</p>
+
+<h2>感想・まとめ</h2>
+
+<p>今回は人数も部屋ぎっしりで、初参加の人もいっぱいいたっぽい。<br/>
+GithubハンズオンでGUIツールの見やすさを実感。コミットしたりするときはコンソールでいいかなと思うけど、過去の編集履歴確認するとき等は、今後SourceTree使うことにしよう。あと普段GitでForkすることがなかったので、いい経験になりました。</p>
+
+<p>LTセッションの多種多様な発表を見ると、自分のプレゼンはまだまだ工夫が足りないのを実感。もっと場数踏んで慣れないといけませんね。あと既存のものの組み合わせ方についても普段から意識的に考えねば。</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[金貨の真贋を見分けよう 〜 SVM と R〜]]></title>
+    <link href="http://Salinger.github.com/blog/2013/06/03/1/"/>
+    <updated>2013-06-03T20:14:00+09:00</updated>
+    <id>http://Salinger.github.com/blog/2013/06/03/1</id>
+    <content type="html"><![CDATA[<p>CodeIQ の機械学習に関する問題にチャレンジしてみた。</p>
+
+<p>https://codeiq.jp/ace/naoyat/q105<br/>
+http://next.rikunabi.com/tech/docs/ct_s03600.jsp?p=002315&amp;tcs=kanren</p>
+
+<!--more-->
+
+
+<p>トレーニング用のデータ: &#8220;CodeIQ_auth.txt&#8221;<br/>
+分類するデータ: &#8220;CodeIQ_mycoins.txt&#8221;<br/>
+を上記のURLからダウンロード。</p>
+
+<p>以下ソースコード。</p>
+
+<div><script src='https://gist.github.com/5697523.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+
+
+<p>きちっと線形分離できるので簡単な問題ですね。</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Niigata.LLに参加してきました]]></title>
+    <link href="http://Salinger.github.com/blog/2013/03/23/1/"/>
+    <updated>2013-03-23T20:00:00+09:00</updated>
+    <id>http://Salinger.github.com/blog/2013/03/23/1</id>
+    <content type="html"><![CDATA[<p>本日行われた<a href="http://atnd.org/events/36394">Niigata.LL</a>に参加してきました。LL(Lightweight Language)と言っても、どの言語がLLなのかは各自の判断に任されたので、様々な言語・プロダクトについての話がありました。</p>
+
+<p>以下今日の発表の簡単なまとめです。</p>
+
+<!--more-->
+
+
+<h2>発表まとめ</h2>
+
+<p>@~ はTwitterのid</p>
+
+<h3>SL4Aでとび森を捗らせたかった @nekokusa</h3>
+
+<p><a href="http://docs.solab.jp/sl4a/">SL4A(Scripting Layer for Android)</a>を利用すると、Android上でPython Perl RubyなどのScript言語が動く。これとQRコードスキャナを組み合わせて、「とびだせ どうぶつの森」のマイデザインのQRコードを生成する。</p>
+
+<p>…はずが失敗。マイデザインのQRコードの中身は独自形式のバイナリデータだったため。Unicode文字列で表示できない文字が&lt;?>に。この部分を改善すればどうにかなるのか？</p>
+
+<h3>C#はLLですが何か？ @masaru_b_cl</h3>
+
+<p>祝電スライド1つ目。内容は<a href="http://www.slideshare.net/masaru_b_cl/lightweight-c">こちら</a> 。</p>
+
+<p><a href="http://ltsv.org/">LTSV（Labeled Tab-separated Values）</a> とは <code>hoge:foo\tbar:baz\n</code>のような形式のデータストラクチャ。</p>
+
+<p><a href="https://github.com/masaru-b-cl/DynamicLTSV">DynamicLTSV</a>：LTSVライブラリを作ったよという話。これからLTSV流行る？</p>
+
+<h3>ガベージコレクションについて @mihyaeru21</h3>
+
+<p><a href="http://ja.wikipedia.org/wiki/%e3%82%ac%e3%83%99%e3%83%bc%e3%82%b8%e3%82%b3%e3%83%ac%e3%82%af%e3%82%bf">ガベージコレクション</a>の基本的なアルゴリズムのお話。基本的なマーク・アンド・スイープ、参照カウント、コピーGCに加え、３つを組み合わせたもの、世代別GCなどの発展的なものの話もあり。最強のGCは無いっぽい。</p>
+
+<h3>Groovyの紹介 @toby55kij</h3>
+
+<p><a href="http://groovy.codehaus.org/">Groovy</a>はJavaVM上で動作する動的なプログラミング言語。Javaのコードがほぼそのまま動くのでJavaとの相性が良い。クロージャー、演算子オーバーロード、Groovy JDK （GDK）、便利なライブラリ(Groovy API)など、Javaを強化する機能が盛り沢山。</p>
+
+<p>開発を効率化するために、Webアプリフレームワークの「Grails」、デスクトップアプリケーションフレームワークの「Griffon」、ビルドツール「Gradle」、常駐化で高速起動「GroobyServ」、その他「Gaelyk」、「Gpars」、「GroovyFX」などのフレームワークやライブラリ群などがある。
+　
+パフォーマンスはそのままだとそこまで良くないが、最近実装された静的な型チェックや静的コンパイル機能を使ってやると結構早い。Javaより少し遅い程度かも？</p>
+
+<p><a href="http://www.jggug.org/">日本Grails/Groovyユーザーグループ</a>に日本語情報あり。</p>
+
+<h3>Padrinoでオンラインブックマークサービスを作った @jewel_x12 (1回目)</h3>
+
+<p><a href="http://titra.herokuapp.com">鯛虎</a>という、Web記事タイトルをみんなでひたすら翻訳するサービスブックマークサービスをPadrinoでつくったとのこと。ちなみに、Title:鯛 Transration:虎。</p>
+
+<p>軽量WebアプリケーションDSL(Domain Specific Language)としてRubyにはSinatoraがある。多言語用の似たものとして、PerlにはMojoliciousやDancer、PythonにはFlaskやJuno、PHPにはSlimやSilexなどがある。</p>
+
+<p><a href="http://www.padrinorb.com">Padrino</a>はSinatoraベース（Sinatoraを拡張）のWebアプリケーション作成フレームワーク。Sinatoraにロガー、ヘルパー、ジェネレータ、Rails風MVCの導入、メール配信機能、管理画面、View用ヘルパー、多言語対応など諸々の機能が追加されている。Webアプリでおなじみのディレクトリ構成をいちいち手動で作る必要がなく、必要な機能のみ選択して拡張可。</p>
+
+<p>小さなサービスをサクッと作るには良いフレームワークっぽい。
+Knohとか出てきてるし、今後記事翻訳系サービスが面白くなるかも的な話もあった。</p>
+
+<h3>CGIを軽量WAFにリプレースして捗った話 @aokcub</h3>
+
+<p>Padrinoに引き続き、WAF（Web Application Framework）の<a href="http://mojolicio.us">Mojolicious</a>のお話。これはPerl用。公式の日本語ドキュメントが充実していて、テンプレート、開発用サーバ・開発用SSL証明書、json、Websoketなどはデフォルトで用意されている。足りないところはCPANでカバーする。例えばデータベースやセッション管理など。</p>
+
+<p>Perlで小粒なアプリケーションをつくるならMojolicious一択！</p>
+
+<h3>Cinnamon @hayajo</h3>
+
+<p><a href="https://github.com/kentaro/cinnamon">Cinnamon</a>はPerl製のデプロイツール。複数ホストに対して、アプリケーションをガッとデプロイ。他言語の似たようなツールはCapistrano (Ruby)、Fabric (Python)などがある。</p>
+
+<p>Cinnamonの実態は、SSHでホストに接続してコマンド実行。Role x Task で柔軟に対応できる。</p>
+
+<p>同時実行たタスク・イン・タスクなどはこれから実装される？シンプルだけどまだまだこれからのようです。この手のツールは基本的に学習コスト高。</p>
+
+<p>Fabricよさげなので、Pythonに抵抗ない人はそっち使おう！というオチ。</p>
+
+<h3>Excel VBAのユニットテスト @bei_kan</h3>
+
+<p>XLUnitはわかりづらい。VBAUnitは手間がかかる割には使いづらい。そこでVBAUnit(jp)。日本語の関数名が使える、レッド/グリーンバーがある、関数を追加するだけでテスト追加、対象とテストのファイル分離可、対象のソースをあまり汚さないなど非常に使いやすい。</p>
+
+<p>VBAであまり組みたくないというオチ。</p>
+
+<h3>Introduction to Scala @joe_noh</h3>
+
+<p>Scala入門編。オブジェクト指向 ＋ 関数型 ≠ 関数型。オブジェクト指向で作っていい。副作用があってもいい。JavaにRubyを足した感じ。すべてオブジェクト（型も）。トレイトを使ってMix-in。Javaのライブラリが使え、より簡潔に書ける。型推論もある。並列処理や再帰が得意。などといった特徴がある。</p>
+
+<p>欠点はコンパイルとJVM起動がややもっさり。また言語仕様が複雑。例えばListのインスタンスメソッド名が<code>++ ++: +: /: :+</code> etc&#8230;のように名が体を表しておらず意味不明。</p>
+
+<p>拡張ライブラリにscalazというものがあるが、こういうことやるからScalaは怖い的なことを言われるので、最初は使わなくてもおｋらしい。</p>
+
+<p>関数型言語は興味あるので、そのうち触ってみるつもり。</p>
+
+<h3>OctopressとGithub Pages @salinger001101</h3>
+
+<p>発表してきました。LLと相性のいいブログだよ！資料は<a href="http://Salinger.github.com/data/niigatall_2013_03/Octopress.pdf">こちら</a>。</p>
+
+<h3>mruby @dictav</h3>
+
+<p><a href="http://www.digitalfukuoka.jp/events/6">MONO Ruby</a>とはmrubyともの作りのコラボイベント。３Dプリンタの話など、すでにmrubyが組み込まれた製品の話。</p>
+
+<p><a href="https://github.com/mruby/mruby">mruby</a>は組み込み向けの軽量ruby。日本語で参加可能なオープンソースプロジェクトでまだまだ発展途上。</p>
+
+<p>RubyのGemはmrubyではmrbgemsとなっている。mrubyを拡張する仕組みでmrubyコンパイル時にlimmrubyに機能を組み込む。基本的な組み込み関数もこれで提供されるので極限まで最適化可能。</p>
+
+<p>プロジェクトの規模は大きいけどソースコードはまだ小さい。もしかしたら、Matzのコードレビューが受けられるかも？今ならmrubyの先駆者になれる。さあLet&#8217;s pull request！</p>
+
+<h3>JS TDD (and Test) with your language @isiduca</h3>
+
+<p>基本的にJSのテスト駆動開発(TDD)の話。クライアント（ブラウザ）を使うテスト：PhantomJS、単体（ユニット）テスト：QUnit、コマンドライン上からのテスト：QUnit-TAP &amp; prove、更新に合わせたテストの自動実行：pfswatchなどが紹介された。</p>
+
+<p>コマンドが成功するか失敗するかによってその結果に対応した音声が流れるモジュールを利用して、テスト結果の通知を音声で通知するという面白い試みについての話<a href="http://d.hatena.ne.jp/moznion/20130305/1362467136">App::WithSound</a>もありました。</p>
+
+<p>一度TDDはしっかり勉強しないと…</p>
+
+<h3>PowerShellの話 @kasacchiful</h3>
+
+<p>PowerShellはWindows用のShell。Win7は2.0、Win8は3.0。MS製品との親和性が高い。例えばSQLServerとかActiveDirectoryとか。基本Shellだが、VBScriptの代替にも使える。</p>
+
+<p>lsって入力できる！エイリアスが登録できる（lsもdirもエイリアス）。csvファイルの読み書きが簡単。スクリプトファイルに保存、実行できる。.NET Frameworkのクラスライブラリが使える。パイプが使える。.NET Frameworkのオブジェクトが渡せる。オブジェクト指向プログラミングができる。IDEが標準で付属。サーバー管理機能。テストツール、例外処理、文字コード周りの処理などもちゃんとある。</p>
+
+<p>もはやなんでもあり。</p>
+
+<h3>Perlなめんな @neko_gata_s</h3>
+
+<p>祝電スライド2つ目。内容は<a href="https://gist.github.com/Shinpeim/5220843">こちら</a>。</p>
+
+<p>最近のPerlの可読性・オブジェクト指向（Mouse）や例外（Try::Lite）のお話。There&#8217;s More Than One Way To Do It. 「やりかたはひとつではない」的な観点に基づくと別にPerlにこだわりすぎる必要もない。</p>
+
+<h3>いままで作ったもののお話 @su8erlemon</h3>
+
+<p><a href="http://su8erlemon.com">ここ</a>にAdobe Airとか<a href="http://www.openframeworks.cc">openFrameworks</a>を使って制作したもののサンプルあり。<a href="http://su8erlemon.com/meme6/">ミーム DE ディスカッション</a>とか。</p>
+
+<p>プロジェクトマッピングとかのお話も。<a href="http://www.youtube.com/watch?feature=player_embedded&amp;v=lP7vGK0ap-k">こんな(YouTube)</a>感じで、かなりレベル高かった。今回一番の衝撃。</p>
+
+<p>この手の話は、普段あまり聞く機会がなかったので面白かった。もっと芸術的なセンス欲しい…</p>
+
+<h3>JO_RI_botの紹介 @shogo82148</h3>
+
+<p>@JO_RI_bot のお話。いわゆる人工無能。圧縮新聞とかしゅうまい君の仲間。Twitterでリプライを送るだけで様々な機能が利用可能。</p>
+
+<p>ぬるぽ->ガッ、タイマー、翻訳（Bing翻訳を利用）、多言語対応、Amazonの商品検索、本の感想（じょりくん：@JO_RI が読んだ本（主にラノベ）ならだいたい返ってくる）、キーワード検索、ユーザー検索、イベントの詳細、QA機能、etc..</p>
+
+<p>詳細は<a href="https://github.com/shogo82148/JO_RI_bot/wiki">ここ</a>読めばおｋ。</p>
+
+<h3>Scalaのパターンマッチング @jewel_x12 (2回目)</h3>
+
+<p>Scalaのパターンマッチングのお話。簡単に言うと豪華なCase文的なイメージ。定数パターン、シーケンスパターン、型付きパターン、コンストラクタパターン、抽出子（インスタンスの構成要素を分解してマッチング）など。</p>
+
+<p>色々できて便利！Scalaは多機能故に学習コスト高…</p>
+
+<p>普段使わない言語の考え方って面白い。</p>
+
+<h2>感想など</h2>
+
+<p>今回は飛び入りの発表者が多く、分量・内容ともかなり増し増しな感じでした。LLは用途的にもWeb開発系のフレームワークの話が多いかなと思ってたけど、そんなことはなかった。</p>
+
+<p>普段はほとんどPythonを使っているけれど、こういう場で学んだ他言語・他ツールとの共通部分・差異をもっと意識すれば、もうちょっとマシなプログラムが書けるはず。精進あるのみ。</p>
+
+<p>それから、普段見落としそうな所にもアンテナを向けるためには、「こんなんあるけど、どうよ？」と言ってくれる人がいる、情報を受動的に手に入れられる環境に定期的に顔出すのって重要なのを再認識しました。</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[RのProxy設定（Mac）]]></title>
+    <link href="http://Salinger.github.com/blog/2013/03/20/1/"/>
+    <updated>2013-03-20T03:25:00+09:00</updated>
+    <id>http://Salinger.github.com/blog/2013/03/20/1</id>
+    <content type="html"><![CDATA[<p>Rでネットに繋ごうとすると繋がらない。
+Proxy環境下では、以下のコマンドをRのコンソール上で入力すればOKだった。</p>
+
+<pre><code>Sys.setenv("http_proxy"="http://xxx.com:yyyy") # xxx: host, yyyy: port
+</code></pre>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Mac + Homebrew で R 環境の構築]]></title>
+    <link href="http://Salinger.github.com/blog/2013/02/26/1/"/>
+    <updated>2013-02-26T22:43:00+09:00</updated>
+    <id>http://Salinger.github.com/blog/2013/02/26/1</id>
+    <content type="html"><![CDATA[<p>「R」は統計データの処理や解析を行うための言語です。面倒くさい統計処理と視覚化が関数の組み合わせだけであっという間に完了する便利な言語。今回はその環境構築の際のメモ。</p>
+
+<!-- more -->
+
+
+<p>最初にRをインストールするために必要なパッケージのgfortranをHomebrewでインストール。</p>
+
+<pre><code>$ brew install gfortran
+</code></pre>
+
+<p>あれ？</p>
+
+<pre><code>Brews that require a Fortran compiler should not use:
+  depends_on 'gfortran'
+</code></pre>
+
+<p>とか言われた。アップデートしてみる。</p>
+
+<pre><code>$ brew update
+$ brew install gfortran
+$ brew install r
+</code></pre>
+
+<p>起動のテストとデモ。</p>
+
+<pre><code>$ R
+Rは、自由なソフトウェアであり、「完全に無保証」です。
+一定の条件に従えば、自由にこれを再配布することができます。
+配布条件の詳細に関しては、'license()'あるいは'licence()'と入力してください。
+
+Rは多くの貢献者による共同プロジェクトです。
+詳しくは'contributors()'と入力してください。
+また、RやRのパッケージを出版物で引用する際の形式については
+'citation()'と入力してください。
+
+'demo()'と入力すればデモをみることができます。
+'help()'とすればオンラインヘルプが出ます。
+'help.start()'でHTMLブラウザによるヘルプがみられます。
+'q()'と入力すればRを終了します。
+&gt; demo(nlm)
+</code></pre>
+
+<p>動いたよ！</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[MacでTeX環境の構築]]></title>
+    <link href="http://Salinger.github.com/blog/2013/02/04/1/"/>
+    <updated>2013-02-04T14:23:00+09:00</updated>
+    <id>http://Salinger.github.com/blog/2013/02/04/1</id>
+    <content type="html"><![CDATA[<p>TeXで文章を書く必要があったので、その環境構築を行う際のメモ。基本的にコンソール上のEmacsで作業するための環境を構築します。具体的にはMacTexとYaTeXをインストールして、プレビューにはOSXデフォルトとPreview.appを使用します。OSはMountain Lionです。</p>
+
+<!-- more -->
+
+
+<h2>MacTeXのインストール</h2>
+
+<p><a href="http://www.tug.org/mactex">MacTeX</a>から、MacTeX.pkgをダウンロード。ダウンロードした.pkgファイルをダブルクリックしてインストール。</p>
+
+<p>動作確認。以下のサンプルをhogehoge.texの名前で保存。</p>
+
+<pre><code>\documentclass{jarticle}
+\begin{document}
+こんにちは、世界。
+こんにちは、\TeX。
+
+こんにちは、\LaTeX。
+\end{document}
+</code></pre>
+
+<p>コンソールから、</p>
+
+<pre><code>$ platex hogehoge.tex
+$ dvipdfmx hogehoge.dvi
+</code></pre>
+
+<p>これで、hogehoge.pdfが生成される。日本語も問題ない。</p>
+
+<h2>YaTeX(やてふ)のインストール</h2>
+
+<p>普段はコンソール上のEmacsで作業しているので、そこからTeXを便利に使うためのツールをインストール。</p>
+
+<p><a href="http://www.yatex.org">YaTeX</a>から、最新版のtar.gzをダウンロード。</p>
+
+<pre><code>$ cd ~/Downloads
+$ curl -O http://www.yatex.org/yatex1.76.tar.gz
+$ tar zxvf yatex1.76.tar.gz
+$ mkdir ~/.emacs.d/lisp/yatex
+$ mv yatex1.76 ~/.emacs.d/lisp/yatex
+</code></pre>
+
+<p>次に、.emacsを編集。以下のコードを最後に追記。</p>
+
+<pre><code>;; for YaTex
+;; Add library path
+(add-to-list 'load-path "~/.emacs.d/lisp/yatex")
+;; YaTeX mode
+(setq auto-mode-alist
+    (cons (cons "\\.tex$" 'yatex-mode) auto-mode-alist))
+(autoload 'yatex-mode "yatex" "Yet Another LaTeX mode" t)
+(setq tex-command "platex")
+(setq dviprint-command-format "dvipdfmx %s")
+;; use Preview.app
+(setq dvi2-command "open -a Preview")
+(setq bibtex-command "pbibtex")
+</code></pre>
+
+<p>動作確認。</p>
+
+<pre><code>$ emacs hogehoge.tex
+</code></pre>
+
+<p><code>C-c t j</code>でコンパイル。<code>C-c t l</code>でdviをpdfに。<code>C-c t p</code>でpdfファイルをプレビュー。</p>
+
+<p>動いた。</p>
+
+<h2>TeX、YaTeXの使い方など</h2>
+
+<p>この辺りのページ参照。<br/>
+<a href="http://www002.upp.so-net.ne.jp/latex/">LaTeXコマンドシート一覧</a><br/>
+<a href="http://hooktail.sub.jp/tex/yatex/">野鳥(YaTeX)[物理のかぎしっぽ]</a></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[NDS30:JAWS-UG-NGキックオフ に参加してきました]]></title>
+    <link href="http://Salinger.github.com/blog/2013/01/27/2/"/>
+    <updated>2013-01-27T22:55:00+09:00</updated>
+    <id>http://Salinger.github.com/blog/2013/01/27/2</id>
+    <content type="html"><![CDATA[<p>2013年1月26日に行われた<a href="http://nagaoka.techtalk.jp/no30">長岡開発者勉強会(NDS)</a>に参加してきました。今回は第30回でメインテーマはAmazon Web Service(AWS)のハンズオン。前回はWindows Azureのハンズオンだったので、2回連続で講師のもと、クラウド関連のサービスに触れる貴重な機会となりました。</p>
+
+<!-- more -->
+
+
+<h2>JAWS-UG-NG発足の儀</h2>
+
+<p>JAWS-UG は AWS User Group - Japan 最後のNGは 新潟 or 長岡。31番目の支部らしい。</p>
+
+<h2>AWSハンズオン</h2>
+
+<p>VPC(Virtual Private Cloud)の作成から始まって、EC2インスタンスを作成してアプリケーションサーバの構築、DBインスタンスを作成してEC2インスタンス内で動かしてたデータベースを移行、ロードバランサの追加という流れで進んでいった。</p>
+
+<p>小規模なWebサービスを立ち上げて、トラフィックの増加に従い、システムリソースの拡張を行う際の流れをひと通り経験出来た。システムの可用性の向上、セキュリティ面で注意すべきことなどの話もきちんとあり、AWS未経験の人間でも数時間でそれなりのシステムが組めるようになった(気がする)。</p>
+
+<p>今回のハンズオンでAWSに以下の様な印象を持った。</p>
+
+<ul>
+<li>低コスト
+
+<ul>
+<li>時間やマシンスペックなどこちらの方が割安</li>
+</ul>
+</li>
+<li><a href="http://aws.amazon.com/jp/products/">豊富なサービス</a>が用意されている
+
+<ul>
+<li>一番気になったのは、<a href="http://aws.amazon.com/jp/elasticmapreduce/">Amazon Elastic MapReduce(EMR)</a>。Hadoopクラスタのセットアップ &amp; 計算量に応じた計算機の確保が容易に出来そう。今後のために使い方勉強しておいたほうが良さそうだ。</li>
+<li><a href="http://aws.amazon.com/jp/glacier/">Amazon Glacier</a>も気になった。データの取り出しに時間が必要だが1ヶ月あたり0.01USD/GBと、大容量のデータを安価にバックアップできる。</li>
+</ul>
+</li>
+<li>細かいルールや設定の管理・適用がしやすい</li>
+</ul>
+
+
+<p>Azureも悪くはないが、個人で利用する場合は少しコスト面が気になる。ネットワーク周りやディスクアクセス周りは、両者で実際にそれなりのサービスを動かして比較してみないとなんとも言えませんね。AWSで今後使う可能性がありそうなサービスは、EC2で簡易なWebサービスのホスト、Amazon Glacierで重要であまり変更が行われないデータのバックアップあたりかな？将来的にはHadoop関連のサービスあたりも使うかも。1年間の無料枠があるので、その間にもう少しいじってみる予定。</p>
+
+<h2>LT(ライトニングトーク)</h2>
+
+<p>一人あたり約5分程度の枠で合計約1時間程度の発表。</p>
+
+<h3>5min de Heroku (@dictav)</h3>
+
+<p><a href="https://gist.github.com/4640042">https://gist.github.com/4640042</a><br/>
+Webサービスが簡単に作れる。<br/>
+スケーリングも簡単にできるが、お金も必要。<br/>
+簡易な処理で済むサービス動かすならいい感じ。<br/>
+家で調べてみたらこのブログで使ってるOctopressもHerokuにデプロイ可能なようだ。</p>
+
+<h3>音をグリッチしてモテたい話 (@neko_gata_s)</h3>
+
+<p><a href="https://github.com/Shinpeim/WaveZutaZuta">https://github.com/Shinpeim/WaveZutaZuta</a><br/>
+いけてるほうのねこがたさん<br/>
+音を分割して繋いでリミックス<br/>
+くーる！<br/>
+えんじにあにはもててた</p>
+
+<h3>高齢者テスター事業構想について (@muromav)</h3>
+
+<p>NPOが実施している高齢者向けパソコン教室の受講者の高齢者のみささんにテスターをやってもらおうという試み。<br/>
+「自助」災害時に自力で情報収集 ＋「共助」高齢者の友達の輪<br/>
+開発者は若年層が多いので、高齢者向けのデザインはあまり考慮されてないものが多い。高齢者にも優しいプロダクトを。<br/>
+多少なりとも報酬を。高齢者のPC学習のモチベーション向上に。</p>
+
+<h3>Raspberry PiでLチカ(aokcub)</h3>
+
+<p>Raspberry Piネタ1人目。<br/>
+<a href="https://github.com/aokcub/PiGPIO">https://github.com/aokcub/PiGPIO</a><br/>
+Lチカ。LEDチカチカ。マイコンのHello, World!<br/>
+Perlで制御。PWM制御も実装。<br/>
+もてそう。</p>
+
+<h3>Raspberry Piについてのなにか (@yutacar)</h3>
+
+<p>Raspberry Piネタ2人目。<br/>
+USB温度センサーで部屋の温度取得。<br/>
+Matplotlibでグラフ化<br/>
+将来はエアコンの管理も？</p>
+
+<h3>Raspberry PiとキャラクタLCDで遊んでみた。 (@salinger001101)</h3>
+
+<p>私が発表しました。このBlogに書いたRaspberry Piネタ(概要・キャラクタLCD・人工無能)を話しました。<br/>
+<a href="http://Salinger.github.com/data/nds30/20130127.pdf">発表スライドのPDF</a><br/>
+<a href="https://gist.github.com/4640042">LCD制御用のプログラム</a><br/>
+<a href="https://github.com/Salinger/MunouChan-onRaspberryPi">人工無能: MunouChan</a></p>
+
+<h3>High Performance Web Server (@wokamoto)</h3>
+
+<p>Webサービスの高速化についてのお話。</p>
+
+<ol>
+<li>HipHop VM for PHP
+
+<ul>
+<li>PHPをC++に自動変換して高速化。VMで動的に。</li>
+</ul>
+</li>
+<li>mod_pagespeed
+
+<ul>
+<li>GoogleのWebサイト高速化モジュール。Apacheサーバに。余計なコード(コメントなど)を自動的に除去。ngx_pagespeedもあるのでnginxでも問題なし。</li>
+</ul>
+</li>
+<li>SPDY
+
+<ul>
+<li>通信プロトコル。接続の高速化。ブラウザが対応してないとダメ。最新版のChrome、Firefox、Operaはデフォルトで対応済み。つまりIEはダメ。</li>
+<li>Multiplexed streams、Request prioritization、HTTP header compression、Server push、Server hintなど。</li>
+</ul>
+</li>
+</ol>
+
+
+<h3>AWSとTitaniumの新しい関係 (@NPoi)</h3>
+
+<p>Titanium Mobile: JavaScriptでiOS・Androidのアプリが書ける。<br/>
+Appcelerator Cloud Services(ACS) -> AWS上で動いている<br/>
+BaaS Backend as a Service<br/>
+あらかじめ用意された機能群から必要な機能を選択できる。<br/>
+サーバーサイド、バックエンド側の知識が少なくてもどうにかなるように。<br/>
+非常に高い堅牢性。</p>
+
+<h2>まとめ</h2>
+
+<p>短時間でAWSでのWebサービス構築方法を学べたので非常に有意義だった。LTも普段触れない技術に触れることの出来る良い機会でした。そろそろLTで言語処理関連の話や機械学習の話もしたいですね。</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Raspberry Piに人工無脳搭載してみた]]></title>
+    <link href="http://Salinger.github.com/blog/2013/01/27/1/"/>
+    <updated>2013-01-27T00:09:00+09:00</updated>
+    <id>http://Salinger.github.com/blog/2013/01/27/1</id>
+    <content type="html"><![CDATA[<p>前回の記事に引き続きRaspberry Piネタ。マルコフ連鎖により文章を自動生成しLCDに出力してみた。</p>
+
+<p><img src="http://Salinger.github.com/images/2013-01-27/001.png" alt="出力例の画像" /></p>
+
+<!--more-->
+
+
+<h2>人工無脳とは</h2>
+
+<p>考えてるように見えて考えてない。ただ確率に従い文章を生成するプログラム。それでも人間から見ると、意味のある文章に見える文章が生成される。</p>
+
+<p>基本的な生成手順は</p>
+
+<ol>
+<li>元データを形態素解析して形態素毎に分割</li>
+<li>マルコフ連鎖により再構成</li>
+</ol>
+
+
+<h2>形態素解析</h2>
+
+<p>自然言語で書かれた文を、形態素 (言語で意味を持つ最小単位) ごとに分割し、各形態素の品詞を特定することを形態素解析と呼ぶ。プログラムで自然言語を扱う場合、よく使われる技術の一つ。細かいことは<a href="http://ja.wikipedia.org/wiki/%e5%bd%a2%e6%85%8b%e7%b4%a0%e8%a7%a3%e6%9e%90">Wikipedia</a> でも見てください。</p>
+
+<p>日本語の形態素解析を行うためのツールは以下の様なものがある。</p>
+
+<ul>
+<li><a href="http://mecab.sourceforge.net/">MeCab</a>
+
+<ul>
+<li>bi-gram マルコフモデル</li>
+<li>学習モデルはCRF</li>
+</ul>
+</li>
+<li><a href="http://chasen-legacy.sourceforge.jp">ChaSen</a>
+
+<ul>
+<li>可変長マルコフモデル</li>
+<li>学習モデルは隠れマルコフモデル(HMM)</li>
+</ul>
+</li>
+<li><a href="http://www.phontron.com/kytea/index-ja.html">KyTea</a>
+
+<ul>
+<li>比較的最近でてきたもの</li>
+<li>ネットスラングや顔文字などの認識も比較的精度がいいらしい</li>
+</ul>
+</li>
+<li><a href="http://developer.yahoo.co.jp/webapi/jlp/ma/v1/parse.html">日本語形態素解析Webサービス</a>
+
+<ul>
+<li>Webベースの日本語形態素解析API</li>
+<li>組み込み系などマシンが非力な場合にも使えそう</li>
+</ul>
+</li>
+</ul>
+
+
+<p>今回は使い慣れているMeCabを使いました。</p>
+
+<h2>マルコフ連鎖</h2>
+
+<p>すごく簡単に言うと、ある要素を次々と発生させる状況を考えたときに、次の要素が現在の要素のみによって決まるのがマルコフ連鎖である。詳しくは<a href="http://ja.wikipedia.org/wiki/%e3%83%9e%e3%83%ab%e3%82%b3%e3%83%95%e9%80%a3%e9%8e%96">Wikipedia</a>でも見てください。</p>
+
+<p>これを文章に適用した場合の例だが、解説はこのページがわかりやすい(<a href="https://www.evernote.com/shard/s70/sh/71947f67-ee6c-405f-92a2-1d64fd631639/2d9397138827808cbc21c36c9389f642">「それが大事」にマルコフ連鎖を適用してみる</a>)。</p>
+
+<p>ある単語があったとき、その単語の次に現れる可能性のある単語の確率のみを考える場合を単語uni-gramのマルコフ連鎖、2単語ずつをペアにして考える場合を単語bi-gramのマルコフ連鎖、さらに続いてtri-gram、4-gram、…N-gram。と呼ぶ。</p>
+
+<p>例えば、<br/>
+私/は/旅行/に/行き/たい/。<br/>
+という文章があった場合、</p>
+
+<ul>
+<li>単語uni-gram:
+
+<ul>
+<li>&#8220;私&#8221;, &#8220;は&#8221;, &#8220;旅行&#8221;, &#8220;に&#8221;, &#8220;行き&#8221;, &#8220;たい&#8221;, &#8220;。&#8221;</li>
+</ul>
+</li>
+<li>単語bi-gram:
+
+<ul>
+<li>&#8220;私/は&#8221;, &#8220;は/旅行&#8221;, &#8220;旅行/に&#8221;, &#8220;に/行き&#8221;, &#8220;行き/たい&#8221;, &#8220;たい/。&#8221;</li>
+</ul>
+</li>
+<li>単語tri-gram:
+
+<ul>
+<li>&#8220;私/は/旅行&#8221;, &#8220;は/旅行/に&#8221;, &#8220;旅行/に/行き&#8221;, &#8220;に/行き/たい&#8221;, &#8220;行き/たい/。&#8221;<br/>
+となる。</li>
+</ul>
+</li>
+</ul>
+
+
+<h2>文章を生成する際のポイント</h2>
+
+<ol>
+<li>要素の単位
+
+<ul>
+<li>文字単位でマルコフ連鎖を行う場合もあるが、単語単位で生成したほうが読みやすい文章になる。N-gramのNが大きくなれば、長文になりやすく、同じパターンのものが生成されやすい。解決するためにはデータ量を増やす必要がある。個人的にいい意味で人工無脳っぽさが出るは単語bi-gramかtri-gramあたりだと思う。</li>
+</ul>
+</li>
+<li>開始・終了の扱い
+
+<ul>
+<li>開始、終了にも適当な目印を割り当てると楽。<code>[S]/私/は/旅行/に/行き/たい/。/[E]</code>のように。単語[S]から作り始めて、単語[E]が現れたら終了。</li>
+</ul>
+</li>
+<li>元データの選択
+
+<ul>
+<li>◯◯っぽいものを作りたい場合は◯◯っぽい文章を集めてくる。とりあえず試してみたい場合のデータ収集元としておすすめなのはTwitterやネットのニュースあたり。この辺りを元データにしたものは<a href="https://twitter.com/shuumai">しゅうまい君</a>や<a href="http://pha22.net/comp/">圧縮新聞</a>なんかが有名ですね。</li>
+</ul>
+</li>
+</ol>
+
+
+<h2>プログラム</h2>
+
+<p>という訳で、Raspberry Pi + LCD で動くものを実装してみました(<a href="https://github.com/Salinger/MunouChan-onRaspberryPi">MunouChan</a>)。文章生成に使用したのは友人のTweet。<code>@~</code> から始まるリプライツイートは削除しました。各単語はMeCabで分割し単語の読みに変換(最終出力が半角カナのみなので)。単語の読みのみを考慮して(火と日は&#8221;ひ&#8221;で同一単語扱い)bi-gramの単語ペアを生成。ペアの出現回数をカウント。次に現れる単語の確率を計算したものをpickleモジュールでダンプしたものが上記URLのプログラムの状態です。</p>
+
+<p>後はプログラム起動時にダンプされたデータを読み込み、開始単語から終了単語が現れるまで確率に従いランダムに単語を選択。LCDに収まる文字数ならLCDに出力し、オーバーしていたら再生成。</p>
+
+<p><code>./probability.pkl</code>を削除またはリネームし、tweetディレクトリの中のsample.tsvを同じ形式で書き換えてやれば、任意の元データでも動くはず。ただ元データに文字数が多いものばかりを選ぶと、制限文字数をオーバしまくるので怪しい動作しそう。</p>
+
+<p>実行したときの画像がこのページトップあたりにある画像です。</p>
+
+<h2>まとめ</h2>
+
+<p>シンプルな人工無脳を作るのはさほど難しくないが、人間らしい応答をさせようとすると難易度が跳ね上がる。そもそも「人間らしい」という定義すらよくわからない。</p>
+
+<p>これはマルコフ連鎖を文章に適用した例だけど、状態の遷移を確率的に表現できるものに適用できるので、音楽や絵の自動生成など、他分野にもいろいろ適用できるはず。</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Raspberry PiとキャラクタLCDで遊んでみた]]></title>
+    <link href="http://Salinger.github.com/blog/2013/01/25/1/"/>
+    <updated>2013-01-25T16:46:00+09:00</updated>
+    <id>http://Salinger.github.com/blog/2013/01/25/1</id>
+    <content type="html"><![CDATA[<p>せっかくGPIOがあるんだから、ここに何かをくっつけて遊んでみたくなった。という訳で、キャラクタLCDを接続してみました。Raspberry Piの電源はGPIOへ直接入力してます。</p>
+
+<p><img src="http://Salinger.github.com/images/2013-01-25/LCD.jpg" alt="Raspberry Pi 画像" /></p>
+
+<!-- more -->
+
+
+<h2>用意したもの</h2>
+
+<p><a href="http://akizukidenshi.com/catalog/default.aspx">秋月電子</a>で以下のものを購入。
+・SD1602HUOB 16x2 キャラクタLCD x 1
+・GF12-US0520 5V2A ACアダプタ x 1
+・半固定抵抗器 50Ω x 1
+・ピンソケット (メス) 2x13 (26P) x 1
+・ブレッドボード用DCジャックDIP化キット x 1
+・トグルスイッチ3P x 1
+・ユニバーサル基板 (両面スルーホール) 72x47 x 1</p>
+
+<p>合計して約2000円。配線は以前からの余りを流用。</p>
+
+<h2>LCD用基板の作成</h2>
+
+<p>今回使用したLCDはHD44780の互換品なので以下の作業は<a href="http://www.raspberrypi-spy.co.uk/2012/07/16x2-lcd-module-control-using-python/">このページ</a>を参考にして行いました。</p>
+
+<p>GPIOとLCDのピンの接続は、基本的に参考ページの通りに接続。基本的には問題ないのですが、注意点が１つ。参考サイトではLCDの3番ピン(Contrast)がGNDに接続されてますが、今回使用したキャラクタLCDはここに可変抵抗器を入れないと、コントラストの関係で液晶に四角い塊が出力される状態になる(斜めから見るとギリギリ文字が読める)。可変抵抗器で分圧してやれば、コントラストの調節ができるようになり、無事文字が読めるようになりました。</p>
+
+<p>また、Raspberry Piには電源スイッチがないので、電源ON/OFFのためのスイッチも追加しました。これでリセット時にACアダプタを抜き差しする必要がなくなった。</p>
+
+<h2>LCD出力用のプログラム</h2>
+
+<p>参考用ページにアルファベットを出力するための、Pythonのプログラムがあったが、日本語(半角カナ・記号)をLCDに出力するために少々書き換えました。GPIO用のモジュール:RPi.GPIO はeasy_installやpipで適当にインストールしてください。<br/>
+Github:<a href="https://github.com/Salinger/Raspberry-Pi-LCD-HD44780">Raspberry-Pi-LCD-HD44780</a><br/>
+このプログラムを使えば、日本語（ひらがな・カタカナ・一部記号）とアルファベットの混じった文字列ををunicodeで渡してやれば、いい感じに変換して出力してくれます。この記事TOPの画像は、このプログラムを動かしたときのものです。</p>
+
+<p>実行する際の注意点として、このプログラムはroot権限で動かす必要があります(GPIO使う場合は必須なのか？)。</p>
+
+<pre><code>$ sudo python lcd.py
+</code></pre>
+
+<h2>まとめ</h2>
+
+<p>これで文字列を生成するPythonのプログラムから、自由にLCDへ出力できるようになりました。電源はRaspberry PiとLCDどちらもACアダプタからの入力で動作します。あと地味に電源スイッチが便利です。次はPythonで文字列を生成するプログラムを書いてこいつに乗っけます。</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Laspberry Piについて]]></title>
+    <link href="http://Salinger.github.com/blog/2013/01/24/1/"/>
+    <updated>2013-01-24T14:39:00+09:00</updated>
+    <id>http://Salinger.github.com/blog/2013/01/24/1</id>
+    <content type="html"><![CDATA[<p>今回は<a href="http://www.raspberrypi.org">Raspberry Pi</a>の紹介をしたいと思います。Raspberry PiはARMプロセッサを搭載したシングルボードコンピュータです。</p>
+
+<p><img src="http://Salinger.github.com/images/2013-01-24/R0012199.jpg" alt="Raspberry Pi 画像" /></p>
+
+<!-- more -->
+
+
+<h2>ハードウェアの仕様</h2>
+
+<p>以下簡単なハードウェア仕様のまとめ。</p>
+
+<table>
+<thead>
+<tr>
+<th></th>
+<th><strong>モデル</strong></th>
+<th><strong>Model A</strong></th>
+<th><strong>Model B</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+<td>価格</td>
+<td>$25</td>
+<td>$35</td>
+</tr>
+<tr>
+<td></td>
+<td>CPU</td>
+<td>ARM11 ARM1176JZF-S core</td>
+<td>同じ</td>
+</tr>
+<tr>
+<td></td>
+<td>メモリ</td>
+<td>256 MB</td>
+<td>512 MB</td>
+</tr>
+<tr>
+<td></td>
+<td>GPU</td>
+<td>Broadcom VideoCore IV,OpenGL ES 2.0, OpenVG 1080p30 H.264 high-profile encode/decode</td>
+<td>同じ</td>
+</tr>
+<tr>
+<td></td>
+<td>ストレージ</td>
+<td>SDメモリーカード / MMC / SDIO カードスロット</td>
+<td>同じ</td>
+</tr>
+<tr>
+<td></td>
+<td>USB2.0</td>
+<td>1ポート</td>
+<td>2ポート</td>
+</tr>
+<tr>
+<td></td>
+<td>ビデオ出力</td>
+<td>コンポジット(RCA) / HDMI</td>
+<td>同じ</td>
+</tr>
+<tr>
+<td></td>
+<td>音声出力</td>
+<td>3.5mmジャック / HDMI</td>
+<td>同じ</td>
+</tr>
+<tr>
+<td></td>
+<td>LAN</td>
+<td>なし</td>
+<td>10/100M 有線Ethernet</td>
+</tr>
+<tr>
+<td></td>
+<td>その他インターフェイス</td>
+<td>GPIO / SPI / UART</td>
+<td>同じ</td>
+</tr>
+<tr>
+<td></td>
+<td>電源</td>
+<td>500 mA</td>
+<td>700 mA</td>
+</tr>
+<tr>
+<td></td>
+<td>電源ソース</td>
+<td>5V MicroUSB Type B or GPIO</td>
+<td>同じ</td>
+</tr>
+<tr>
+<td></td>
+<td>サイズ</td>
+<td>85.60 mm ×53.98mm</td>
+<td> 同じ</td>
+</tr>
+</tbody>
+</table>
+
+
+<h2>ソフトウェア</h2>
+
+<p>OSはDebian(wheezy)ベースのもの、Arch Linux、RISC OSなどが動きます。ダウンロードは<a href="http://www.raspberrypi.org/downloads">ここ</a>から。</p>
+
+<h2>購入先</h2>
+
+<p><a href="http://jp.rs-online.com/web/generalDisplay.html?id=raspberrypi">ここ</a>で購入しました。私が入手した際は1ヶ月以上待ちましたが、今はどうなってるのやら。</p>
+
+<h2>インストール</h2>
+
+<p>書き込み作業の際、ディスクの指定を誤るとシステムデータが飛ぶ可能性があるので、気をつけてください。</p>
+
+<h3>OSのダウンロード</h3>
+
+<p>インストールするOSのイメージを上記のページからダウンロードしておきます。今回はDebianベースのRaspbian &#8220;wheezy&#8221;(2012-12-16-wheezy-raspbian.zip) を利用しました。<code>~/Downloads/</code> (デフォルトのダウンロードフォルダ)に保存しておきます。</p>
+
+<h3>SDカードの準備</h3>
+
+<p>OSをインストールするためのSDカードを用意します。OS自体は2GB程度なので、最低4GB程度の容量があれば大丈夫ですが、色々とソフトをインストールする場合を考えると、8GB程度あれば問題ないと思います。インストールの際、カード内の全データが消去されます。</p>
+
+<h3>SDカードへの書き込み。</h3>
+
+<p>今回はMacOSXで作業しました。Unix系のOSならおそらくほぼ同じ方法でできるはず。最初にSDカードのデバイス名を調べます。SDカードを接続する前に、以下のコマンドを実行します。</p>
+
+<pre><code>$ df -h
+</code></pre>
+
+<p>次にSDカード接続後に同じコマンドを実行します。私の環境の場合、SDカード名は<code>/dev/disk1s1</code>になっていました。次にSDカードをアンマウントします。</p>
+
+<pre><code>$ umount /dev/disk1s1
+</code></pre>
+
+<p>ダウンロードしたOSのイメージがあるところへ移動し、ddコマンドを実行。この際、デバイスの指定は<code>/dev/disk1s1</code> => <code>/dev/rdisk1</code>のようにrawデバイスを指定します。</p>
+
+<pre><code>$ cd ~/Downloads
+$ dd sudo time dd bs=1m if=2012-12-16-wheezy-raspbian.img of=/dev/rdisk1
+</code></pre>
+
+<p>これでOSの入ったSDカードの準備ができた。</p>
+
+<h3>起動</h3>
+
+<p>Raspberry Piに先ほど準備したSDカード、モニタ、キーボード、LAN、その他デバイスを接続し、USBポートまたはGPIOから電源を供給して起動します。電源供給と同時に起動するので、電源の接続は最後にしてください<br/>
+初回のみ、設定画面が表示されます。項目は以下の通りです。</p>
+
+<p>・info<br/>
+　　このツールの情報の確認。スルーして問題なし。<br/>
+・expand_rootfs<br/>
+　　デフォルトではSDカードのうち2GB程度しか使用していません。<br/>
+　　全領域を使用するようにここで設定出来ます。設定後、要再起動。<br/>
+・overscan<br/>
+　　テレビに出力する場合、画面周囲がきちんと表示されない場合があります。<br/>
+　　その際、ここで周囲に余白を設定することで、正常に表示できるようになります。<br/>
+・configure_keyboard<br/>
+　　キーボードの配列の設定。<br/>
+　　日本語配列、US配列、使用しているキーボードに合わせて設定。<br/>
+・change_pass<br/>
+　　デフォルトのユーザである&#8217;pi&#8217; ユーザのパスワードの変更。<br/>
+　　自分のパスワードに変更しておくべき。<br/>
+・change_locale<br/>
+　　ロケールの設定。<br/>
+　　日本語フォントが入っていないので、UTF-8に設定しても日本語は文字化けする。<br/>
+　　とりあえずデフォルトのままで問題ない。<br/>
+・change_timezone<br/>
+　　時間の設定。日本は&#8221;Asia&#8221;の&#8221;Tokyo&#8221;を指定すればよい。<br/>
+・memory_split<br/>
+　　GPUどれだけメモリを割り当てるか。通常はデフォルトのままで問題ない。<br/>
+・ssh<br/>
+　　sshを利用してリモートログインする場合&#8221;Enable&#8221;を指定。<br/>
+　　設定しておけば別マシンから開発できる。<br/>
+・boot_behaviour<br/>
+　　&#8221;Yes&#8221;を選択すれば、最初からGUIな画面で起動する。<br/>
+　　CUIで起動して、startxするのが面倒くさいなら&#8221;Yes&#8221;に。<br/>
+・update<br/>
+　　この設定用ツール raspi-config のアップデート。</p>
+
+<p>これで最低限の設定は終わりです。もし、再設定したいならコンソールから</p>
+
+<pre><code>$ sudo raspi-config
+</code></pre>
+
+<p>を実行することで、いつでも再設定出来ます。</p>
+
+<h2>使用した感想</h2>
+
+<p>私が買ったのは$35のモデルです。<br/>
+想像以上に高性能です。コンソールから使う分には特に不満なし。<br/>
+軽い開発なら実機のみでそれなりにできそう。<br/>
+低消費電力なのでサーバー用途に良さそう。<br/>
+GPIO / オーディオ出力 などいろいろ遊べそう。<br/>
+なかなか遊びがいのあるおもちゃですね。</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Homebrew + virtualenv 環境でlibsvmのインストール]]></title>
+    <link href="http://Salinger.github.com/blog/2013/01/18/1/"/>
+    <updated>2013-01-18T02:42:00+09:00</updated>
+    <id>http://Salinger.github.com/blog/2013/01/18/1</id>
+    <content type="html"><![CDATA[<p>サポートベクターマシン(SVM)についての概要は <a href="http://ja.wikipedia.org/wiki/%E3%82%B5%E3%83%9D%E3%83%BC%E3%83%88%E3%83%99%E3%82%AF%E3%82%BF%E3%83%BC%E3%83%9E%E3%82%B7%E3%83%B3">Wikipedia</a> でも見てください。
+スパムの分類、ユーザーのクラスタリング、他何か色々なものを分類する用途に使われます。今回はSVMを使うための環境構築を行った際のメモです。</p>
+
+<!-- more -->
+
+
+<h2>libsvmについて</h2>
+
+<p><a href="http://www.csie.ntu.edu.tw/~cjlin/libsvm/">libsvm</a>はChih-Chung Changさん・Chih-Jen Linさんが開発したSVMのライブラリです。様々なSVMタイプ・カーネル関数、また細かくオプションも指定できるので、SVMを使う必要がある場合は、とりあえずこれを選んでおけば困ることは少ないと思います。</p>
+
+<h2>libsvmのインストール</h2>
+
+<pre><code>$ brew search libsvm
+libsvm
+</code></pre>
+
+<p>brewにあった。ラッキー。</p>
+
+<pre><code>$ brew install libsvm
+</code></pre>
+
+<p>本体のインストール完了。</p>
+
+<pre><code>$ svm-train
+Usage: svm-train [options] training_set_file [model_file]
+options:
+-s svm_type : set type of SVM (default 0)
+        0 -- C-SVC              (multi-class classification)
+...
+</code></pre>
+
+<p>動いた。がこれだとPython用バインディングがインストールできなかった。残念。</p>
+
+<h2>libsvmのPython用バインディングのインストール</h2>
+
+<p>無いなら、pipで公式のバインディングをインストールするためのsetup.pyを自分で書いてしまえばいいじゃない。てな訳で書いた奴をgithubに上げといた<a href="https://github.com/Salinger/libsvm-python">(libsvm-python)</a>。
+問題はsetup.py書いたのが初めてなので、これであってるのかどうか自信がない。とりあえず以下のコマンドでインストールできます。</p>
+
+<pre><code>$ pip install -e git+https://github.com/Salinger/libsvm-python.git#egg=libsvm-python
+</code></pre>
+
+<h2>動作確認</h2>
+
+<p>テスト用のコード。</p>
+
+<div><script src='https://gist.github.com/4579980.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+
+
+<p>そして実行。</p>
+
+<pre><code>$ python libsvm_test.py 
+.*.*
+optimization finished, #iter = 9
+nu = 0.298326
+obj = -0.596685, rho = 3.000257
+nSV = 3, nBSV = 0
+Total nSV = 3
+Accuracy = 75% (3/4) (classification)
+[Result]
+[-1.0, 1.0, -1.0, -1.0]
+(75.0, 1.0, 0.3333333333333333)
+[[-1.3527684585781998], [3.038557720585867], [-1.9331234989121904], [-2.4115929900464406]]
+</code></pre>
+
+<p>問題なく動くのを確認できた。自分で書いたsetup.pyもとりあえず問題ないっぽい？</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Homebrew + virtualenv 環境でMeCabのインストール]]></title>
+    <link href="http://Salinger.github.com/blog/2013/01/17/1/"/>
+    <updated>2013-01-17T18:40:00+09:00</updated>
+    <id>http://Salinger.github.com/blog/2013/01/17/1</id>
+    <content type="html"><![CDATA[<p>普段良く使うモジュールのMeCabのインストール。
+Homebrewもvirutalenvも最近使い始めたばかりなので、自分用メモとして記録。</p>
+
+<!-- more -->
+
+
+<h2>virtualenv環境の作成</h2>
+
+<p>普段はNormalという環境を作って、これを使うことにする。</p>
+
+<pre><code>$ mkvirtualenv Normal
+</code></pre>
+
+<h2>MeCabのインストール</h2>
+
+<pre><code>$ brew search mecab
+mecab mecab-ipadic
+</code></pre>
+
+<p>Homebrewにあった。</p>
+
+<pre><code>$ brew install mecab mecab-ipadic
+$ mecab
+</code></pre>
+
+<p>これでこの時点の最新版である0.994とIPA辞書がインストールできた。動作確認。</p>
+
+<pre><code>$ mecab
+すもももももももものうち
+すもも  名詞,一般,*,*,*,*,すもも,スモモ,スモモ
+も      助詞,係助詞,*,*,*,*,も,モ,モ
+もも    名詞,一般,*,*,*,*,もも,モモ,モモ
+も      助詞,係助詞,*,*,*,*,も,モ,モ
+もも    名詞,一般,*,*,*,*,もも,モモ,モモ
+の      助詞,連体化,*,*,*,*,の,ノ,ノ
+うち    名詞,非自立,副詞可能,*,*,*,うち,ウチ,ウチ
+EOS
+</code></pre>
+
+<p>Ctrl + c で終了。
+文字コード周りのトラブルも特になし。</p>
+
+<h2>MeCabのPythonバインディングのインストール</h2>
+
+<p>MacPortsのときはPythonバインディングもまとめてインストールできたが、Homebrewには無いっぽい。まあvirtualenvで作った環境にインストールするには結局自分で入れなきゃならないらしいので、普通にインストールすることにする。インストール先のvirtualenv環境のまま作業続行。</p>
+
+<pre><code>$ cd ~/Downloads/
+$ curl -O http://mecab.googlecode.com/files/mecab-python-0.994.tar.gz # 同じバージョンのものをダウンロード
+$ pip install mecab-python-0.994.tar.gz # tar.gz のままインストールできる。
+</code></pre>
+
+<p>動作確認を行う。</p>
+
+<h2>Pythonバインディングの動作確認</h2>
+
+<p>サンプルコード</p>
+
+<div><script src='https://gist.github.com/4555097.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+
+
+<p>実行。</p>
+
+<pre><code>$ python mecab_test.py
+ BOS/EOS,*,*,*,*,*,*,*,*
+それ 名詞,代名詞,一般,*,*,*,それ,ソレ,ソレ
+サバンナ 名詞,一般,*,*,*,*,サバンナ,サバンナ,サバンナ
+で 助詞,格助詞,一般,*,*,*,で,デ,デ
+も 助詞,係助詞,*,*,*,*,も,モ,モ
+同じ 連体詞,*,*,*,*,*,同じ,オナジ,オナジ
+事 名詞,非自立,一般,*,*,*,事,コト,コト
+言え 動詞,自立,*,*,一段,未然形,言える,イエ,イエ
+ん 助動詞,*,*,*,不変化型,基本形,ん,ン,ン
+の 助詞,終助詞,*,*,*,*,の,ノ,ノ
+？ 記号,一般,*,*,*,*,？,？,？
+ BOS/EOS,*,*,*,*,*,*,*,*
+</code></pre>
+
+<p>動いた。</p>
+
+<h2>おまけ</h2>
+
+<p>今回はgistで書いたコードをブログに貼ってみたけど、</p>
+
+<pre><code>{% gist 4555097 %}
+</code></pre>
+
+<p>の1行で長いコードを見やすい形式で貼れるのってかなり便利だ。
+Github + Octopress 快適すぎる。</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Macでvirtualenvの設定]]></title>
+    <link href="http://Salinger.github.com/blog/2013/01/16/2/"/>
+    <updated>2013-01-16T17:41:00+09:00</updated>
+    <id>http://Salinger.github.com/blog/2013/01/16/2</id>
+    <content type="html"><![CDATA[<p>virtualenvはPython用の仮想環境構築のためのモジュール。virtualenvwrapperはvirtualenvを楽に使うためのラッパー。とりあえずPython周りの環境は、基本的にPython自体をHomebrewで、モジュールはvirtualenv + virtualenvwrapper + pip で管理することにする。</p>
+
+<!-- more -->
+
+
+<h2>Pythonのインストール</h2>
+
+<p>必要な物をHomebrewでインストール。</p>
+
+<pre><code>$ python -V
+Python 2.7.2 # Macに標準で入ってるPython
+$ brew install readline sqlite gdbm
+$ brew install python --universal --framework
+$ python -V
+Python 2.7.2
+</code></pre>
+
+<p>あれっ？変化なし？
+bashだとPathは問題なく2.7.3が起動したけど、普段使ってるtmux + zshだと2.7.2が起動した。.zshrcに以下のようにPathの記述をする必要あり。</p>
+
+<pre><code>export PATH=/usr/local/bin:/usr/local/sbin:/sbin:/usr/sbin:${PATH}
+</code></pre>
+
+<p>.zshrcの再読み込み</p>
+
+<pre><code>$ source .zshrc
+$ python -V
+Python 2.7.3
+</code></pre>
+
+<p>これでPython2系最新版のインストールはOK。</p>
+
+<h2>virtualenvとvirtualenvwrapperのインストール</h2>
+
+<pre><code>$ which pip # インストール先の確認
+/usr/local/bin/pip # Homebrewでインストールした先になっているのを確認
+$ pip install virtualenv
+$ pip install virtualenvwrapper
+$ mkdir ~/.virtualenvs
+</code></pre>
+
+<p>.zshrcに</p>
+
+<pre><code>#virtualenv settings
+export WORKON_HOME=$HOME/.virtualenvs
+. /usr/local/share/python/virtualenvwrapper.sh
+</code></pre>
+
+<p>を記述。</p>
+
+<pre><code>$ source .zshrc # リロード
+virtualenvが見えない…
+</code></pre>
+
+<p>.zshrcに</p>
+
+<pre><code>export PATH=/usr/local/share/python:${PATH}
+</code></pre>
+
+<p>を追記。</p>
+
+<pre><code>$ source .zshrc
+</code></pre>
+
+<p>問題解決。</p>
+
+<h2>テスト</h2>
+
+<pre><code>$ pip freeze # 現在のモジュールの確認 (virtualenvなど)
+$ mkvirtualenv test1 # test1という環境を作成
+$ deactivate #環境から抜ける
+$ mkvirtualenv test2 # test2という環境を作成
+$ workon # 環境の一覧を確認
+test1
+test2
+$ workon test1 # testを選択
+$ pip install numpy # test1 にnumpyをインストール
+$ pip freeze # nuupyのインストールを確認
+$ deactivate 
+$ pip freeze # 元の環境に影響がないのを確認
+$ rmvirtualenv test1 # テスト環境を削除
+$ rmvirtualenv test2
+$ workon # 出力なし 削除完了
+</code></pre>
+
+<p>動作確認完了。モジュールの切り替えが非常に楽なので、今後の開発が捗りそう。</p>
+
+<h2>Octopressとzshのトラブル？</h2>
+
+<p>この記事を書こうとして、</p>
+
+<pre><code>$ rake new_post["2"]
+</code></pre>
+
+<p>を実行したら、</p>
+
+<pre><code>$ zsh: no matches found: new_post["2"]
+</code></pre>
+
+<p>というエラーが。何故だ？しかし、</p>
+
+<pre><code>$ rake new_post
+$ Enter a post title:2
+</code></pre>
+
+<p>作成できたぞ？今回Pathを弄ったのが原因か？<br/>
+この辺の動作がよくわからんので。また確認しとかないと。</p>
+
+<h3>追記</h3>
+
+<p>.zshrcに</p>
+
+<pre><code>alias rake="noglob rake"
+</code></pre>
+
+<p>を追記したらエラー消えました。ありがとうございます > shogo82148 。</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[homebrew環境の構築]]></title>
+    <link href="http://Salinger.github.com/blog/2013/01/16/1/"/>
+    <updated>2013-01-16T02:41:00+09:00</updated>
+    <id>http://Salinger.github.com/blog/2013/01/16/1</id>
+    <content type="html"><![CDATA[<p>Macbook Airの環境を再構築したので、その際のメモ。今まではパッケージ管理にMacPortsを使っていたが、今回からHomebrewに移行した。元からMountain LionにインストールされてるPythonやRubyと、パッケージ管理ソフトで導入したそれらの最新版の管理がMacPortsだと少々面倒くさかったので、もう少し楽に済みそうなものを使ってみようというのが理由だ。</p>
+
+<!-- more -->
+
+
+<h2>Homebrewのインストール</h2>
+
+<p>以下のコマンドを実行。</p>
+
+<pre><code>$ ruby -e "$(curl -fsSkL raw.github.com/mxcl/homebrew/go)"
+$ brew doctor
+</code></pre>
+
+<p>gitのインストール。</p>
+
+<pre><code>$ brew install git
+</code></pre>
+
+<p>Homebrewのアップデート。</p>
+
+<pre><code>$ brew update
+</code></pre>
+
+<p><code>/usr/local/sbin</code>の作成。</p>
+
+<pre><code>$ mkdir /usr/local/sbin
+</code></pre>
+
+<p>Pathを設定するため<code>/etc/paths</code>の編集。</p>
+
+<pre><code>/usr/bin
+/bin
+/usr/sbin
+/sbin
+/usr/local/bin
+</code></pre>
+
+<p>となっているのを、</p>
+
+<pre><code>/usr/local/bin
+/usr/bin
+/bin
+/usr/sbin
+/usr/local/sbin
+/sbin
+</code></pre>
+
+<p>と変更。これでHomebrewでインストールした方が優先される。
+ターミナルを再起動してとりあえずの設定は終わり。</p>
+
+<h2>Ruby1.9.3のインストール</h2>
+
+<p>とりあえずこのブログを編集するためのRuby環境構築。</p>
+
+<pre><code>$ brew install ruby
+$ gem install bundler
+</code></pre>
+
+<p>このBlogのデータを<code>git clone</code>で作業用ディレクトリに持ってきて、そのディレクトに移動。そこで、</p>
+
+<pre><code>$ bundle install
+</code></pre>
+
+<p>を実行しようとしたら、bundleコマンドが見当たらないぞ？次のコマンドを実行すれば良かった。</p>
+
+<pre><code>$ brew unlink ruby
+$ brew link ruby
+</code></pre>
+
+<h2>おわりに</h2>
+
+<p>こんな感じでBlogを更新するための環境の再構築はとりあえず終了。MacPortsの時に面倒だったRubyとGemのバージョン指定周りも特に気にする必要はなかった。早くPythonの環境も整えないと。</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Mac + Ruby + Octopress + Github でブログの作成]]></title>
+    <link href="http://Salinger.github.com/blog/2013/01/14/1/"/>
+    <updated>2013-01-14T22:22:00+09:00</updated>
+    <id>http://Salinger.github.com/blog/2013/01/14/1</id>
+    <content type="html"><![CDATA[<p>技術系の話をメモするためのブログを作ろうと思っていたところ、このようなものを発見<a href="http://octopress.org">Octopress</a>。コードの管理に普段からGithubを使ってるので、技術系の話はすべてGithub上に集約してしまおう、という試み。以下SSHKeyの登録などGithubの設定はひと通り終わってる前提で話を進めています。</p>
+
+<!-- more -->
+
+
+<h2>環境</h2>
+
+<p>PC: MacBook Air, Core i5 1.7GHz, Mem 4GB<br/>
+OS: OS X 10.8.2<br/>
+XCode: 4.5.2</p>
+
+<h2>Rubyのインストール</h2>
+
+<p>1.9.3が入ってればいいらしいので、MacPortsを使ってインストール。</p>
+
+<pre><code>$ sudo port install ruby19 +nosuffix
+</code></pre>
+
+<p>bundle のインストール (とりあえずgem1.9を使えば問題はなかった。gem だと標準でインストールされている1.8系にインストールされるのか？試していないので分からないが)。</p>
+
+<pre><code>$ sudo gem1.9 install bundle
+</code></pre>
+
+<h2>Octopressのインストール</h2>
+
+<pre><code>$ cd ~/Downloads/
+$ git clone https://github.com/imathis/octopress.git
+$ cd octopress
+$ bundle install
+$ rake install
+</code></pre>
+
+<h2>Github Pagesの準備</h2>
+
+<p>Github Pagesを利用するために、username.github.com というような名前でリポジトリを作成。<a href="https://github.com/repositories/new">ここ</a>で私の場合はsalinger.github.comという名前で作成した。→のGithub Reposに見えてるかな？</p>
+
+<h2>Octpress のデプロイ設定</h2>
+
+<pre><code>$ rake setup_github_pages
+</code></pre>
+
+<p>ここでgit@github.com:Salinger/salinger.github.com.git を入力。</p>
+
+<pre><code>$ rake generate
+$ rake deploy
+</code></pre>
+
+<p>この2行をまとめて実行する場合には</p>
+
+<pre><code>$ rake gen_deploy
+</code></pre>
+
+<p>で可能。</p>
+
+<h2>Github コミット</h2>
+
+<pre><code>$ git add . &amp;&amp; git commit -m "Initial commit"
+$ git push
+</code></pre>
+
+<h2>初期設定</h2>
+
+<p><a href="http://change-the-world.github.com/blog/2012/08/26/1/">ここ</a>を見ながら_config.ymlを弄って初期設定。Github,Twitterとの連携も簡単にできる。</p>
+
+<h2>新規記事作成</h2>
+
+<pre><code>$ rake new_post["1"]
+</code></pre>
+
+<p>sourse/_posts/以下に新しい記事のテンプレートが作成される。
+<a href="http://ja.wikipedia.org/wiki/Markdown">Wikipedia:Markdown</a>
+を見ながら、テストがてらこの記事を作成してみた。
+なおデプロイする前に</p>
+
+<pre><code>$ rake generate
+$ rake preview
+</code></pre>
+
+<p>を実行すると、http://localhost:4000でプレビューが見れる。</p>
+
+<pre><code>$ rake deploy
+$ git add . &amp;&amp; git commit -m "Create octopress install page."
+$ git push
+</code></pre>
+
+<h2>コメント欄の追加</h2>
+
+<p>記事にコメント欄を追加するには、<a href="http://disqus.com/">Disqus</a>に登録しなければならないっぽいので登録した。<a href="http://blog.morizotter.com/octopress%E3%81%AB%E3%82%B3%E3%83%A1%E3%83%B3%E3%83%88%E3%82%92%E8%BF%BD%E5%8A%A0%E3%81%99%E3%82%8B/">このページ</a>を見つつ_config.ymlに設定を記述した。</p>
+
+<h2>サイドバーにプロフィール欄を追加</h2>
+
+<p><a href="http://www.mk-mode.com/octopress/2012/12/17/octopress-add-profile/">ここ</a>を参考にしました。<code>source/_includes/custom/asides/about.html</code> を編集（中身はただのHTML）。サイドバーの表示設定を変更するために_config.ymlを編集。</p>
+
+<pre><code>default_asides: [...]
+</code></pre>
+
+<p>の中の任意の位置にcustom/asides/about.htmlを追加する。genereteしてdeployすればプロフィールがサイドバーに表示されるはず。</p>
+
+<h2>感想</h2>
+
+<p>ちょこちょこ弄ってみた感想ですが、<br/>
+1. Githubとの連携が良い感じ。<br/>
+2. Markdown記法なかなか書きやすい。普段使ってるEmacsで書けるのはありがたい。<br/>
+3. 2とも関連するが、作業中にエディタ内でシームレスに書けるのは非常に楽。<br/>
+静的なページでいいなら、レンタルサーバ借りるよりもこっちの方がいいかも。</p>
+]]></content>
+  </entry>
+  
+</feed>

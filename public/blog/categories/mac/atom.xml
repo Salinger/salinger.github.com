@@ -1,0 +1,328 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Mac | さりんじゃーのプログラミング日記]]></title>
+  <link href="http://Salinger.github.com/blog/categories/mac/atom.xml" rel="self"/>
+  <link href="http://Salinger.github.com/"/>
+  <updated>2014-11-03T23:31:09+09:00</updated>
+  <id>http://Salinger.github.com/</id>
+  <author>
+    <name><![CDATA[Salinger]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[RのProxy設定（Mac）]]></title>
+    <link href="http://Salinger.github.com/blog/2013/03/20/1/"/>
+    <updated>2013-03-20T03:25:00+09:00</updated>
+    <id>http://Salinger.github.com/blog/2013/03/20/1</id>
+    <content type="html"><![CDATA[<p>Rでネットに繋ごうとすると繋がらない。
+Proxy環境下では、以下のコマンドをRのコンソール上で入力すればOKだった。</p>
+
+<pre><code>Sys.setenv("http_proxy"="http://xxx.com:yyyy") # xxx: host, yyyy: port
+</code></pre>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Mac + Homebrew で R 環境の構築]]></title>
+    <link href="http://Salinger.github.com/blog/2013/02/26/1/"/>
+    <updated>2013-02-26T22:43:00+09:00</updated>
+    <id>http://Salinger.github.com/blog/2013/02/26/1</id>
+    <content type="html"><![CDATA[<p>「R」は統計データの処理や解析を行うための言語です。面倒くさい統計処理と視覚化が関数の組み合わせだけであっという間に完了する便利な言語。今回はその環境構築の際のメモ。</p>
+
+<!-- more -->
+
+
+<p>最初にRをインストールするために必要なパッケージのgfortranをHomebrewでインストール。</p>
+
+<pre><code>$ brew install gfortran
+</code></pre>
+
+<p>あれ？</p>
+
+<pre><code>Brews that require a Fortran compiler should not use:
+  depends_on 'gfortran'
+</code></pre>
+
+<p>とか言われた。アップデートしてみる。</p>
+
+<pre><code>$ brew update
+$ brew install gfortran
+$ brew install r
+</code></pre>
+
+<p>起動のテストとデモ。</p>
+
+<pre><code>$ R
+Rは、自由なソフトウェアであり、「完全に無保証」です。
+一定の条件に従えば、自由にこれを再配布することができます。
+配布条件の詳細に関しては、'license()'あるいは'licence()'と入力してください。
+
+Rは多くの貢献者による共同プロジェクトです。
+詳しくは'contributors()'と入力してください。
+また、RやRのパッケージを出版物で引用する際の形式については
+'citation()'と入力してください。
+
+'demo()'と入力すればデモをみることができます。
+'help()'とすればオンラインヘルプが出ます。
+'help.start()'でHTMLブラウザによるヘルプがみられます。
+'q()'と入力すればRを終了します。
+&gt; demo(nlm)
+</code></pre>
+
+<p>動いたよ！</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[MacでTeX環境の構築]]></title>
+    <link href="http://Salinger.github.com/blog/2013/02/04/1/"/>
+    <updated>2013-02-04T14:23:00+09:00</updated>
+    <id>http://Salinger.github.com/blog/2013/02/04/1</id>
+    <content type="html"><![CDATA[<p>TeXで文章を書く必要があったので、その環境構築を行う際のメモ。基本的にコンソール上のEmacsで作業するための環境を構築します。具体的にはMacTexとYaTeXをインストールして、プレビューにはOSXデフォルトとPreview.appを使用します。OSはMountain Lionです。</p>
+
+<!-- more -->
+
+
+<h2>MacTeXのインストール</h2>
+
+<p><a href="http://www.tug.org/mactex">MacTeX</a>から、MacTeX.pkgをダウンロード。ダウンロードした.pkgファイルをダブルクリックしてインストール。</p>
+
+<p>動作確認。以下のサンプルをhogehoge.texの名前で保存。</p>
+
+<pre><code>\documentclass{jarticle}
+\begin{document}
+こんにちは、世界。
+こんにちは、\TeX。
+
+こんにちは、\LaTeX。
+\end{document}
+</code></pre>
+
+<p>コンソールから、</p>
+
+<pre><code>$ platex hogehoge.tex
+$ dvipdfmx hogehoge.dvi
+</code></pre>
+
+<p>これで、hogehoge.pdfが生成される。日本語も問題ない。</p>
+
+<h2>YaTeX(やてふ)のインストール</h2>
+
+<p>普段はコンソール上のEmacsで作業しているので、そこからTeXを便利に使うためのツールをインストール。</p>
+
+<p><a href="http://www.yatex.org">YaTeX</a>から、最新版のtar.gzをダウンロード。</p>
+
+<pre><code>$ cd ~/Downloads
+$ curl -O http://www.yatex.org/yatex1.76.tar.gz
+$ tar zxvf yatex1.76.tar.gz
+$ mkdir ~/.emacs.d/lisp/yatex
+$ mv yatex1.76 ~/.emacs.d/lisp/yatex
+</code></pre>
+
+<p>次に、.emacsを編集。以下のコードを最後に追記。</p>
+
+<pre><code>;; for YaTex
+;; Add library path
+(add-to-list 'load-path "~/.emacs.d/lisp/yatex")
+;; YaTeX mode
+(setq auto-mode-alist
+    (cons (cons "\\.tex$" 'yatex-mode) auto-mode-alist))
+(autoload 'yatex-mode "yatex" "Yet Another LaTeX mode" t)
+(setq tex-command "platex")
+(setq dviprint-command-format "dvipdfmx %s")
+;; use Preview.app
+(setq dvi2-command "open -a Preview")
+(setq bibtex-command "pbibtex")
+</code></pre>
+
+<p>動作確認。</p>
+
+<pre><code>$ emacs hogehoge.tex
+</code></pre>
+
+<p><code>C-c t j</code>でコンパイル。<code>C-c t l</code>でdviをpdfに。<code>C-c t p</code>でpdfファイルをプレビュー。</p>
+
+<p>動いた。</p>
+
+<h2>TeX、YaTeXの使い方など</h2>
+
+<p>この辺りのページ参照。<br/>
+<a href="http://www002.upp.so-net.ne.jp/latex/">LaTeXコマンドシート一覧</a><br/>
+<a href="http://hooktail.sub.jp/tex/yatex/">野鳥(YaTeX)[物理のかぎしっぽ]</a></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Homebrew + virtualenv 環境でlibsvmのインストール]]></title>
+    <link href="http://Salinger.github.com/blog/2013/01/18/1/"/>
+    <updated>2013-01-18T02:42:00+09:00</updated>
+    <id>http://Salinger.github.com/blog/2013/01/18/1</id>
+    <content type="html"><![CDATA[<p>サポートベクターマシン(SVM)についての概要は <a href="http://ja.wikipedia.org/wiki/%E3%82%B5%E3%83%9D%E3%83%BC%E3%83%88%E3%83%99%E3%82%AF%E3%82%BF%E3%83%BC%E3%83%9E%E3%82%B7%E3%83%B3">Wikipedia</a> でも見てください。
+スパムの分類、ユーザーのクラスタリング、他何か色々なものを分類する用途に使われます。今回はSVMを使うための環境構築を行った際のメモです。</p>
+
+<!-- more -->
+
+
+<h2>libsvmについて</h2>
+
+<p><a href="http://www.csie.ntu.edu.tw/~cjlin/libsvm/">libsvm</a>はChih-Chung Changさん・Chih-Jen Linさんが開発したSVMのライブラリです。様々なSVMタイプ・カーネル関数、また細かくオプションも指定できるので、SVMを使う必要がある場合は、とりあえずこれを選んでおけば困ることは少ないと思います。</p>
+
+<h2>libsvmのインストール</h2>
+
+<pre><code>$ brew search libsvm
+libsvm
+</code></pre>
+
+<p>brewにあった。ラッキー。</p>
+
+<pre><code>$ brew install libsvm
+</code></pre>
+
+<p>本体のインストール完了。</p>
+
+<pre><code>$ svm-train
+Usage: svm-train [options] training_set_file [model_file]
+options:
+-s svm_type : set type of SVM (default 0)
+        0 -- C-SVC              (multi-class classification)
+...
+</code></pre>
+
+<p>動いた。がこれだとPython用バインディングがインストールできなかった。残念。</p>
+
+<h2>libsvmのPython用バインディングのインストール</h2>
+
+<p>無いなら、pipで公式のバインディングをインストールするためのsetup.pyを自分で書いてしまえばいいじゃない。てな訳で書いた奴をgithubに上げといた<a href="https://github.com/Salinger/libsvm-python">(libsvm-python)</a>。
+問題はsetup.py書いたのが初めてなので、これであってるのかどうか自信がない。とりあえず以下のコマンドでインストールできます。</p>
+
+<pre><code>$ pip install -e git+https://github.com/Salinger/libsvm-python.git#egg=libsvm-python
+</code></pre>
+
+<h2>動作確認</h2>
+
+<p>テスト用のコード。
+<div><script src='https://gist.github.com/4579980.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+
+<p>そして実行。</p>
+
+<pre><code>$ python libsvm_test.py 
+.*.*
+optimization finished, #iter = 9
+nu = 0.298326
+obj = -0.596685, rho = 3.000257
+nSV = 3, nBSV = 0
+Total nSV = 3
+Accuracy = 75% (3/4) (classification)
+[Result]
+[-1.0, 1.0, -1.0, -1.0]
+(75.0, 1.0, 0.3333333333333333)
+[[-1.3527684585781998], [3.038557720585867], [-1.9331234989121904], [-2.4115929900464406]]
+</code></pre>
+
+<p>問題なく動くのを確認できた。自分で書いたsetup.pyもとりあえず問題ないっぽい？</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Homebrew + virtualenv 環境でMeCabのインストール]]></title>
+    <link href="http://Salinger.github.com/blog/2013/01/17/1/"/>
+    <updated>2013-01-17T18:40:00+09:00</updated>
+    <id>http://Salinger.github.com/blog/2013/01/17/1</id>
+    <content type="html"><![CDATA[<p>普段良く使うモジュールのMeCabのインストール。
+Homebrewもvirutalenvも最近使い始めたばかりなので、自分用メモとして記録。</p>
+
+<!-- more -->
+
+
+<h2>virtualenv環境の作成</h2>
+
+<p>普段はNormalという環境を作って、これを使うことにする。</p>
+
+<pre><code>$ mkvirtualenv Normal
+</code></pre>
+
+<h2>MeCabのインストール</h2>
+
+<pre><code>$ brew search mecab
+mecab mecab-ipadic
+</code></pre>
+
+<p>Homebrewにあった。</p>
+
+<pre><code>$ brew install mecab mecab-ipadic
+$ mecab
+</code></pre>
+
+<p>これでこの時点の最新版である0.994とIPA辞書がインストールできた。動作確認。</p>
+
+<pre><code>$ mecab
+すもももももももものうち
+すもも  名詞,一般,*,*,*,*,すもも,スモモ,スモモ
+も      助詞,係助詞,*,*,*,*,も,モ,モ
+もも    名詞,一般,*,*,*,*,もも,モモ,モモ
+も      助詞,係助詞,*,*,*,*,も,モ,モ
+もも    名詞,一般,*,*,*,*,もも,モモ,モモ
+の      助詞,連体化,*,*,*,*,の,ノ,ノ
+うち    名詞,非自立,副詞可能,*,*,*,うち,ウチ,ウチ
+EOS
+</code></pre>
+
+<p>Ctrl + c で終了。
+文字コード周りのトラブルも特になし。</p>
+
+<h2>MeCabのPythonバインディングのインストール</h2>
+
+<p>MacPortsのときはPythonバインディングもまとめてインストールできたが、Homebrewには無いっぽい。まあvirtualenvで作った環境にインストールするには結局自分で入れなきゃならないらしいので、普通にインストールすることにする。インストール先のvirtualenv環境のまま作業続行。</p>
+
+<pre><code>$ cd ~/Downloads/
+$ curl -O http://mecab.googlecode.com/files/mecab-python-0.994.tar.gz # 同じバージョンのものをダウンロード
+$ pip install mecab-python-0.994.tar.gz # tar.gz のままインストールできる。
+</code></pre>
+
+<p>動作確認を行う。</p>
+
+<h2>Pythonバインディングの動作確認</h2>
+
+<p>サンプルコード
+<div><script src='https://gist.github.com/4555097.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+
+<p>実行。</p>
+
+<pre><code>$ python mecab_test.py
+ BOS/EOS,*,*,*,*,*,*,*,*
+それ 名詞,代名詞,一般,*,*,*,それ,ソレ,ソレ
+サバンナ 名詞,一般,*,*,*,*,サバンナ,サバンナ,サバンナ
+で 助詞,格助詞,一般,*,*,*,で,デ,デ
+も 助詞,係助詞,*,*,*,*,も,モ,モ
+同じ 連体詞,*,*,*,*,*,同じ,オナジ,オナジ
+事 名詞,非自立,一般,*,*,*,事,コト,コト
+言え 動詞,自立,*,*,一段,未然形,言える,イエ,イエ
+ん 助動詞,*,*,*,不変化型,基本形,ん,ン,ン
+の 助詞,終助詞,*,*,*,*,の,ノ,ノ
+？ 記号,一般,*,*,*,*,？,？,？
+ BOS/EOS,*,*,*,*,*,*,*,*
+</code></pre>
+
+<p>動いた。</p>
+
+<h2>おまけ</h2>
+
+<p>今回はgistで書いたコードをブログに貼ってみたけど、</p>
+
+<pre><code>{% gist 4555097 %}
+</code></pre>
+
+<p>の1行で長いコードを見やすい形式で貼れるのってかなり便利だ。
+Github + Octopress 快適すぎる。</p>
+]]></content>
+  </entry>
+  
+</feed>

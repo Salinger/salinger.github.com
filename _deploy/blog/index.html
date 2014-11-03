@@ -1,0 +1,1387 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>さりんじゃーのプログラミング日記</title>
+  <meta name="author" content="Salinger">
+
+  
+  <meta name="description" content="">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://Salinger.github.com/blog">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/bootstrap/bootstrap.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/stylesheets/bootstrap/responsive.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/stylesheets/syntax/syntax.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <style type="text/css">
+    body {
+      padding-bottom: 40px;
+    }
+    h1 {
+      margin-bottom: 15px;
+    }
+    img {
+      max-width: 100%;
+    }
+    .sharing, .meta, .pager {
+      margin: 20px 0px 20px 0px;
+    }
+    .page-footer p {
+      text-align: center;
+    }
+  </style>
+  <script src="/javascripts/libs/jquery.js"></script>
+  <script src="/javascripts/libs/modernizr-2.0.js"></script>
+  <script src="/javascripts/libs/bootstrap.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="さりんじゃーのプログラミング日記" type="application/atom+xml">
+  <link href="/stylesheets/data-table.css" rel="stylesheet" type="text/css" />
+  
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-39177183-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <nav role="navigation"><div class="navbar navbar-inverse">
+  <div class="navbar-inner">
+    <div class="container">
+      <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </a>
+
+      <a class="brand" href="/">さりんじゃーのプログラミング日記</a>
+
+      <div class="nav-collapse">
+        <ul class="nav">
+  <li><a href="/">Top</a></li>
+  <li><a href="/blog">Blog</a></li>
+  <li><a href="/python">Python</a></li>
+  <li><a href="/r">R</a></li>
+  <li><a href="/clojure">Clojure</a></li>
+  <li><a href="/ml">機械学習</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+
+        <ul class="nav pull-right" data-subscription="rss">
+          <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+          
+        </ul>
+
+        
+          <form class="pull-right navbar-search" action="http://google.com/search" method="get">
+            <fieldset role="search">
+              <input type="hidden" name="q" value="site:Salinger.github.com" />
+              <input class="search-query" type="text" name="q" results="0" placeholder="Search"/>
+            </fieldset>
+          </form>
+        
+      </div>
+    </div>
+  </div>
+</div>
+</nav>
+  <div class="container">
+    <div class="row-fluid">
+      
+
+
+  
+  <article class="listing">
+    <header>
+  
+  <h1 class="beta">
+    <a href="/blog/2014/11/03/1/">Vagrant で 始める CDH5 + Hive + Impala 入門</a>
+  </h1>
+  
+
+  
+  <div class="meta clearfix">
+    
+
+
+
+
+
+
+
+
+  
+
+
+<time class="pull-left" datetime="2014-11-03T23:04:00+09:00" pubdate data-updated="true"><i class="icon-calendar"></i> Nov 3<span>rd</span>, 2014</time>
+    
+
+
+
+  
+  <div class="pull-left">
+    <i class="icon-tags"></i>
+    <ul class="tags unstyled">
+    
+      <li><a href="/blog/categories/CDH5/">CDH5</a></li>
+    
+      <li><a href="/blog/categories/Cloudera/">Cloudera</a></li>
+    
+      <li><a href="/blog/categories/Hadoop/">Hadoop</a></li>
+    
+      <li><a href="/blog/categories/Hive/">Hive</a></li>
+    
+      <li><a href="/blog/categories/Impala/">Impala</a></li>
+    
+      <li><a href="/blog/categories/Vagrant/">Vagrant</a></li>
+    
+    </ul>
+  </div>
+  
+
+    
+      <a class="pull-right" href="http://Salinger.github.com/blog/2014/11/03/1/#disqus_thread">
+        Comments <i class="icon-comment"></i>
+      </a>
+    
+  </div>
+  
+</header>
+
+
+
+
+<div class="entry-content clearfix">
+  <p>以下の記事を参考にしつつテスト環境を作る。</p>
+
+<p><a href="http://blog.cloudera.com/blog/2014/06/how-to-install-a-virtual-apache-hadoop-cluster-with-vagrant-and-cloudera-manager/">how-to-install-a-virtual-apache-hadoop-cluster-with-vagrant-and-cloudera-manager</a></p>
+
+<p>なお、仮想マシン用に合計10GBはメモリが必要になるので、メインメモリ 16GB 以上詰んでるマシンで作業するのを推奨。</p>
+
+
+  <a class="btn pull-right" href="/blog/2014/11/03/1/">続きを読む &rarr;</a>
+</div>
+
+  </article>
+  <hr>
+
+  
+  <article class="listing">
+    <header>
+  
+  <h1 class="beta">
+    <a href="/blog/2014/02/03/1/">Python 2.7.X 入門者向けのまとめ</a>
+  </h1>
+  
+
+  
+  <div class="meta clearfix">
+    
+
+
+
+
+
+
+
+
+  
+
+
+<time class="pull-left" datetime="2014-02-03T21:57:00+09:00" pubdate data-updated="true"><i class="icon-calendar"></i> Feb 3<span>rd</span>, 2014</time>
+    
+
+
+
+  
+  <div class="pull-left">
+    <i class="icon-tags"></i>
+    <ul class="tags unstyled">
+    
+      <li><a href="/blog/categories/Python/">Python</a></li>
+    
+    </ul>
+  </div>
+  
+
+    
+      <a class="pull-right" href="http://Salinger.github.com/blog/2014/02/03/1/#disqus_thread">
+        Comments <i class="icon-comment"></i>
+      </a>
+    
+  </div>
+  
+</header>
+
+
+
+
+  <p>他言語を触っていると、Pythonでアレどう書くんだっけ？的なことが多いので、自分用によく使うであろう機能を<a href="/python/">ここ</a>にひと通りまとめた。プロジェクトの管理と、3系への移行についてもまとめ中。</p>
+
+
+  </article>
+  <hr>
+
+  
+  <article class="listing">
+    <header>
+  
+  <h1 class="beta">
+    <a href="/blog/2013/11/05/1/">Mac で Vagrant 環境の整備</a>
+  </h1>
+  
+
+  
+  <div class="meta clearfix">
+    
+
+
+
+
+
+
+
+
+  
+
+
+<time class="pull-left" datetime="2013-11-05T22:23:00+09:00" pubdate data-updated="true"><i class="icon-calendar"></i> Nov 5<span>th</span>, 2013</time>
+    
+
+
+
+  
+  <div class="pull-left">
+    <i class="icon-tags"></i>
+    <ul class="tags unstyled">
+    
+      <li><a href="/blog/categories/MacOSX/">MacOSX</a></li>
+    
+      <li><a href="/blog/categories/Vagrant/">Vagrant</a></li>
+    
+      <li><a href="/blog/categories/VirtualBox/">VirtualBox</a></li>
+    
+    </ul>
+  </div>
+  
+
+    
+      <a class="pull-right" href="http://Salinger.github.com/blog/2013/11/05/1/#disqus_thread">
+        Comments <i class="icon-comment"></i>
+      </a>
+    
+  </div>
+  
+</header>
+
+
+
+
+<div class="entry-content clearfix">
+  <h2>Vagrant とは</h2>
+
+<p>仮想的なマシンをインストールしたPC上に作成できる VirtualBox のフロントエンド。Ruby 製。ゲストOSのインストールや必要なソフトのインストール等、面倒くさい設定を省くことができ、いきなり目的の作業することができる。</p>
+
+
+  <a class="btn pull-right" href="/blog/2013/11/05/1/">続きを読む &rarr;</a>
+</div>
+
+  </article>
+  <hr>
+
+  
+  <article class="listing">
+    <header>
+  
+  <h1 class="beta">
+    <a href="/blog/2013/09/29/1/">第33回 長岡IT開発者勉強会 Scala入学式に参加してきました</a>
+  </h1>
+  
+
+  
+  <div class="meta clearfix">
+    
+
+
+
+
+
+
+
+
+  
+
+
+<time class="pull-left" datetime="2013-09-29T15:50:00+09:00" pubdate data-updated="true"><i class="icon-calendar"></i> Sep 29<span>th</span>, 2013</time>
+    
+
+
+
+  
+  <div class="pull-left">
+    <i class="icon-tags"></i>
+    <ul class="tags unstyled">
+    
+      <li><a href="/blog/categories/NDS/">NDS</a></li>
+    
+      <li><a href="/blog/categories/Study/">Study</a></li>
+    
+    </ul>
+  </div>
+  
+
+    
+      <a class="pull-right" href="http://Salinger.github.com/blog/2013/09/29/1/#disqus_thread">
+        Comments <i class="icon-comment"></i>
+      </a>
+    
+  </div>
+  
+</header>
+
+
+
+
+<div class="entry-content clearfix">
+  <h2>はじめに</h2>
+
+<p>2013/09/28に行われた<a href="http://nagaoka.techtalk.jp/no33">NDS33</a>に参加してきました。今回はScalaのハンズオン＋LTの構成。</p>
+
+
+  <a class="btn pull-right" href="/blog/2013/09/29/1/">続きを読む &rarr;</a>
+</div>
+
+  </article>
+  <hr>
+
+  
+  <article class="listing">
+    <header>
+  
+  <h1 class="beta">
+    <a href="/blog/2013/07/06/1/">第32回 長岡IT開発者勉強会に参加してきました</a>
+  </h1>
+  
+
+  
+  <div class="meta clearfix">
+    
+
+
+
+
+
+
+
+
+  
+
+
+<time class="pull-left" datetime="2013-07-06T13:45:00+09:00" pubdate data-updated="true"><i class="icon-calendar"></i> Jul 6<span>th</span>, 2013</time>
+    
+
+
+
+  
+  <div class="pull-left">
+    <i class="icon-tags"></i>
+    <ul class="tags unstyled">
+    
+      <li><a href="/blog/categories/NDS/">NDS</a></li>
+    
+      <li><a href="/blog/categories/Study/">Study</a></li>
+    
+    </ul>
+  </div>
+  
+
+    
+      <a class="pull-right" href="http://Salinger.github.com/blog/2013/07/06/1/#disqus_thread">
+        Comments <i class="icon-comment"></i>
+      </a>
+    
+  </div>
+  
+</header>
+
+
+
+
+<div class="entry-content clearfix">
+  <p>2013/07/06に行われた<a href="http://nagaoka.techtalk.jp/no32">32回目のNDS</a>に参加しました。
+今回はGithubのハンズオン ＋ LT の構成。</p>
+
+
+  <a class="btn pull-right" href="/blog/2013/07/06/1/">続きを読む &rarr;</a>
+</div>
+
+  </article>
+  <hr>
+
+  
+  <article class="listing">
+    <header>
+  
+  <h1 class="beta">
+    <a href="/blog/2013/06/03/1/">金貨の真贋を見分けよう 〜 SVM と R〜</a>
+  </h1>
+  
+
+  
+  <div class="meta clearfix">
+    
+
+
+
+
+
+
+
+
+  
+
+
+<time class="pull-left" datetime="2013-06-03T20:14:00+09:00" pubdate data-updated="true"><i class="icon-calendar"></i> Jun 3<span>rd</span>, 2013</time>
+    
+
+
+
+  
+  <div class="pull-left">
+    <i class="icon-tags"></i>
+    <ul class="tags unstyled">
+    
+      <li><a href="/blog/categories/R/">R</a></li>
+    
+      <li><a href="/blog/categories/SVM/">SVM</a></li>
+    
+      <li><a href="/blog/categories/機械学習/">機械学習</a></li>
+    
+    </ul>
+  </div>
+  
+
+    
+      <a class="pull-right" href="http://Salinger.github.com/blog/2013/06/03/1/#disqus_thread">
+        Comments <i class="icon-comment"></i>
+      </a>
+    
+  </div>
+  
+</header>
+
+
+
+
+<div class="entry-content clearfix">
+  <p>CodeIQ の機械学習に関する問題にチャレンジしてみた。</p>
+
+<p>https://codeiq.jp/ace/naoyat/q105<br/>
+http://next.rikunabi.com/tech/docs/ct_s03600.jsp?p=002315&amp;tcs=kanren</p>
+
+
+  <a class="btn pull-right" href="/blog/2013/06/03/1/">続きを読む &rarr;</a>
+</div>
+
+  </article>
+  <hr>
+
+  
+  <article class="listing">
+    <header>
+  
+  <h1 class="beta">
+    <a href="/blog/2013/03/23/1/">Niigata.LLに参加してきました</a>
+  </h1>
+  
+
+  
+  <div class="meta clearfix">
+    
+
+
+
+
+
+
+
+
+  
+
+
+<time class="pull-left" datetime="2013-03-23T20:00:00+09:00" pubdate data-updated="true"><i class="icon-calendar"></i> Mar 23<span>rd</span>, 2013</time>
+    
+
+
+
+  
+  <div class="pull-left">
+    <i class="icon-tags"></i>
+    <ul class="tags unstyled">
+    
+      <li><a href="/blog/categories/Niigata.LL/">Niigata.LL</a></li>
+    
+      <li><a href="/blog/categories/Study/">Study</a></li>
+    
+    </ul>
+  </div>
+  
+
+    
+      <a class="pull-right" href="http://Salinger.github.com/blog/2013/03/23/1/#disqus_thread">
+        Comments <i class="icon-comment"></i>
+      </a>
+    
+  </div>
+  
+</header>
+
+
+
+
+<div class="entry-content clearfix">
+  <p>本日行われた<a href="http://atnd.org/events/36394">Niigata.LL</a>に参加してきました。LL(Lightweight Language)と言っても、どの言語がLLなのかは各自の判断に任されたので、様々な言語・プロダクトについての話がありました。</p>
+
+<p>以下今日の発表の簡単なまとめです。</p>
+
+
+  <a class="btn pull-right" href="/blog/2013/03/23/1/">続きを読む &rarr;</a>
+</div>
+
+  </article>
+  <hr>
+
+  
+  <article class="listing">
+    <header>
+  
+  <h1 class="beta">
+    <a href="/blog/2013/03/20/1/">RのProxy設定（Mac）</a>
+  </h1>
+  
+
+  
+  <div class="meta clearfix">
+    
+
+
+
+
+
+
+
+
+  
+
+
+<time class="pull-left" datetime="2013-03-20T03:25:00+09:00" pubdate data-updated="true"><i class="icon-calendar"></i> Mar 20<span>th</span>, 2013</time>
+    
+
+
+
+  
+  <div class="pull-left">
+    <i class="icon-tags"></i>
+    <ul class="tags unstyled">
+    
+      <li><a href="/blog/categories/Mac/">Mac</a></li>
+    
+      <li><a href="/blog/categories/R,/">R,</a></li>
+    
+    </ul>
+  </div>
+  
+
+    
+      <a class="pull-right" href="http://Salinger.github.com/blog/2013/03/20/1/#disqus_thread">
+        Comments <i class="icon-comment"></i>
+      </a>
+    
+  </div>
+  
+</header>
+
+
+
+
+  <p>Rでネットに繋ごうとすると繋がらない。
+Proxy環境下では、以下のコマンドをRのコンソール上で入力すればOKだった。</p>
+
+<pre><code>Sys.setenv("http_proxy"="http://xxx.com:yyyy") # xxx: host, yyyy: port
+</code></pre>
+
+
+  </article>
+  <hr>
+
+  
+  <article class="listing">
+    <header>
+  
+  <h1 class="beta">
+    <a href="/blog/2013/02/26/1/">Mac + Homebrew で R 環境の構築</a>
+  </h1>
+  
+
+  
+  <div class="meta clearfix">
+    
+
+
+
+
+
+
+
+
+  
+
+
+<time class="pull-left" datetime="2013-02-26T22:43:00+09:00" pubdate data-updated="true"><i class="icon-calendar"></i> Feb 26<span>th</span>, 2013</time>
+    
+
+
+
+  
+  <div class="pull-left">
+    <i class="icon-tags"></i>
+    <ul class="tags unstyled">
+    
+      <li><a href="/blog/categories/Homebrew/">Homebrew</a></li>
+    
+      <li><a href="/blog/categories/Mac/">Mac</a></li>
+    
+      <li><a href="/blog/categories/OSX/">OSX</a></li>
+    
+      <li><a href="/blog/categories/R/">R</a></li>
+    
+    </ul>
+  </div>
+  
+
+    
+      <a class="pull-right" href="http://Salinger.github.com/blog/2013/02/26/1/#disqus_thread">
+        Comments <i class="icon-comment"></i>
+      </a>
+    
+  </div>
+  
+</header>
+
+
+
+
+<div class="entry-content clearfix">
+  <p>「R」は統計データの処理や解析を行うための言語です。面倒くさい統計処理と視覚化が関数の組み合わせだけであっという間に完了する便利な言語。今回はその環境構築の際のメモ。</p>
+
+
+  <a class="btn pull-right" href="/blog/2013/02/26/1/">続きを読む &rarr;</a>
+</div>
+
+  </article>
+  <hr>
+
+  
+  <article class="listing">
+    <header>
+  
+  <h1 class="beta">
+    <a href="/blog/2013/02/04/1/">MacでTeX環境の構築</a>
+  </h1>
+  
+
+  
+  <div class="meta clearfix">
+    
+
+
+
+
+
+
+
+
+  
+
+
+<time class="pull-left" datetime="2013-02-04T14:23:00+09:00" pubdate data-updated="true"><i class="icon-calendar"></i> Feb 4<span>th</span>, 2013</time>
+    
+
+
+
+  
+  <div class="pull-left">
+    <i class="icon-tags"></i>
+    <ul class="tags unstyled">
+    
+      <li><a href="/blog/categories/Mac/">Mac</a></li>
+    
+      <li><a href="/blog/categories/TeX/">TeX</a></li>
+    
+    </ul>
+  </div>
+  
+
+    
+      <a class="pull-right" href="http://Salinger.github.com/blog/2013/02/04/1/#disqus_thread">
+        Comments <i class="icon-comment"></i>
+      </a>
+    
+  </div>
+  
+</header>
+
+
+
+
+<div class="entry-content clearfix">
+  <p>TeXで文章を書く必要があったので、その環境構築を行う際のメモ。基本的にコンソール上のEmacsで作業するための環境を構築します。具体的にはMacTexとYaTeXをインストールして、プレビューにはOSXデフォルトとPreview.appを使用します。OSはMountain Lionです。</p>
+
+
+  <a class="btn pull-right" href="/blog/2013/02/04/1/">続きを読む &rarr;</a>
+</div>
+
+  </article>
+  <hr>
+
+  
+  <article class="listing">
+    <header>
+  
+  <h1 class="beta">
+    <a href="/blog/2013/01/27/2/">NDS30:JAWS-UG-NGキックオフ に参加してきました</a>
+  </h1>
+  
+
+  
+  <div class="meta clearfix">
+    
+
+
+
+
+
+
+
+
+  
+
+
+<time class="pull-left" datetime="2013-01-27T22:55:00+09:00" pubdate data-updated="true"><i class="icon-calendar"></i> Jan 27<span>th</span>, 2013</time>
+    
+
+
+
+  
+  <div class="pull-left">
+    <i class="icon-tags"></i>
+    <ul class="tags unstyled">
+    
+      <li><a href="/blog/categories/AWS/">AWS</a></li>
+    
+      <li><a href="/blog/categories/NDS/">NDS</a></li>
+    
+      <li><a href="/blog/categories/Study/">Study</a></li>
+    
+    </ul>
+  </div>
+  
+
+    
+      <a class="pull-right" href="http://Salinger.github.com/blog/2013/01/27/2/#disqus_thread">
+        Comments <i class="icon-comment"></i>
+      </a>
+    
+  </div>
+  
+</header>
+
+
+
+
+<div class="entry-content clearfix">
+  <p>2013年1月26日に行われた<a href="http://nagaoka.techtalk.jp/no30">長岡開発者勉強会(NDS)</a>に参加してきました。今回は第30回でメインテーマはAmazon Web Service(AWS)のハンズオン。前回はWindows Azureのハンズオンだったので、2回連続で講師のもと、クラウド関連のサービスに触れる貴重な機会となりました。</p>
+
+
+  <a class="btn pull-right" href="/blog/2013/01/27/2/">続きを読む &rarr;</a>
+</div>
+
+  </article>
+  <hr>
+
+  
+  <article class="listing">
+    <header>
+  
+  <h1 class="beta">
+    <a href="/blog/2013/01/27/1/">Raspberry Piに人工無脳搭載してみた</a>
+  </h1>
+  
+
+  
+  <div class="meta clearfix">
+    
+
+
+
+
+
+
+
+
+  
+
+
+<time class="pull-left" datetime="2013-01-27T00:09:00+09:00" pubdate data-updated="true"><i class="icon-calendar"></i> Jan 27<span>th</span>, 2013</time>
+    
+
+
+
+  
+  <div class="pull-left">
+    <i class="icon-tags"></i>
+    <ul class="tags unstyled">
+    
+      <li><a href="/blog/categories/NLP/">NLP</a></li>
+    
+      <li><a href="/blog/categories/Python/">Python</a></li>
+    
+      <li><a href="/blog/categories/RaspberryPi/">RaspberryPi</a></li>
+    
+    </ul>
+  </div>
+  
+
+    
+      <a class="pull-right" href="http://Salinger.github.com/blog/2013/01/27/1/#disqus_thread">
+        Comments <i class="icon-comment"></i>
+      </a>
+    
+  </div>
+  
+</header>
+
+
+
+
+<div class="entry-content clearfix">
+  <p>前回の記事に引き続きRaspberry Piネタ。マルコフ連鎖により文章を自動生成しLCDに出力してみた。</p>
+
+<p><img src="/images/2013-01-27/001.png" alt="出力例の画像" /></p>
+
+
+  <a class="btn pull-right" href="/blog/2013/01/27/1/">続きを読む &rarr;</a>
+</div>
+
+  </article>
+  <hr>
+
+  
+  <article class="listing">
+    <header>
+  
+  <h1 class="beta">
+    <a href="/blog/2013/01/25/1/">Raspberry PiとキャラクタLCDで遊んでみた</a>
+  </h1>
+  
+
+  
+  <div class="meta clearfix">
+    
+
+
+
+
+
+
+
+
+  
+
+
+<time class="pull-left" datetime="2013-01-25T16:46:00+09:00" pubdate data-updated="true"><i class="icon-calendar"></i> Jan 25<span>th</span>, 2013</time>
+    
+
+
+
+  
+  <div class="pull-left">
+    <i class="icon-tags"></i>
+    <ul class="tags unstyled">
+    
+      <li><a href="/blog/categories/Python/">Python</a></li>
+    
+      <li><a href="/blog/categories/RaspberryPi/">RaspberryPi</a></li>
+    
+    </ul>
+  </div>
+  
+
+    
+      <a class="pull-right" href="http://Salinger.github.com/blog/2013/01/25/1/#disqus_thread">
+        Comments <i class="icon-comment"></i>
+      </a>
+    
+  </div>
+  
+</header>
+
+
+
+
+<div class="entry-content clearfix">
+  <p>せっかくGPIOがあるんだから、ここに何かをくっつけて遊んでみたくなった。という訳で、キャラクタLCDを接続してみました。Raspberry Piの電源はGPIOへ直接入力してます。</p>
+
+<p><img src="/images/2013-01-25/LCD.jpg" alt="Raspberry Pi 画像" /></p>
+
+
+  <a class="btn pull-right" href="/blog/2013/01/25/1/">続きを読む &rarr;</a>
+</div>
+
+  </article>
+  <hr>
+
+  
+  <article class="listing">
+    <header>
+  
+  <h1 class="beta">
+    <a href="/blog/2013/01/24/1/">Laspberry Piについて</a>
+  </h1>
+  
+
+  
+  <div class="meta clearfix">
+    
+
+
+
+
+
+
+
+
+  
+
+
+<time class="pull-left" datetime="2013-01-24T14:39:00+09:00" pubdate data-updated="true"><i class="icon-calendar"></i> Jan 24<span>th</span>, 2013</time>
+    
+
+
+
+  
+  <div class="pull-left">
+    <i class="icon-tags"></i>
+    <ul class="tags unstyled">
+    
+      <li><a href="/blog/categories/RaspberryPi/">RaspberryPi</a></li>
+    
+    </ul>
+  </div>
+  
+
+    
+      <a class="pull-right" href="http://Salinger.github.com/blog/2013/01/24/1/#disqus_thread">
+        Comments <i class="icon-comment"></i>
+      </a>
+    
+  </div>
+  
+</header>
+
+
+
+
+<div class="entry-content clearfix">
+  <p>今回は<a href="http://www.raspberrypi.org">Raspberry Pi</a>の紹介をしたいと思います。Raspberry PiはARMプロセッサを搭載したシングルボードコンピュータです。</p>
+
+<p><img src="/images/2013-01-24/R0012199.jpg" alt="Raspberry Pi 画像" /></p>
+
+
+  <a class="btn pull-right" href="/blog/2013/01/24/1/">続きを読む &rarr;</a>
+</div>
+
+  </article>
+  <hr>
+
+  
+  <article class="listing">
+    <header>
+  
+  <h1 class="beta">
+    <a href="/blog/2013/01/18/1/">Homebrew + virtualenv 環境でlibsvmのインストール</a>
+  </h1>
+  
+
+  
+  <div class="meta clearfix">
+    
+
+
+
+
+
+
+
+
+  
+
+
+<time class="pull-left" datetime="2013-01-18T02:42:00+09:00" pubdate data-updated="true"><i class="icon-calendar"></i> Jan 18<span>th</span>, 2013</time>
+    
+
+
+
+  
+  <div class="pull-left">
+    <i class="icon-tags"></i>
+    <ul class="tags unstyled">
+    
+      <li><a href="/blog/categories/Mac/">Mac</a></li>
+    
+      <li><a href="/blog/categories/NLP/">NLP</a></li>
+    
+      <li><a href="/blog/categories/Python/">Python</a></li>
+    
+    </ul>
+  </div>
+  
+
+    
+      <a class="pull-right" href="http://Salinger.github.com/blog/2013/01/18/1/#disqus_thread">
+        Comments <i class="icon-comment"></i>
+      </a>
+    
+  </div>
+  
+</header>
+
+
+
+
+<div class="entry-content clearfix">
+  <p>サポートベクターマシン(SVM)についての概要は <a href="http://ja.wikipedia.org/wiki/%E3%82%B5%E3%83%9D%E3%83%BC%E3%83%88%E3%83%99%E3%82%AF%E3%82%BF%E3%83%BC%E3%83%9E%E3%82%B7%E3%83%B3">Wikipedia</a> でも見てください。
+スパムの分類、ユーザーのクラスタリング、他何か色々なものを分類する用途に使われます。今回はSVMを使うための環境構築を行った際のメモです。</p>
+
+
+  <a class="btn pull-right" href="/blog/2013/01/18/1/">続きを読む &rarr;</a>
+</div>
+
+  </article>
+  <hr>
+
+  
+  <article class="listing">
+    <header>
+  
+  <h1 class="beta">
+    <a href="/blog/2013/01/17/1/">Homebrew + virtualenv 環境でMeCabのインストール</a>
+  </h1>
+  
+
+  
+  <div class="meta clearfix">
+    
+
+
+
+
+
+
+
+
+  
+
+
+<time class="pull-left" datetime="2013-01-17T18:40:00+09:00" pubdate data-updated="true"><i class="icon-calendar"></i> Jan 17<span>th</span>, 2013</time>
+    
+
+
+
+  
+  <div class="pull-left">
+    <i class="icon-tags"></i>
+    <ul class="tags unstyled">
+    
+      <li><a href="/blog/categories/Mac/">Mac</a></li>
+    
+      <li><a href="/blog/categories/NLP/">NLP</a></li>
+    
+      <li><a href="/blog/categories/Python/">Python</a></li>
+    
+    </ul>
+  </div>
+  
+
+    
+      <a class="pull-right" href="http://Salinger.github.com/blog/2013/01/17/1/#disqus_thread">
+        Comments <i class="icon-comment"></i>
+      </a>
+    
+  </div>
+  
+</header>
+
+
+
+
+<div class="entry-content clearfix">
+  <p>普段良く使うモジュールのMeCabのインストール。
+Homebrewもvirutalenvも最近使い始めたばかりなので、自分用メモとして記録。</p>
+
+
+  <a class="btn pull-right" href="/blog/2013/01/17/1/">続きを読む &rarr;</a>
+</div>
+
+  </article>
+  <hr>
+
+  
+  <article class="listing">
+    <header>
+  
+  <h1 class="beta">
+    <a href="/blog/2013/01/16/2/">Macでvirtualenvの設定</a>
+  </h1>
+  
+
+  
+  <div class="meta clearfix">
+    
+
+
+
+
+
+
+
+
+  
+
+
+<time class="pull-left" datetime="2013-01-16T17:41:00+09:00" pubdate data-updated="true"><i class="icon-calendar"></i> Jan 16<span>th</span>, 2013</time>
+    
+
+
+
+  
+  <div class="pull-left">
+    <i class="icon-tags"></i>
+    <ul class="tags unstyled">
+    
+      <li><a href="/blog/categories/Python/">Python</a></li>
+    
+    </ul>
+  </div>
+  
+
+    
+      <a class="pull-right" href="http://Salinger.github.com/blog/2013/01/16/2/#disqus_thread">
+        Comments <i class="icon-comment"></i>
+      </a>
+    
+  </div>
+  
+</header>
+
+
+
+
+<div class="entry-content clearfix">
+  <p>virtualenvはPython用の仮想環境構築のためのモジュール。virtualenvwrapperはvirtualenvを楽に使うためのラッパー。とりあえずPython周りの環境は、基本的にPython自体をHomebrewで、モジュールはvirtualenv + virtualenvwrapper + pip で管理することにする。</p>
+
+
+  <a class="btn pull-right" href="/blog/2013/01/16/2/">続きを読む &rarr;</a>
+</div>
+
+  </article>
+  <hr>
+
+  
+  <article class="listing">
+    <header>
+  
+  <h1 class="beta">
+    <a href="/blog/2013/01/16/1/">homebrew環境の構築</a>
+  </h1>
+  
+
+  
+  <div class="meta clearfix">
+    
+
+
+
+
+
+
+
+
+  
+
+
+<time class="pull-left" datetime="2013-01-16T02:41:00+09:00" pubdate data-updated="true"><i class="icon-calendar"></i> Jan 16<span>th</span>, 2013</time>
+    
+
+
+
+  
+  <div class="pull-left">
+    <i class="icon-tags"></i>
+    <ul class="tags unstyled">
+    
+      <li><a href="/blog/categories/Mac/">Mac</a></li>
+    
+    </ul>
+  </div>
+  
+
+    
+      <a class="pull-right" href="http://Salinger.github.com/blog/2013/01/16/1/#disqus_thread">
+        Comments <i class="icon-comment"></i>
+      </a>
+    
+  </div>
+  
+</header>
+
+
+
+
+<div class="entry-content clearfix">
+  <p>Macbook Airの環境を再構築したので、その際のメモ。今まではパッケージ管理にMacPortsを使っていたが、今回からHomebrewに移行した。元からMountain LionにインストールされてるPythonやRubyと、パッケージ管理ソフトで導入したそれらの最新版の管理がMacPortsだと少々面倒くさかったので、もう少し楽に済みそうなものを使ってみようというのが理由だ。</p>
+
+
+  <a class="btn pull-right" href="/blog/2013/01/16/1/">続きを読む &rarr;</a>
+</div>
+
+  </article>
+  <hr>
+
+  
+  <article class="listing">
+    <header>
+  
+  <h1 class="beta">
+    <a href="/blog/2013/01/14/1/">Mac + Ruby + Octopress + Github でブログの作成</a>
+  </h1>
+  
+
+  
+  <div class="meta clearfix">
+    
+
+
+
+
+
+
+
+
+  
+
+
+<time class="pull-left" datetime="2013-01-14T22:22:00+09:00" pubdate data-updated="true"><i class="icon-calendar"></i> Jan 14<span>th</span>, 2013</time>
+    
+
+
+
+  
+  <div class="pull-left">
+    <i class="icon-tags"></i>
+    <ul class="tags unstyled">
+    
+      <li><a href="/blog/categories/Octopress/">Octopress</a></li>
+    
+    </ul>
+  </div>
+  
+
+    
+      <a class="pull-right" href="http://Salinger.github.com/blog/2013/01/14/1/#disqus_thread">
+        Comments <i class="icon-comment"></i>
+      </a>
+    
+  </div>
+  
+</header>
+
+
+
+
+<div class="entry-content clearfix">
+  <p>技術系の話をメモするためのブログを作ろうと思っていたところ、このようなものを発見<a href="http://octopress.org">Octopress</a>。コードの管理に普段からGithubを使ってるので、技術系の話はすべてGithub上に集約してしまおう、という試み。以下SSHKeyの登録などGithubの設定はひと通り終わってる前提で話を進めています。</p>
+
+
+  <a class="btn pull-right" href="/blog/2013/01/14/1/">続きを読む &rarr;</a>
+</div>
+
+  </article>
+  <hr>
+
+    </div>
+  </div>
+  <footer role="contentinfo" class="page-footer"><hr>
+<p>
+  Copyright &copy; 2014 - Salinger -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'salinger';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

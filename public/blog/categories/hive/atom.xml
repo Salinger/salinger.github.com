@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Hive | さりんじゃーのプログラミング日記]]></title>
+  <link href="http://Salinger.github.com/blog/categories/hive/atom.xml" rel="self"/>
+  <link href="http://Salinger.github.com/"/>
+  <updated>2014-11-03T23:31:09+09:00</updated>
+  <id>http://Salinger.github.com/</id>
+  <author>
+    <name><![CDATA[Salinger]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Vagrant で 始める CDH5 + Hive + Impala 入門]]></title>
+    <link href="http://Salinger.github.com/blog/2014/11/03/1/"/>
+    <updated>2014-11-03T23:04:00+09:00</updated>
+    <id>http://Salinger.github.com/blog/2014/11/03/1</id>
+    <content type="html"><![CDATA[<p>以下の記事を参考にしつつテスト環境を作る。</p>
+
+<p><a href="http://blog.cloudera.com/blog/2014/06/how-to-install-a-virtual-apache-hadoop-cluster-with-vagrant-and-cloudera-manager/">how-to-install-a-virtual-apache-hadoop-cluster-with-vagrant-and-cloudera-manager</a></p>
+
+<p>なお、仮想マシン用に合計10GBはメモリが必要になるので、メインメモリ 16GB 以上詰んでるマシンで作業するのを推奨。</p>
+
+<!-- more -->
+
+
+<h2>VirtualBox のインストール</h2>
+
+<p>以下から最新版をインストール。</p>
+
+<p><a href="https://www.virtualbox.org/wiki/Downloads">https://www.virtualbox.org/wiki/Downloads</a></p>
+
+<h2>Vagrant のインストール</h2>
+
+<p>以下から最新版をインストール。</p>
+
+<p><a href="http://www.vagrantup.com/downloads">http://www.vagrantup.com/downloads</a></p>
+
+<h2>Vagrant によるクラスタ環境構築</h2>
+
+<p>ホストのコンソールで次のコマンドを実行。</p>
+
+<p><code>
+$ mkdir ~/vagrant
+$ cd ~/vagrant/
+$ vagrant plugin install vagrant-hostmanager
+$ git clone https://github.com/DandyDev/virtual-hadoop-cluster.git
+$ cd virtual-hadoop-cluster
+$ vagrant up
+</code></p>
+
+<h2>Cloudera Manager によるクラスタ環境設定</h2>
+
+<p>ブラウザで以下にアクセス。</p>
+
+<p><a href="http://vm-cluster-node1:7180">http://vm-cluster-node1:7180</a></p>
+
+<p>Cloudera Manager 5 の画面にアクセスできるはず</p>
+
+<ul>
+<li>admin / admin でログイン。</li>
+<li>Cloudera Express を選んで「続行」をクリック。</li>
+<li>CDHクラスタインストールのホストを指定。
+  *vm-cluster-node[1-4] と入力して「検索」をクリックすると4台のノードが検索できる。</li>
+<li>クラスタのインストール > リポジトリの選択
+
+<ul>
+<li>デフォルトのまま「続行」をクリック。</li>
+</ul>
+</li>
+<li>クラスタのインストール > JDK インストールオプション
+
+<ul>
+<li>デフォルトのまま「続行」をクリック。</li>
+</ul>
+</li>
+<li>クラスタのインストール >　SSH ログインの資格情報を入力してください。
+
+<ul>
+<li>別のユーザー: vagrant パスワード: vagrant パスワードの確認:vagrant を入力。これでクラスタのインストール作業が進む。
+
+<ul>
+<li>途中で1台のみインストールが進行しなくなったので一度中止をクリックした後、もう一度インストールを進めたら問題なく進行。「続行」をクリック。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>クラスタのインストール > 選択した Parcel のインストール
+
+<ul>
+<li>各種パッケージがインストールされるのを待つ。終わったら「続行」をクリック。</li>
+</ul>
+</li>
+<li>クラスタのインストール > ホストが正常かどうかの検査
+
+<ul>
+<li>インストール状況を確認できる。「続行」をクリック。</li>
+</ul>
+</li>
+<li>クラスタのセットアップ > クラスタにインストールする CDH 5 サービスを選択してください。
+  *「すべてのサービス」を選んで「続行」をクリック。</li>
+<li>クラスタのセットアップ > ロール割り当てのカスタマイズ デフォルトのまま「続行」をクリック。</li>
+<li>クラスタのセットアップ > データベースセットアップ
+
+<ul>
+<li>デフォルトのまま「続行」をクリック。</li>
+</ul>
+</li>
+<li>クラスタのセットアップ > 変更の確認
+
+<ul>
+<li>デフォルトのまま「続行」をクリック。</li>
+</ul>
+</li>
+<li>クラスタのセットアップ > 進行状況
+
+<ul>
+<li>全てインストールされるのを待ち「続行」をクリック。</li>
+</ul>
+</li>
+</ul>
+
+
+<p>これで Cloudera Manager のホーム画面にアクセス出来る。</p>
+
+<h2>Impala のインストール</h2>
+
+<p><a href="http://gyazo.com/f606d5ead7ffe1152e9353ae6f1f1204">http://gyazo.com/f606d5ead7ffe1152e9353ae6f1f1204</a></p>
+
+<p>この図の6になっている部分をクリックし、Impalaをダウンロード。</p>
+
+<p>画面下部の Cluster 1 の部分の配布ボタンをクリック。</p>
+
+<h2>作成したクラスタにログイン</h2>
+
+<p>ホストのコンソールで次のコマンドを実行。
+<code>
+$ ssh vagrant@vm-cluster-node1
+</code>
+PASS は vagrant</p>
+
+<h2>YARN で MapReduce 処理の動作チェック</h2>
+
+<p>vagrant@vm-cluster-node1 で作業。
+<code>
+$ sudo su - hdfs
+$ hadoop jar /opt/cloudera/parcels/CDH-5.2.0-1.cdh5.2.0.p0.36/lib/hadoop-mapreduce/hadoop-mapreduce-examples.jar pi 4 100
+</code></p>
+
+<p>Job の実行状況は下記URLで確認できる。
+<a href="http://vm-cluster-node1:8088/cluster">http://vm-cluster-node1:8088/cluster</a></p>
+
+<h3>実行結果</h3>
+
+<p>```
+Number of Maps  = 4
+Samples per Map = 100
+Wrote input for Map #0
+Wrote input for Map #1
+Wrote input for Map #2
+Wrote input for Map #3
+Starting Job
+14/11/03 11:44:03 INFO client.RMProxy: Connecting to ResourceManager at vm-cluster-node1/10.211.55.100:8032
+14/11/03 11:44:04 INFO input.FileInputFormat: Total input paths to process : 4
+14/11/03 11:44:04 INFO mapreduce.JobSubmitter: number of splits:4
+14/11/03 11:44:05 INFO mapreduce.JobSubmitter: Submitting tokens for job: job_1415003058856_0001
+14/11/03 11:44:05 INFO impl.YarnClientImpl: Submitted application application_1415003058856_0001
+14/11/03 11:44:05 INFO mapreduce.Job: The url to track the job: http://vm-cluster-node1:8088/proxy/application_1415003058856_0001/
+14/11/03 11:44:05 INFO mapreduce.Job: Running job: job_1415003058856_0001
+14/11/03 11:44:25 INFO mapreduce.Job: Job job_1415003058856_0001 running in uber mode : false
+14/11/03 11:44:25 INFO mapreduce.Job:  map 0% reduce 0%
+14/11/03 11:44:39 INFO mapreduce.Job:  map 25% reduce 0%
+14/11/03 11:44:40 INFO mapreduce.Job:  map 50% reduce 0%
+14/11/03 11:44:50 INFO mapreduce.Job:  map 100% reduce 0%
+14/11/03 11:45:01 INFO mapreduce.Job:  map 100% reduce 100%
+14/11/03 11:45:02 INFO mapreduce.Job: Job job_1415003058856_0001 completed successfully
+14/11/03 11:45:02 INFO mapreduce.Job: Counters: 49</p>
+
+<pre><code>     File System Counters
+          FILE: Number of bytes read=62
+                FILE: Number of bytes written=532213
+                      FILE: Number of read operations=0
+                            FILE: Number of large read operations=0
+                                  FILE: Number of write operations=0
+                                        HDFS: Number of bytes read=1084
+                                              HDFS: Number of bytes written=215
+                                                    HDFS: Number of read operations=19
+                                                          HDFS: Number of large read operations=0
+                                                                HDFS: Number of write operations=3
+                                                                Job Counters 
+                                                                    Launched map tasks=4
+                                                                             Launched reduce tasks=1
+                                                                                      Data-local map tasks=4
+                                                                                                 Total time spent by all maps in occupied slots (ms)=40475
+                                                                                                       Total time spent by all reduces in occupied slots (ms)=5994
+                                                                                                             Total time spent by all map tasks (ms)=40475
+                                                                                                                   Total time spent by all reduce tasks (ms)=5994
+                                                                                                                         Total vcore-seconds taken by all map tasks=40475
+                                                                                                                               Total vcore-seconds taken by all reduce tasks=5994
+                                                                                                                                     Total megabyte-seconds taken by all map tasks=41446400
+                                                                                                                                           Total megabyte-seconds taken by all reduce tasks=6137856
+                                                                                                                                           Map-Reduce Framework
+                                                                                                                                                      Map input records=4
+                                                                                                                                                          Map output records=8
+                                                                                                                                                              Map output bytes=72
+                                                                                                                                                                  Map output materialized bytes=136
+                                                                                                                                                                      Input split bytes=612
+                                                                                                                                                                            Combine input records=0
+                                                                                                                                                                                    Combine output records=0
+                                                                                                                                                                                            Reduce input groups=2
+                                                                                                                                                                                                   Reduce shuffle bytes=136
+                                                                                                                                                                                                          Reduce input records=8
+                                                                                                                                                                                                                 Reduce output records=0
+                                                                                                                                                                                                                        Spilled Records=16
+                                                                                                                                                                                                                                Shuffled Maps =4
+                                                                                                                                                                                                                                         Failed Shuffles=0
+                                                                                                                                                                                                                                                Merged Map outputs=4
+                                                                                                                                                                                                                                                       GC time elapsed (ms)=211
+                                                                                                                                                                                                                                                          CPU time spent (ms)=5230
+                                                                                                                                                                                                                                                              Physical memory (bytes) snapshot=1845346304
+                                                                                                                                                                                                                                                                       Virtual memory (bytes) snapshot=8395341824
+                                                                                                                                                                                                                                                                               Total committed heap usage (bytes)=1530396672
+                                                                                                                                                                                                                                                                               Shuffle Errors
+                                                                                                                                                                                                                                                                                       BAD_ID=0
+                                                                                                                                                                                                                                                                                        CONNECTION=0
+                                                                                                                                                                                                                                                                                         IO_ERROR=0
+                                                                                                                                                                                                                                                                                          WRONG_LENGTH=0
+                                                                                                                                                                                                                                                                                           WRONG_MAP=0
+                                                                                                                                                                                                                                                                                            WRONG_REDUCE=0
+                                                                                                                                                                                                                                                                                            File Input Format Counters 
+                                                                                                                                                                                                                                                                                                 Bytes Read=472
+                                                                                                                                                                                                                                                                                                 File Output Format Counters 
+                                                                                                                                                                                                                                                                                                      Bytes Written=97
+</code></pre>
+
+<p>Job Finished in 59.247 seconds
+Estimated value of Pi is 3.17000000000000000000
+hdfs@vm-cluster-node1:~$
+```</p>
+
+<p>MapReduce の Job が YARN で実行できた。</p>
+
+<h2>Hive の動作確認</h2>
+
+<p>vagrant@vm-cluster-node1 で作業。</p>
+
+<p><code>
+$ hive
+hive&gt; SHOW databases;
+OK
+default
+Time taken: 0.388 seconds, Fetched: 1 row(s)
+hive&gt; CREATE DATABASE IF NOT EXISTS sample_logs;
+OK
+Time taken: 0.408 seconds
+hive&gt; USE sample_logs;          
+OK
+Time taken: 0.54 seconds
+hive&gt; CREATE TABLE logs(id INT, created_at STRING) row format delimited fields terminated by ',' lines terminated by '\n';
+OK
+Time taken: 0.771 seconds
+hive&gt;
+</code>
+動作した。</p>
+
+<h2>Impala の動作確認</h2>
+
+<p>次のURLにアクセスすると Impala の WebUI にアクセスできる。
+<a href="http://vm-cluster-node1:25010">http://vm-cluster-node1:25010</a></p>
+
+<p>vm-cluster-node1 で下記コマンドを実行し、シェルの起動。ノード2 ~ 4 のどれかにログイン。
+<code>
+$ impala-shell -i vm-cluster-node2
+</code></p>
+
+<p>操作してみる。</p>
+
+<p><code>
+[vm-cluster-node2:21000] &gt; SHOW databases;
+[vm-cluster-node2:21000] &gt; CREATE DATABASE IF NOT EXISTS sample_logs;
+[vm-cluster-node2:21000] &gt; USE sample_logs;
+[vm-cluster-node2:21000] &gt; CREATE TABLE logs(id INT, created_at STRING) row format delimited fields terminated by ',' lines terminated by '\n';
+[vm-cluster-node2:21000] &gt; SHOW tables;
+Query: show tables
++------+
+| name |
++------+
+| logs |
++------+
+</code></p>
+
+<p>動作した。</p>
+
+<p>サーバーからログアウトして、
+<code>
+$ vagrant halt
+</code>
+でクラスタの全サーバーをシャットダウン。</p>
+
+<p>とりあえず、ここまででテスト用の CDH5 の Hadoop (HDFS + YARN によるMapReduce)環境、Hive、Impala環境が構築できた。</p>
+]]></content>
+  </entry>
+  
+</feed>

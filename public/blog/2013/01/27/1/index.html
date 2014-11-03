@@ -1,0 +1,459 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Raspberry Piに人工無脳搭載してみた - さりんじゃーのプログラミング日記</title>
+  <meta name="author" content="Salinger">
+
+  
+  <meta name="description" content="">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://Salinger.github.com/blog/2013/01/27/1">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/bootstrap/bootstrap.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/stylesheets/bootstrap/responsive.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/stylesheets/syntax/syntax.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <style type="text/css">
+    body {
+      padding-bottom: 40px;
+    }
+    h1 {
+      margin-bottom: 15px;
+    }
+    img {
+      max-width: 100%;
+    }
+    .sharing, .meta, .pager {
+      margin: 20px 0px 20px 0px;
+    }
+    .page-footer p {
+      text-align: center;
+    }
+  </style>
+  <script src="/javascripts/libs/jquery.js"></script>
+  <script src="/javascripts/libs/modernizr-2.0.js"></script>
+  <script src="/javascripts/libs/bootstrap.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="さりんじゃーのプログラミング日記" type="application/atom+xml">
+  <link href="/stylesheets/data-table.css" rel="stylesheet" type="text/css" />
+  
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-39177183-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <nav role="navigation"><div class="navbar navbar-inverse">
+  <div class="navbar-inner">
+    <div class="container">
+      <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </a>
+
+      <a class="brand" href="/">さりんじゃーのプログラミング日記</a>
+
+      <div class="nav-collapse">
+        <ul class="nav">
+  <li><a href="/">Top</a></li>
+  <li><a href="/blog">Blog</a></li>
+  <li><a href="/python">Python</a></li>
+  <li><a href="/r">R</a></li>
+  <li><a href="/clojure">Clojure</a></li>
+  <li><a href="/ml">機械学習</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+
+        <ul class="nav pull-right" data-subscription="rss">
+          <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+          
+        </ul>
+
+        
+          <form class="pull-right navbar-search" action="http://google.com/search" method="get">
+            <fieldset role="search">
+              <input type="hidden" name="q" value="site:Salinger.github.com" />
+              <input class="search-query" type="text" name="q" results="0" placeholder="Search"/>
+            </fieldset>
+          </form>
+        
+      </div>
+    </div>
+  </div>
+</div>
+</nav>
+  <div class="container">
+    <div class="row-fluid">
+      
+<article class="hentry span9" role="article">
+
+  
+  <header class="page-header">
+    
+      <h1 class="entry-title">Raspberry Piに人工無脳搭載してみた</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-01-27T00:09:00+09:00" pubdate data-updated="true">Jan 27<span>th</span>, 2013</time>
+        
+         | <a href="#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>前回の記事に引き続きRaspberry Piネタ。マルコフ連鎖により文章を自動生成しLCDに出力してみた。</p>
+
+<p><img src="/images/2013-01-27/001.png" alt="出力例の画像" /></p>
+
+<!--more-->
+
+
+<h2>人工無脳とは</h2>
+
+<p>考えてるように見えて考えてない。ただ確率に従い文章を生成するプログラム。それでも人間から見ると、意味のある文章に見える文章が生成される。</p>
+
+<p>基本的な生成手順は</p>
+
+<ol>
+<li>元データを形態素解析して形態素毎に分割</li>
+<li>マルコフ連鎖により再構成</li>
+</ol>
+
+
+<h2>形態素解析</h2>
+
+<p>自然言語で書かれた文を、形態素 (言語で意味を持つ最小単位) ごとに分割し、各形態素の品詞を特定することを形態素解析と呼ぶ。プログラムで自然言語を扱う場合、よく使われる技術の一つ。細かいことは<a href="http://ja.wikipedia.org/wiki/%e5%bd%a2%e6%85%8b%e7%b4%a0%e8%a7%a3%e6%9e%90">Wikipedia</a> でも見てください。</p>
+
+<p>日本語の形態素解析を行うためのツールは以下の様なものがある。</p>
+
+<ul>
+<li><a href="http://mecab.sourceforge.net/">MeCab</a>
+
+<ul>
+<li>bi-gram マルコフモデル</li>
+<li>学習モデルはCRF</li>
+</ul>
+</li>
+<li><a href="http://chasen-legacy.sourceforge.jp">ChaSen</a>
+
+<ul>
+<li>可変長マルコフモデル</li>
+<li>学習モデルは隠れマルコフモデル(HMM)</li>
+</ul>
+</li>
+<li><a href="http://www.phontron.com/kytea/index-ja.html">KyTea</a>
+
+<ul>
+<li>比較的最近でてきたもの</li>
+<li>ネットスラングや顔文字などの認識も比較的精度がいいらしい</li>
+</ul>
+</li>
+<li><a href="http://developer.yahoo.co.jp/webapi/jlp/ma/v1/parse.html">日本語形態素解析Webサービス</a>
+
+<ul>
+<li>Webベースの日本語形態素解析API</li>
+<li>組み込み系などマシンが非力な場合にも使えそう</li>
+</ul>
+</li>
+</ul>
+
+
+<p>今回は使い慣れているMeCabを使いました。</p>
+
+<h2>マルコフ連鎖</h2>
+
+<p>すごく簡単に言うと、ある要素を次々と発生させる状況を考えたときに、次の要素が現在の要素のみによって決まるのがマルコフ連鎖である。詳しくは<a href="http://ja.wikipedia.org/wiki/%e3%83%9e%e3%83%ab%e3%82%b3%e3%83%95%e9%80%a3%e9%8e%96">Wikipedia</a>でも見てください。</p>
+
+<p>これを文章に適用した場合の例だが、解説はこのページがわかりやすい(<a href="https://www.evernote.com/shard/s70/sh/71947f67-ee6c-405f-92a2-1d64fd631639/2d9397138827808cbc21c36c9389f642">「それが大事」にマルコフ連鎖を適用してみる</a>)。</p>
+
+<p>ある単語があったとき、その単語の次に現れる可能性のある単語の確率のみを考える場合を単語uni-gramのマルコフ連鎖、2単語ずつをペアにして考える場合を単語bi-gramのマルコフ連鎖、さらに続いてtri-gram、4-gram、…N-gram。と呼ぶ。</p>
+
+<p>例えば、<br/>
+私/は/旅行/に/行き/たい/。<br/>
+という文章があった場合、</p>
+
+<ul>
+<li>単語uni-gram:
+
+<ul>
+<li>&#8220;私&#8221;, &#8220;は&#8221;, &#8220;旅行&#8221;, &#8220;に&#8221;, &#8220;行き&#8221;, &#8220;たい&#8221;, &#8220;。&#8221;</li>
+</ul>
+</li>
+<li>単語bi-gram:
+
+<ul>
+<li>&#8220;私/は&#8221;, &#8220;は/旅行&#8221;, &#8220;旅行/に&#8221;, &#8220;に/行き&#8221;, &#8220;行き/たい&#8221;, &#8220;たい/。&#8221;</li>
+</ul>
+</li>
+<li>単語tri-gram:
+
+<ul>
+<li>&#8220;私/は/旅行&#8221;, &#8220;は/旅行/に&#8221;, &#8220;旅行/に/行き&#8221;, &#8220;に/行き/たい&#8221;, &#8220;行き/たい/。&#8221;<br/>
+となる。</li>
+</ul>
+</li>
+</ul>
+
+
+<h2>文章を生成する際のポイント</h2>
+
+<ol>
+<li>要素の単位
+
+<ul>
+<li>文字単位でマルコフ連鎖を行う場合もあるが、単語単位で生成したほうが読みやすい文章になる。N-gramのNが大きくなれば、長文になりやすく、同じパターンのものが生成されやすい。解決するためにはデータ量を増やす必要がある。個人的にいい意味で人工無脳っぽさが出るは単語bi-gramかtri-gramあたりだと思う。</li>
+</ul>
+</li>
+<li>開始・終了の扱い
+
+<ul>
+<li>開始、終了にも適当な目印を割り当てると楽。<code>[S]/私/は/旅行/に/行き/たい/。/[E]</code>のように。単語[S]から作り始めて、単語[E]が現れたら終了。</li>
+</ul>
+</li>
+<li>元データの選択
+
+<ul>
+<li>◯◯っぽいものを作りたい場合は◯◯っぽい文章を集めてくる。とりあえず試してみたい場合のデータ収集元としておすすめなのはTwitterやネットのニュースあたり。この辺りを元データにしたものは<a href="https://twitter.com/shuumai">しゅうまい君</a>や<a href="http://pha22.net/comp/">圧縮新聞</a>なんかが有名ですね。</li>
+</ul>
+</li>
+</ol>
+
+
+<h2>プログラム</h2>
+
+<p>という訳で、Raspberry Pi + LCD で動くものを実装してみました(<a href="https://github.com/Salinger/MunouChan-onRaspberryPi">MunouChan</a>)。文章生成に使用したのは友人のTweet。<code>@~</code> から始まるリプライツイートは削除しました。各単語はMeCabで分割し単語の読みに変換(最終出力が半角カナのみなので)。単語の読みのみを考慮して(火と日は&#8221;ひ&#8221;で同一単語扱い)bi-gramの単語ペアを生成。ペアの出現回数をカウント。次に現れる単語の確率を計算したものをpickleモジュールでダンプしたものが上記URLのプログラムの状態です。</p>
+
+<p>後はプログラム起動時にダンプされたデータを読み込み、開始単語から終了単語が現れるまで確率に従いランダムに単語を選択。LCDに収まる文字数ならLCDに出力し、オーバーしていたら再生成。</p>
+
+<p><code>./probability.pkl</code>を削除またはリネームし、tweetディレクトリの中のsample.tsvを同じ形式で書き換えてやれば、任意の元データでも動くはず。ただ元データに文字数が多いものばかりを選ぶと、制限文字数をオーバしまくるので怪しい動作しそう。</p>
+
+<p>実行したときの画像がこのページトップあたりにある画像です。</p>
+
+<h2>まとめ</h2>
+
+<p>シンプルな人工無脳を作るのはさほど難しくないが、人間らしい応答をさせようとすると難易度が跳ね上がる。そもそも「人間らしい」という定義すらよくわからない。</p>
+
+<p>これはマルコフ連鎖を文章に適用した例だけど、状態の遷移を確率的に表現できるものに適用できるので、音楽や絵の自動生成など、他分野にもいろいろ適用できるはず。</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Salinger</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-01-27T00:09:00+09:00" pubdate data-updated="true">Jan 27<span>th</span>, 2013</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/nlp/'>NLP</a>, <a class='category' href='/blog/categories/python/'>Python</a>, <a class='category' href='/blog/categories/raspberrypi/'>RaspberryPi</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  
+  
+</div>
+
+    
+    
+    <section>
+      <h1>Comments</h1>
+      <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+    </section>
+    
+    <ul class="pager">
+      
+      <li class="previous"><a class="basic-alignment left"
+        href="/blog/2013/01/25/1/" title="Previous Post:
+        Raspberry PiとキャラクタLCDで遊んでみた">&laquo; Raspberry PiとキャラクタLCDで遊んでみた</a></li>
+      
+      <li><a href="/blog/archives">Blog Archives</a></li>
+      
+      <li class="next"><a class="basic-alignment right" href="/blog/2013/01/27/2/"
+        title="Next Post: NDS30:JAWS-UG-NGキックオフ に参加してきました">NDS30:JAWS-UG-NGキックオフ に参加してきました
+        &raquo;</a></li>
+      
+    </ul>
+  </footer>
+</article>
+
+<aside class="sidebar-nav span3">
+  
+    <section>
+  <h1>About me</h1>
+  <p>Name: さりんじゃー</p>
+  <p>使用言語: Python (main), R (学習中), Clojure (学習中)</p>
+  <p>興味: 機械学習, データ分析, 自然言語処理, 情報検索 など</p>
+</section>
+<section class="well">
+  <ul id="recent_posts" class="nav nav-list">
+    <li class="nav-header">Recent Posts</li>
+    
+      <li class="post">
+        <a href="/blog/2014/11/03/1/">Vagrant で 始める CDH5 + Hive + Impala 入門</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/02/03/1/">Python 2.7.X 入門者向けのまとめ</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/11/05/1/">Mac で Vagrant 環境の整備</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/09/29/1/">第33回 長岡IT開発者勉強会 Scala入学式に参加してきました</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/07/06/1/">第32回 長岡IT開発者勉強会に参加してきました</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section class="well">
+  <ul id="gh_repos" class="nav">
+    <li class="nav-header">GitHub Repos</li>
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/Salinger">@Salinger</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        github.showRepos({
+            user: 'Salinger',
+            count: 5,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/asides/github.js" type="text/javascript"> </script>
+</section>
+
+
+<section class="well">
+  <a class="twitter-timeline" href="https://twitter.com/salinger001101" data-widget-id="429220673311891456">
+    @salinger001101 からのツイート
+  </a>
+  <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
+  </script>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo" class="page-footer"><hr>
+<p>
+  Copyright &copy; 2014 - Salinger -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'salinger';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://Salinger.github.com/blog/2013/01/27/1/';
+        var disqus_url = 'http://Salinger.github.com/blog/2013/01/27/1/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

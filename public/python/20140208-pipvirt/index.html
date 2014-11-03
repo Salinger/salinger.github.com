@@ -1,0 +1,504 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>pip 1.5 + virtualenv によるパッケージの管理 - さりんじゃーのプログラミング日記</title>
+  <meta name="author" content="Salinger">
+
+  
+  <meta name="description" content="">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://Salinger.github.com/python/20140208-pipvirt">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/bootstrap/bootstrap.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/stylesheets/bootstrap/responsive.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/stylesheets/syntax/syntax.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <style type="text/css">
+    body {
+      padding-bottom: 40px;
+    }
+    h1 {
+      margin-bottom: 15px;
+    }
+    img {
+      max-width: 100%;
+    }
+    .sharing, .meta, .pager {
+      margin: 20px 0px 20px 0px;
+    }
+    .page-footer p {
+      text-align: center;
+    }
+  </style>
+  <script src="/javascripts/libs/jquery.js"></script>
+  <script src="/javascripts/libs/modernizr-2.0.js"></script>
+  <script src="/javascripts/libs/bootstrap.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="さりんじゃーのプログラミング日記" type="application/atom+xml">
+  <link href="/stylesheets/data-table.css" rel="stylesheet" type="text/css" />
+  
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-39177183-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <nav role="navigation"><div class="navbar navbar-inverse">
+  <div class="navbar-inner">
+    <div class="container">
+      <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </a>
+
+      <a class="brand" href="/">さりんじゃーのプログラミング日記</a>
+
+      <div class="nav-collapse">
+        <ul class="nav">
+  <li><a href="/">Top</a></li>
+  <li><a href="/blog">Blog</a></li>
+  <li><a href="/python">Python</a></li>
+  <li><a href="/r">R</a></li>
+  <li><a href="/clojure">Clojure</a></li>
+  <li><a href="/ml">機械学習</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+
+        <ul class="nav pull-right" data-subscription="rss">
+          <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+          
+        </ul>
+
+        
+          <form class="pull-right navbar-search" action="http://google.com/search" method="get">
+            <fieldset role="search">
+              <input type="hidden" name="q" value="site:Salinger.github.com" />
+              <input class="search-query" type="text" name="q" results="0" placeholder="Search"/>
+            </fieldset>
+          </form>
+        
+      </div>
+    </div>
+  </div>
+</div>
+</nav>
+  <div class="container">
+    <div class="row-fluid">
+      
+<article role="article" class="span9">
+
+  
+  <header class="page-header">
+    <h1 class="entry-title">Pip 1.5 + Virtualenv によるパッケージの管理</h1>
+    <p class="meta">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-02-08T12:14:00+09:00" pubdate data-updated="true">Feb 8<span>th</span>, 2014</time></p>
+  </header>
+  
+  <h2>はじめに</h2>
+
+<p>プロジェクト毎に必要なパッケージの管理を Python でやるにはどうしたらいいかをまとめた。Ruby の Gem パッケージの管理ツール Bundler と似たような事ができる。MacOSX の Homebrew 環境で作業は行っているが、virtualenv 環境を構築してしまえば Linux 等でも同じはず。</p>
+
+<h2>virtualenv 環境の構築</h2>
+
+<p>まずは、virtualenv 環境を構築する。<a href="/python/20140208-virtpy23">こっちのページ</a>を参照。</p>
+
+<h2>pip について</h2>
+
+<p>Python のパッケージ管理ツール。virtualenv 環境を構築すれば自動的にインストール済み。
+既にインストールされているpipのバージョン &lt; 1.5の場合、<code>$ pip install -U pip</code>で1.5以上になるように更新しておく。</p>
+
+<p>まず作業したいプロジェクト用の仮想環境を作る。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ mkvirtualenv testenv
+</span><span class='line'>$ workon testenv</span></code></pre></td></tr></table></div></figure>
+
+
+<p>あとは仮想環境下で以下のようなコマンドを実行して、必要なパッケージのインストール、管理を行う。</p>
+
+<h3>インストール済みのパッケージを確認</h3>
+
+<p><code>$ pip list</code> で確認できる。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ pip list
+</span><span class='line'>List (1.3.0)
+</span><span class='line'>mecab-python (0.994)
+</span><span class='line'>pip (1.5.2)
+</span><span class='line'>setuptools (2.1)
+</span><span class='line'>...</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>pypi からパッケージを検索</h3>
+
+<p><a href="https://pypi.python.org/pypi">Python Package index(pypi)</a>とは、Python 用のソフトウェアリポジトリ。 Ruby の RubyGems 、Perl の CPAN みたいなもの。</p>
+
+<p><code>$ pip search SomePackage</code> で SomePackage を検索できる。</p>
+
+<p>例:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ pip search scipy
+</span><span class='line'>scipy                     - SciPy: Scientific Library for Python
+</span><span class='line'>scikit-image              - Image processing routines for SciPy
+</span><span class='line'>scipy-data_fitting        - Data fitting system with SciPy.
+</span><span class='line'>...</span></code></pre></td></tr></table></div></figure>
+
+
+<p></p>
+
+<h3>インストール</h3>
+
+<p><code>$ pip install PACKAGE_NAME</code> で PACKAGE_NAME を pypi から検索してインストールしてくれる。</p>
+
+<p>例:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ pip install SomePackage            # 最新 ver
+</span><span class='line'>$ pip install SomePackage==1.0.4     # 特定 ver
+</span><span class='line'>$ pip install 'SomePackage&gt;=1.0.4'     # ある ver 以上</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>開発版のインストール</h4>
+
+<p>開発版のパッケージをインストールしたい場合、以下のようにする。デフォルトで検索されるのは安定版のみ。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ pip install --pre SomePackage</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>ファイルからインストール</h4>
+
+<p>手元のファイルやネット上のファイル(圧縮したままでOK)からもインストール可能。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ pip install ./downloads/SomePackage-1.0.4.tar.gz
+</span><span class='line'>$ pip install http://my.package.repo/SomePackage-1.0.4.zip</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>リモートリポジトリからインストール</h4>
+
+<p>git リポジトリなどから直接パッケージをインストールすることも可能。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ pip install -e git+https://git.repo/some_pkg.git#egg=SomePackage          # from git
+</span><span class='line'>$ pip install -e hg+https://hg.repo/some_pkg.git#egg=SomePackage            # from mercurial
+</span><span class='line'>$ pip install -e svn+svn://svn.repo/some_pkg/trunk/#egg=SomePackage         # from svn
+</span><span class='line'>$ pip install -e git+https://git.repo/some_pkg.git@feature#egg=SomePackage  # from 'feature' branch
+</span><span class='line'>$ pip install -e git+https://git.repo/some_repo.git@egg=subdir&subdirectory=subdir_path # install a python package from a repo subdirectory</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>ローカルミラーからインストール</h4>
+
+<p>ローカルのミラーからもインストール可能。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ pip install --index-url http://my.package.repo/simple/ SomePackage # pypi は検索しない
+</span><span class='line'>$ pip install --extra-index-url http://my.package.repo/simple SomePackage # pypi も検索</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>proxy 環境下でのインストール</h4>
+
+<p>proxy 環境下の場合、</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ pip install SomePackage --proxy=username:passwd@proxy.example.com:8080</span></code></pre></td></tr></table></div></figure>
+
+
+<p>で proxy を通してインストール可能。</p>
+
+<h4>アップグレード</h4>
+
+<p>インストール済みのパッケージをアップグレードする場合は以下のコマンドを実行する。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>pip install SomePackage -U</span></code></pre></td></tr></table></div></figure>
+
+
+<p>更新可能なパッケージは</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>pip list -o</span></code></pre></td></tr></table></div></figure>
+
+
+<p>で確認可能。</p>
+
+<p>virtualenv環境の場合、</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>pip list -l</span></code></pre></td></tr></table></div></figure>
+
+
+<p>でシステム(仮想環境ではない場所)にインストールされているものを除外して、
+仮想環境上にインストールしたパッケージのみ表示できる。</p>
+
+<h3>アンインストール</h3>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ pip uninstall SomePackage</span></code></pre></td></tr></table></div></figure>
+
+
+<p>で指定したパッケージを削除できる。</p>
+
+<h3>freeze</h3>
+
+<p>現在インストールしてあるパッケージをテキストファイルに書き出して、後に一括インストールできるようにするためのコマンド。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ pip freeze &gt; requirements.txt</span></code></pre></td></tr></table></div></figure>
+
+
+<p>で書き出す。インストールする際は、</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ pip install -r requirements.txt</span></code></pre></td></tr></table></div></figure>
+
+
+<p>でインストール可能。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ pip install -r requirements1.txt requirements2.txt</span></code></pre></td></tr></table></div></figure>
+
+
+<p>のように複数個のファイルも指定可能。</p>
+
+<p>また、freezeで書きだしたファイルをまとめて削除することも可能。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ pip uninstall -r requirements.txt</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>依存パッケージを1つのzipにまとめる</h3>
+
+<p>書き出し。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ pip freeze &gt; requirements.txt
+</span><span class='line'>$ pip bundle -r requirements.txt test.pybundle</span></code></pre></td></tr></table></div></figure>
+
+
+<p>別の環境でインストール。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ pip install test.pybundle</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>参考文献等</h2>
+
+<p><a href="http://www.pip-installer.org/en/latest/index.html">pip 1.5.2 documentation</a></p>
+
+<p><a href="http://tdoc.info/blog/2014/01/15/pip.html">pipの使い方 (2014/1バージョン)</a>, そこはかとなく書くよん。</p>
+
+  
+    <footer>
+      <p class="meta">
+        
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-02-08T12:14:00+09:00" pubdate data-updated="true">Feb 8<span>th</span>, 2014</time>
+        
+      </p>
+      
+        <div class="sharing">
+  
+  
+  
+</div>
+
+      
+      
+      <section>
+        <h1>Comments</h1>
+        <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+      </section>
+      
+    </footer>
+  
+</article>
+
+<aside class="sidebar-nav span3">
+  
+    <section>
+  <h1>About me</h1>
+  <p>Name: さりんじゃー</p>
+  <p>使用言語: Python (main), R (学習中), Clojure (学習中)</p>
+  <p>興味: 機械学習, データ分析, 自然言語処理, 情報検索 など</p>
+</section>
+<section class="well">
+  <ul id="recent_posts" class="nav nav-list">
+    <li class="nav-header">Recent Posts</li>
+    
+      <li class="post">
+        <a href="/blog/2014/11/03/1/">Vagrant で 始める CDH5 + Hive + Impala 入門</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/02/03/1/">Python 2.7.X 入門者向けのまとめ</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/11/05/1/">Mac で Vagrant 環境の整備</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/09/29/1/">第33回 長岡IT開発者勉強会 Scala入学式に参加してきました</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/07/06/1/">第32回 長岡IT開発者勉強会に参加してきました</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section class="well">
+  <ul id="gh_repos" class="nav">
+    <li class="nav-header">GitHub Repos</li>
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/Salinger">@Salinger</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        github.showRepos({
+            user: 'Salinger',
+            count: 5,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/asides/github.js" type="text/javascript"> </script>
+</section>
+
+
+<section class="well">
+  <a class="twitter-timeline" href="https://twitter.com/salinger001101" data-widget-id="429220673311891456">
+    @salinger001101 からのツイート
+  </a>
+  <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
+  </script>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo" class="page-footer"><hr>
+<p>
+  Copyright &copy; 2014 - Salinger -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'salinger';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://Salinger.github.com/python/20140208-pipvirt/index.html';
+        var disqus_url = 'http://Salinger.github.com/python/20140208-pipvirt/index.html';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

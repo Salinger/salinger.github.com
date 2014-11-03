@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Octopress | さりんじゃーのプログラミング日記]]></title>
+  <link href="http://Salinger.github.com/blog/categories/octopress/atom.xml" rel="self"/>
+  <link href="http://Salinger.github.com/"/>
+  <updated>2014-11-03T23:31:09+09:00</updated>
+  <id>http://Salinger.github.com/</id>
+  <author>
+    <name><![CDATA[Salinger]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Mac + Ruby + Octopress + Github でブログの作成]]></title>
+    <link href="http://Salinger.github.com/blog/2013/01/14/1/"/>
+    <updated>2013-01-14T22:22:00+09:00</updated>
+    <id>http://Salinger.github.com/blog/2013/01/14/1</id>
+    <content type="html"><![CDATA[<p>技術系の話をメモするためのブログを作ろうと思っていたところ、このようなものを発見<a href="http://octopress.org">Octopress</a>。コードの管理に普段からGithubを使ってるので、技術系の話はすべてGithub上に集約してしまおう、という試み。以下SSHKeyの登録などGithubの設定はひと通り終わってる前提で話を進めています。</p>
+
+<!-- more -->
+
+
+<h2>環境</h2>
+
+<p>PC: MacBook Air, Core i5 1.7GHz, Mem 4GB<br/>
+OS: OS X 10.8.2<br/>
+XCode: 4.5.2</p>
+
+<h2>Rubyのインストール</h2>
+
+<p>1.9.3が入ってればいいらしいので、MacPortsを使ってインストール。</p>
+
+<pre><code>$ sudo port install ruby19 +nosuffix
+</code></pre>
+
+<p>bundle のインストール (とりあえずgem1.9を使えば問題はなかった。gem だと標準でインストールされている1.8系にインストールされるのか？試していないので分からないが)。</p>
+
+<pre><code>$ sudo gem1.9 install bundle
+</code></pre>
+
+<h2>Octopressのインストール</h2>
+
+<pre><code>$ cd ~/Downloads/
+$ git clone https://github.com/imathis/octopress.git
+$ cd octopress
+$ bundle install
+$ rake install
+</code></pre>
+
+<h2>Github Pagesの準備</h2>
+
+<p>Github Pagesを利用するために、username.github.com というような名前でリポジトリを作成。<a href="https://github.com/repositories/new">ここ</a>で私の場合はsalinger.github.comという名前で作成した。→のGithub Reposに見えてるかな？</p>
+
+<h2>Octpress のデプロイ設定</h2>
+
+<pre><code>$ rake setup_github_pages
+</code></pre>
+
+<p>ここでgit@github.com:Salinger/salinger.github.com.git を入力。</p>
+
+<pre><code>$ rake generate
+$ rake deploy
+</code></pre>
+
+<p>この2行をまとめて実行する場合には</p>
+
+<pre><code>$ rake gen_deploy
+</code></pre>
+
+<p>で可能。</p>
+
+<h2>Github コミット</h2>
+
+<pre><code>$ git add . &amp;&amp; git commit -m "Initial commit"
+$ git push
+</code></pre>
+
+<h2>初期設定</h2>
+
+<p><a href="http://change-the-world.github.com/blog/2012/08/26/1/">ここ</a>を見ながら_config.ymlを弄って初期設定。Github,Twitterとの連携も簡単にできる。</p>
+
+<h2>新規記事作成</h2>
+
+<pre><code>$ rake new_post["1"]
+</code></pre>
+
+<p>sourse/_posts/以下に新しい記事のテンプレートが作成される。
+<a href="http://ja.wikipedia.org/wiki/Markdown">Wikipedia:Markdown</a>
+を見ながら、テストがてらこの記事を作成してみた。
+なおデプロイする前に</p>
+
+<pre><code>$ rake generate
+$ rake preview
+</code></pre>
+
+<p>を実行すると、http://localhost:4000でプレビューが見れる。</p>
+
+<pre><code>$ rake deploy
+$ git add . &amp;&amp; git commit -m "Create octopress install page."
+$ git push
+</code></pre>
+
+<h2>コメント欄の追加</h2>
+
+<p>記事にコメント欄を追加するには、<a href="http://disqus.com/">Disqus</a>に登録しなければならないっぽいので登録した。<a href="http://blog.morizotter.com/octopress%E3%81%AB%E3%82%B3%E3%83%A1%E3%83%B3%E3%83%88%E3%82%92%E8%BF%BD%E5%8A%A0%E3%81%99%E3%82%8B/">このページ</a>を見つつ_config.ymlに設定を記述した。</p>
+
+<h2>サイドバーにプロフィール欄を追加</h2>
+
+<p><a href="http://www.mk-mode.com/octopress/2012/12/17/octopress-add-profile/">ここ</a>を参考にしました。<code>source/_includes/custom/asides/about.html</code> を編集（中身はただのHTML）。サイドバーの表示設定を変更するために_config.ymlを編集。</p>
+
+<pre><code>default_asides: [...]
+</code></pre>
+
+<p>の中の任意の位置にcustom/asides/about.htmlを追加する。genereteしてdeployすればプロフィールがサイドバーに表示されるはず。</p>
+
+<h2>感想</h2>
+
+<p>ちょこちょこ弄ってみた感想ですが、<br/>
+1. Githubとの連携が良い感じ。<br/>
+2. Markdown記法なかなか書きやすい。普段使ってるEmacsで書けるのはありがたい。<br/>
+3. 2とも関連するが、作業中にエディタ内でシームレスに書けるのは非常に楽。<br/>
+静的なページでいいなら、レンタルサーバ借りるよりもこっちの方がいいかも。</p>
+]]></content>
+  </entry>
+  
+</feed>

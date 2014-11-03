@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: MacOSX | さりんじゃーのプログラミング日記]]></title>
+  <link href="http://Salinger.github.com/blog/categories/macosx/atom.xml" rel="self"/>
+  <link href="http://Salinger.github.com/"/>
+  <updated>2014-11-03T23:31:09+09:00</updated>
+  <id>http://Salinger.github.com/</id>
+  <author>
+    <name><![CDATA[Salinger]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Mac で Vagrant 環境の整備]]></title>
+    <link href="http://Salinger.github.com/blog/2013/11/05/1/"/>
+    <updated>2013-11-05T22:23:00+09:00</updated>
+    <id>http://Salinger.github.com/blog/2013/11/05/1</id>
+    <content type="html"><![CDATA[<h2>Vagrant とは</h2>
+
+<p>仮想的なマシンをインストールしたPC上に作成できる VirtualBox のフロントエンド。Ruby 製。ゲストOSのインストールや必要なソフトのインストール等、面倒くさい設定を省くことができ、いきなり目的の作業することができる。</p>
+
+<!-- more -->
+
+
+<h2>VirtualBox のインストール</h2>
+
+<p>最初に Mac 版のVirtualBox の最新版をインストールしておく。</p>
+
+<p><a href="https://www.virtualbox.org/wiki/Downloads">VirtualBox binaries</a></p>
+
+<h2>Vagrant のインストール</h2>
+
+<p>今回は最新版のV1.3.5をインストール
+<a href="http://downloads.vagrantup.com">Vagrant</a></p>
+
+<h2>boxファイルのダウンロードと追加</h2>
+
+<p>予め用意された仮想マシンのテンプレートをダウンロードしてくる。CentOSやUbuntu等のメジャーなLinux系のbox以外にも、OpenBSDなんかのboxもある。</p>
+
+<p><a href="http://www.vagrantbox.es/">http://www.vagrantbox.es/</a></p>
+
+<p>他にもGithub等で検索すれば、多種多様なboxファイルをダウンロードできる。今回はCentOS 6.4 x86_64 Minimal (VirtualBox Guest Additions 4.2.16, Chef 11.6.4, Puppet 3.2.3)をインストールすることにする。</p>
+
+<p>boxファイルの追加は以下のようにすればOK。下記のように。最後の部分にURLを指定すると自動的にダウンロードが開始されるが、boxファイルを事前にダウンロードしておいて、そのファイルのPathを指定してもOK。</p>
+
+<pre><code>$ vagrant box add ceontos6.4 http://developer.nrel.gov/downloads/vagrant-boxes/CentOS-6.4-x86_64-v20130731.box
+</code></pre>
+
+<h2>仮想サーバーの起動</h2>
+
+<p>まず仮想マシン作成先に移動する。</p>
+
+<pre><code>$ mkdir ~/vagrant/centos6.4
+$ cd ~/vagrant/centos6.4
+</code></pre>
+
+<p>下記のようにすれば、仮想マシンが作成されサーバーが起動する。</p>
+
+<pre><code>$ vagrant init ceontos6.4
+$ vagrant up
+</code></pre>
+
+<p>次に下記のようにすると、起動したサーバーにsshで接続できる。</p>
+
+<pre><code>$ vagrant ssh
+</code></pre>
+
+<p>接続を切断する際はコンソールにexitと入力すればOK。シャットダウンする際は、下記のようにする。</p>
+
+<pre><code>$ vagrant halt
+</code></pre>
+
+<h2>その他の Vagrant のコマンド</h2>
+
+<p>サスペンド</p>
+
+<pre><code>$ vagrant suspend
+</code></pre>
+
+<p>レジューム(サスペンド状態から復帰)</p>
+
+<pre><code>$ vagrant resume
+</code></pre>
+
+<p>追加済みのboxの一覧を表示</p>
+
+<pre><code>$ vagrant box list
+</code></pre>
+
+<p>boxの削除</p>
+
+<pre><code>$ vagrant box remove {box名}
+</code></pre>
+
+<p>仮想マシンの状況確認</p>
+
+<pre><code>$ vagrant status
+</code></pre>
+
+<p>仮想マシン削除</p>
+
+<pre><code>$ vagrant destroy
+</code></pre>
+
+<p>仮想マシンからboxを作成</p>
+
+<pre><code>$ vagrant package
+</code></pre>
+]]></content>
+  </entry>
+  
+</feed>

@@ -1,0 +1,397 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>MacでTeX環境の構築 - さりんじゃーのプログラミング日記</title>
+  <meta name="author" content="Salinger">
+
+  
+  <meta name="description" content="">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://Salinger.github.com/blog/2013/02/04/1">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/bootstrap/bootstrap.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/stylesheets/bootstrap/responsive.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/stylesheets/syntax/syntax.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <style type="text/css">
+    body {
+      padding-bottom: 40px;
+    }
+    h1 {
+      margin-bottom: 15px;
+    }
+    img {
+      max-width: 100%;
+    }
+    .sharing, .meta, .pager {
+      margin: 20px 0px 20px 0px;
+    }
+    .page-footer p {
+      text-align: center;
+    }
+  </style>
+  <script src="/javascripts/libs/jquery.js"></script>
+  <script src="/javascripts/libs/modernizr-2.0.js"></script>
+  <script src="/javascripts/libs/bootstrap.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="さりんじゃーのプログラミング日記" type="application/atom+xml">
+  <link href="/stylesheets/data-table.css" rel="stylesheet" type="text/css" />
+  
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-39177183-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <nav role="navigation"><div class="navbar navbar-inverse">
+  <div class="navbar-inner">
+    <div class="container">
+      <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </a>
+
+      <a class="brand" href="/">さりんじゃーのプログラミング日記</a>
+
+      <div class="nav-collapse">
+        <ul class="nav">
+  <li><a href="/">Top</a></li>
+  <li><a href="/blog">Blog</a></li>
+  <li><a href="/python">Python</a></li>
+  <li><a href="/r">R</a></li>
+  <li><a href="/clojure">Clojure</a></li>
+  <li><a href="/ml">機械学習</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+
+        <ul class="nav pull-right" data-subscription="rss">
+          <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+          
+        </ul>
+
+        
+          <form class="pull-right navbar-search" action="http://google.com/search" method="get">
+            <fieldset role="search">
+              <input type="hidden" name="q" value="site:Salinger.github.com" />
+              <input class="search-query" type="text" name="q" results="0" placeholder="Search"/>
+            </fieldset>
+          </form>
+        
+      </div>
+    </div>
+  </div>
+</div>
+</nav>
+  <div class="container">
+    <div class="row-fluid">
+      
+<article class="hentry span9" role="article">
+
+  
+  <header class="page-header">
+    
+      <h1 class="entry-title">MacでTeX環境の構築</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-02-04T14:23:00+09:00" pubdate data-updated="true">Feb 4<span>th</span>, 2013</time>
+        
+         | <a href="#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>TeXで文章を書く必要があったので、その環境構築を行う際のメモ。基本的にコンソール上のEmacsで作業するための環境を構築します。具体的にはMacTexとYaTeXをインストールして、プレビューにはOSXデフォルトとPreview.appを使用します。OSはMountain Lionです。</p>
+
+<!-- more -->
+
+
+<h2>MacTeXのインストール</h2>
+
+<p><a href="http://www.tug.org/mactex">MacTeX</a>から、MacTeX.pkgをダウンロード。ダウンロードした.pkgファイルをダブルクリックしてインストール。</p>
+
+<p>動作確認。以下のサンプルをhogehoge.texの名前で保存。</p>
+
+<pre><code>\documentclass{jarticle}
+\begin{document}
+こんにちは、世界。
+こんにちは、\TeX。
+
+こんにちは、\LaTeX。
+\end{document}
+</code></pre>
+
+<p>コンソールから、</p>
+
+<pre><code>$ platex hogehoge.tex
+$ dvipdfmx hogehoge.dvi
+</code></pre>
+
+<p>これで、hogehoge.pdfが生成される。日本語も問題ない。</p>
+
+<h2>YaTeX(やてふ)のインストール</h2>
+
+<p>普段はコンソール上のEmacsで作業しているので、そこからTeXを便利に使うためのツールをインストール。</p>
+
+<p><a href="http://www.yatex.org">YaTeX</a>から、最新版のtar.gzをダウンロード。</p>
+
+<pre><code>$ cd ~/Downloads
+$ curl -O http://www.yatex.org/yatex1.76.tar.gz
+$ tar zxvf yatex1.76.tar.gz
+$ mkdir ~/.emacs.d/lisp/yatex
+$ mv yatex1.76 ~/.emacs.d/lisp/yatex
+</code></pre>
+
+<p>次に、.emacsを編集。以下のコードを最後に追記。</p>
+
+<pre><code>;; for YaTex
+;; Add library path
+(add-to-list 'load-path "~/.emacs.d/lisp/yatex")
+;; YaTeX mode
+(setq auto-mode-alist
+    (cons (cons "\\.tex$" 'yatex-mode) auto-mode-alist))
+(autoload 'yatex-mode "yatex" "Yet Another LaTeX mode" t)
+(setq tex-command "platex")
+(setq dviprint-command-format "dvipdfmx %s")
+;; use Preview.app
+(setq dvi2-command "open -a Preview")
+(setq bibtex-command "pbibtex")
+</code></pre>
+
+<p>動作確認。</p>
+
+<pre><code>$ emacs hogehoge.tex
+</code></pre>
+
+<p><code>C-c t j</code>でコンパイル。<code>C-c t l</code>でdviをpdfに。<code>C-c t p</code>でpdfファイルをプレビュー。</p>
+
+<p>動いた。</p>
+
+<h2>TeX、YaTeXの使い方など</h2>
+
+<p>この辺りのページ参照。<br/>
+<a href="http://www002.upp.so-net.ne.jp/latex/">LaTeXコマンドシート一覧</a><br/>
+<a href="http://hooktail.sub.jp/tex/yatex/">野鳥(YaTeX)[物理のかぎしっぽ]</a></p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Salinger</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-02-04T14:23:00+09:00" pubdate data-updated="true">Feb 4<span>th</span>, 2013</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/mac/'>Mac</a>, <a class='category' href='/blog/categories/tex/'>TeX</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  
+  
+</div>
+
+    
+    
+    <section>
+      <h1>Comments</h1>
+      <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+    </section>
+    
+    <ul class="pager">
+      
+      <li class="previous"><a class="basic-alignment left"
+        href="/blog/2013/01/27/2/" title="Previous Post:
+        NDS30:JAWS-UG-NGキックオフ に参加してきました">&laquo; NDS30:JAWS-UG-NGキックオフ に参加してきました</a></li>
+      
+      <li><a href="/blog/archives">Blog Archives</a></li>
+      
+      <li class="next"><a class="basic-alignment right" href="/blog/2013/02/26/1/"
+        title="Next Post: Mac + Homebrew で R 環境の構築">Mac + Homebrew で R 環境の構築
+        &raquo;</a></li>
+      
+    </ul>
+  </footer>
+</article>
+
+<aside class="sidebar-nav span3">
+  
+    <section>
+  <h1>About me</h1>
+  <p>Name: さりんじゃー</p>
+  <p>使用言語: Python (main), R (学習中), Clojure (学習中)</p>
+  <p>興味: 機械学習, データ分析, 自然言語処理, 情報検索 など</p>
+</section>
+<section class="well">
+  <ul id="recent_posts" class="nav nav-list">
+    <li class="nav-header">Recent Posts</li>
+    
+      <li class="post">
+        <a href="/blog/2014/11/03/1/">Vagrant で 始める CDH5 + Hive + Impala 入門</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/02/03/1/">Python 2.7.X 入門者向けのまとめ</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/11/05/1/">Mac で Vagrant 環境の整備</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/09/29/1/">第33回 長岡IT開発者勉強会 Scala入学式に参加してきました</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/07/06/1/">第32回 長岡IT開発者勉強会に参加してきました</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section class="well">
+  <ul id="gh_repos" class="nav">
+    <li class="nav-header">GitHub Repos</li>
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/Salinger">@Salinger</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        github.showRepos({
+            user: 'Salinger',
+            count: 5,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/asides/github.js" type="text/javascript"> </script>
+</section>
+
+
+<section class="well">
+  <a class="twitter-timeline" href="https://twitter.com/salinger001101" data-widget-id="429220673311891456">
+    @salinger001101 からのツイート
+  </a>
+  <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
+  </script>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo" class="page-footer"><hr>
+<p>
+  Copyright &copy; 2014 - Salinger -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'salinger';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://Salinger.github.com/blog/2013/02/04/1/';
+        var disqus_url = 'http://Salinger.github.com/blog/2013/02/04/1/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

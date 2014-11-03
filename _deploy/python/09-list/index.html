@@ -1,0 +1,514 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>9. リスト - さりんじゃーのプログラミング日記</title>
+  <meta name="author" content="Salinger">
+
+  
+  <meta name="description" content="">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://Salinger.github.com/python/09-list">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/bootstrap/bootstrap.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/stylesheets/bootstrap/responsive.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/stylesheets/syntax/syntax.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <style type="text/css">
+    body {
+      padding-bottom: 40px;
+    }
+    h1 {
+      margin-bottom: 15px;
+    }
+    img {
+      max-width: 100%;
+    }
+    .sharing, .meta, .pager {
+      margin: 20px 0px 20px 0px;
+    }
+    .page-footer p {
+      text-align: center;
+    }
+  </style>
+  <script src="/javascripts/libs/jquery.js"></script>
+  <script src="/javascripts/libs/modernizr-2.0.js"></script>
+  <script src="/javascripts/libs/bootstrap.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="さりんじゃーのプログラミング日記" type="application/atom+xml">
+  <link href="/stylesheets/data-table.css" rel="stylesheet" type="text/css" />
+  
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-39177183-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <nav role="navigation"><div class="navbar navbar-inverse">
+  <div class="navbar-inner">
+    <div class="container">
+      <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </a>
+
+      <a class="brand" href="/">さりんじゃーのプログラミング日記</a>
+
+      <div class="nav-collapse">
+        <ul class="nav">
+  <li><a href="/">Top</a></li>
+  <li><a href="/blog">Blog</a></li>
+  <li><a href="/python">Python</a></li>
+  <li><a href="/r">R</a></li>
+  <li><a href="/clojure">Clojure</a></li>
+  <li><a href="/ml">機械学習</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+
+        <ul class="nav pull-right" data-subscription="rss">
+          <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+          
+        </ul>
+
+        
+          <form class="pull-right navbar-search" action="http://google.com/search" method="get">
+            <fieldset role="search">
+              <input type="hidden" name="q" value="site:Salinger.github.com" />
+              <input class="search-query" type="text" name="q" results="0" placeholder="Search"/>
+            </fieldset>
+          </form>
+        
+      </div>
+    </div>
+  </div>
+</div>
+</nav>
+  <div class="container">
+    <div class="row-fluid">
+      
+<article role="article" class="span9">
+
+  
+  <header class="page-header">
+    <h1 class="entry-title">9. リスト</h1>
+    <p class="meta">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-02-03T16:31:00+09:00" pubdate data-updated="true">Feb 3<span>rd</span>, 2014</time></p>
+  </header>
+  
+  <h2>リストについて</h2>
+
+<p>リストは以下のような書式で定義できる。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&gt;&gt;&gt; l = [1, 2, 3, 4, 5]</span></code></pre></td></tr></table></div></figure>
+
+
+<p>各要素にアクセスする場合、以下のようにしてアクセスできる(シーケンス型の各演算子が適用出来る)。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&gt;&gt;&gt; l[2]
+</span><span class='line'>3
+</span><span class='line'>&gt;&gt;&gt; l[1:4]
+</span><span class='line'>[2, 3, 4]
+</span><span class='line'>&gt;&gt;&gt; l[2:]
+</span><span class='line'>[3, 4, 5]
+</span><span class='line'>&gt;&gt;&gt; 2 in l
+</span><span class='line'>True
+</span><span class='line'>&gt;&gt;&gt; max(l)
+</span><span class='line'>5
+</span><span class='line'>&gt;&gt;&gt; r = [6,7,8,9,10]
+</span><span class='line'>&gt;&gt;&gt; l + r
+</span><span class='line'>[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]</span></code></pre></td></tr></table></div></figure>
+
+
+<p>各要素は変更可能。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&gt;&gt;&gt; l[2] = 8
+</span><span class='line'>&gt;&gt;&gt; l
+</span><span class='line'> [1, 2, 8, 4, 5]</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>よく使うリストのメソッド</h2>
+
+<ul>
+<li>list.append(x)
+
+<ul>
+<li>リストの末尾に要素を一つ追加する。</li>
+</ul>
+</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&gt;&gt;&gt; l = [1,2,2,3,3,3]
+</span><span class='line'>&gt;&gt;&gt; l.append(4)
+</span><span class='line'>&gt;&gt;&gt; l
+</span><span class='line'>[1, 2, 2, 3, 3, 3, 4]</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>list.extend(L)
+
+<ul>
+<li>指定したリスト中のすべての要素を対象のリストに追加し、リストを拡張する。</li>
+</ul>
+</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&gt;&gt;&gt; l = [1,2,2,3,3,3]
+</span><span class='line'>&gt;&gt;&gt; l.extend(l)
+</span><span class='line'>&gt;&gt;&gt; l
+</span><span class='line'>[1, 2, 2, 3, 3, 3, 1, 2, 2, 3, 3, 3]</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>list.insert(i, x)
+
+<ul>
+<li>指定した位置に要素 x を挿入する。i は、リストのインデクス。そのインデクスを持つ要素の直前に挿入が行われる。</li>
+</ul>
+</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&gt;&gt;&gt; l = [1,2,2,3,3,3]
+</span><span class='line'>&gt;&gt;&gt; l.insert(3,4)
+</span><span class='line'>&gt;&gt;&gt; l
+</span><span class='line'>[1, 2, 2, 4, 3, 3, 3]</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>list.remove(x)
+
+<ul>
+<li>リスト中で、値 x を持つ最初の要素を削除する。該当する項目がなければエラー。</li>
+</ul>
+</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&gt;&gt;&gt; l = [1, 2, 2, 4, 3, 3, 3]
+</span><span class='line'>&gt;&gt;&gt; l.remove(4)
+</span><span class='line'>&gt;&gt;&gt; l
+</span><span class='line'>[1, 2, 2, 3, 3, 3]</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>list.pop([i])
+
+<ul>
+<li>リスト中の指定された位置にある要素をリストから削除して、その要素を返す。インデクスが指定されなければ、 a.pop() はリストの末尾の要素を削除して返す。この場合も要素は削除される。</li>
+</ul>
+</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&gt;&gt;&gt; l = [1,2,2,3,3,3]
+</span><span class='line'>&gt;&gt;&gt; l.pop()
+</span><span class='line'>3
+</span><span class='line'>&gt;&gt;&gt; l
+</span><span class='line'>l = [1,2,2,3,3]</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>list.index(x)
+
+<ul>
+<li>リスト中で、値 x を持つ最初の要素のインデクスを返す。該当する項目がなければエラー。</li>
+</ul>
+</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&gt;&gt;&gt; l = [1,2,2,3,3,3]
+</span><span class='line'>&gt;&gt;&gt; l.index(3)
+</span><span class='line'>3</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>list.count(x)
+
+<ul>
+<li>リストでの x の出現回数を返す。</li>
+</ul>
+</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&gt;&gt;&gt; l = [1,2,2,3,3,3]
+</span><span class='line'>&gt;&gt;&gt; l.count(2)
+</span><span class='line'>2</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>list.sort()
+
+<ul>
+<li>リストの項目を、インプレース演算 (in place、元のデータを演算結果で置き換えるやりかた) でソートする。</li>
+</ul>
+</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&gt;&gt;&gt; l = [2,4,3,5,1] 
+</span><span class='line'>&gt;&gt;&gt; l.sort()
+</span><span class='line'>&gt;&gt;&gt; print l
+</span><span class='line'>[1, 2, 3, 4, 5]</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>list.reverse()
+
+<ul>
+<li>リストの要素を、インプレース演算で逆順にする。</li>
+</ul>
+</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&gt;&gt;&gt; l = [2,4,3,5,1]
+</span><span class='line'>&gt;&gt;&gt; l.reverse()
+</span><span class='line'>&gt;&gt;&gt; print l
+</span><span class='line'>[5, 4, 3, 2, 1]</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>list([iterable])
+
+<ul>
+<li>他のシーケンス型をリストに変換する。</li>
+</ul>
+</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&gt;&gt;&gt; string = "this is test!"
+</span><span class='line'>&gt;&gt;&gt; list(string)
+</span><span class='line'>['t', 'h', 'i', 's', ' ', 'i', 's', ' ', 't', 'e', 's', 't', '!']</span></code></pre></td></tr></table></div></figure>
+
+
+  
+    <footer>
+      <p class="meta">
+        
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-02-03T16:31:00+09:00" pubdate data-updated="true">Feb 3<span>rd</span>, 2014</time>
+        
+      </p>
+      
+        <div class="sharing">
+  
+  
+  
+</div>
+
+      
+      
+    </footer>
+  
+</article>
+
+<aside class="sidebar-nav span3">
+  
+    <section>
+  <h1>About me</h1>
+  <p>Name: さりんじゃー</p>
+  <p>使用言語: Python (main), R (学習中), Clojure (学習中)</p>
+  <p>興味: 機械学習, データ分析, 自然言語処理, 情報検索 など</p>
+</section>
+<section class="well">
+  <ul id="recent_posts" class="nav nav-list">
+    <li class="nav-header">Recent Posts</li>
+    
+      <li class="post">
+        <a href="/blog/2014/11/03/1/">Vagrant で 始める CDH5 + Hive + Impala 入門</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/02/03/1/">Python 2.7.X 入門者向けのまとめ</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/11/05/1/">Mac で Vagrant 環境の整備</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/09/29/1/">第33回 長岡IT開発者勉強会 Scala入学式に参加してきました</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/07/06/1/">第32回 長岡IT開発者勉強会に参加してきました</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section class="well">
+  <ul id="gh_repos" class="nav">
+    <li class="nav-header">GitHub Repos</li>
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/Salinger">@Salinger</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        github.showRepos({
+            user: 'Salinger',
+            count: 5,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/asides/github.js" type="text/javascript"> </script>
+</section>
+
+
+<section class="well">
+  <a class="twitter-timeline" href="https://twitter.com/salinger001101" data-widget-id="429220673311891456">
+    @salinger001101 からのツイート
+  </a>
+  <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
+  </script>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo" class="page-footer"><hr>
+<p>
+  Copyright &copy; 2014 - Salinger -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

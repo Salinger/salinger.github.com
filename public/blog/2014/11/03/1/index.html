@@ -1,0 +1,719 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Vagrant で 始める CDH5 + Hive + Impala 入門 - さりんじゃーのプログラミング日記</title>
+  <meta name="author" content="Salinger">
+
+  
+  <meta name="description" content="">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://Salinger.github.com/blog/2014/11/03/1">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/bootstrap/bootstrap.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/stylesheets/bootstrap/responsive.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/stylesheets/syntax/syntax.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <style type="text/css">
+    body {
+      padding-bottom: 40px;
+    }
+    h1 {
+      margin-bottom: 15px;
+    }
+    img {
+      max-width: 100%;
+    }
+    .sharing, .meta, .pager {
+      margin: 20px 0px 20px 0px;
+    }
+    .page-footer p {
+      text-align: center;
+    }
+  </style>
+  <script src="/javascripts/libs/jquery.js"></script>
+  <script src="/javascripts/libs/modernizr-2.0.js"></script>
+  <script src="/javascripts/libs/bootstrap.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="さりんじゃーのプログラミング日記" type="application/atom+xml">
+  <link href="/stylesheets/data-table.css" rel="stylesheet" type="text/css" />
+  
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-39177183-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <nav role="navigation"><div class="navbar navbar-inverse">
+  <div class="navbar-inner">
+    <div class="container">
+      <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </a>
+
+      <a class="brand" href="/">さりんじゃーのプログラミング日記</a>
+
+      <div class="nav-collapse">
+        <ul class="nav">
+  <li><a href="/">Top</a></li>
+  <li><a href="/blog">Blog</a></li>
+  <li><a href="/python">Python</a></li>
+  <li><a href="/r">R</a></li>
+  <li><a href="/clojure">Clojure</a></li>
+  <li><a href="/ml">機械学習</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+
+        <ul class="nav pull-right" data-subscription="rss">
+          <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+          
+        </ul>
+
+        
+          <form class="pull-right navbar-search" action="http://google.com/search" method="get">
+            <fieldset role="search">
+              <input type="hidden" name="q" value="site:Salinger.github.com" />
+              <input class="search-query" type="text" name="q" results="0" placeholder="Search"/>
+            </fieldset>
+          </form>
+        
+      </div>
+    </div>
+  </div>
+</div>
+</nav>
+  <div class="container">
+    <div class="row-fluid">
+      
+<article class="hentry span9" role="article">
+
+  
+  <header class="page-header">
+    
+      <h1 class="entry-title">Vagrant で 始める CDH5 + Hive + Impala 入門</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-11-03T23:04:00+09:00" pubdate data-updated="true">Nov 3<span>rd</span>, 2014</time>
+        
+         | <a href="#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>以下の記事を参考にしつつテスト環境を作る。</p>
+
+<p><a href="http://blog.cloudera.com/blog/2014/06/how-to-install-a-virtual-apache-hadoop-cluster-with-vagrant-and-cloudera-manager/">how-to-install-a-virtual-apache-hadoop-cluster-with-vagrant-and-cloudera-manager</a></p>
+
+<p>なお、仮想マシン用に合計10GBはメモリが必要になるので、メインメモリ 16GB 以上詰んでるマシンで作業するのを推奨。</p>
+
+<!-- more -->
+
+
+<h2>VirtualBox のインストール</h2>
+
+<p>以下から最新版をインストール。</p>
+
+<p><a href="https://www.virtualbox.org/wiki/Downloads">https://www.virtualbox.org/wiki/Downloads</a></p>
+
+<h2>Vagrant のインストール</h2>
+
+<p>以下から最新版をインストール。</p>
+
+<p><a href="http://www.vagrantup.com/downloads">http://www.vagrantup.com/downloads</a></p>
+
+<h2>Vagrant によるクラスタ環境構築</h2>
+
+<p>ホストのコンソールで次のコマンドを実行。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ mkdir ~/vagrant
+</span><span class='line'>$ cd ~/vagrant/
+</span><span class='line'>$ vagrant plugin install vagrant-hostmanager
+</span><span class='line'>$ git clone https://github.com/DandyDev/virtual-hadoop-cluster.git
+</span><span class='line'>$ cd virtual-hadoop-cluster
+</span><span class='line'>$ vagrant up</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Cloudera Manager によるクラスタ環境設定</h2>
+
+<p>ブラウザで以下にアクセス。</p>
+
+<p><a href="http://vm-cluster-node1:7180">http://vm-cluster-node1:7180</a></p>
+
+<p>Cloudera Manager 5 の画面にアクセスできるはず</p>
+
+<ul>
+<li>admin / admin でログイン。</li>
+<li>Cloudera Express を選んで「続行」をクリック。</li>
+<li>CDHクラスタインストールのホストを指定。
+  *vm-cluster-node[1-4] と入力して「検索」をクリックすると4台のノードが検索できる。</li>
+<li>クラスタのインストール > リポジトリの選択
+
+<ul>
+<li>デフォルトのまま「続行」をクリック。</li>
+</ul>
+</li>
+<li>クラスタのインストール > JDK インストールオプション
+
+<ul>
+<li>デフォルトのまま「続行」をクリック。</li>
+</ul>
+</li>
+<li>クラスタのインストール >　SSH ログインの資格情報を入力してください。
+
+<ul>
+<li>別のユーザー: vagrant パスワード: vagrant パスワードの確認:vagrant を入力。これでクラスタのインストール作業が進む。
+
+<ul>
+<li>途中で1台のみインストールが進行しなくなったので一度中止をクリックした後、もう一度インストールを進めたら問題なく進行。「続行」をクリック。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>クラスタのインストール > 選択した Parcel のインストール
+
+<ul>
+<li>各種パッケージがインストールされるのを待つ。終わったら「続行」をクリック。</li>
+</ul>
+</li>
+<li>クラスタのインストール > ホストが正常かどうかの検査
+
+<ul>
+<li>インストール状況を確認できる。「続行」をクリック。</li>
+</ul>
+</li>
+<li>クラスタのセットアップ > クラスタにインストールする CDH 5 サービスを選択してください。
+  *「すべてのサービス」を選んで「続行」をクリック。</li>
+<li>クラスタのセットアップ > ロール割り当てのカスタマイズ デフォルトのまま「続行」をクリック。</li>
+<li>クラスタのセットアップ > データベースセットアップ
+
+<ul>
+<li>デフォルトのまま「続行」をクリック。</li>
+</ul>
+</li>
+<li>クラスタのセットアップ > 変更の確認
+
+<ul>
+<li>デフォルトのまま「続行」をクリック。</li>
+</ul>
+</li>
+<li>クラスタのセットアップ > 進行状況
+
+<ul>
+<li>全てインストールされるのを待ち「続行」をクリック。</li>
+</ul>
+</li>
+</ul>
+
+
+<p>これで Cloudera Manager のホーム画面にアクセス出来る。</p>
+
+<h2>Impala のインストール</h2>
+
+<p><a href="http://gyazo.com/f606d5ead7ffe1152e9353ae6f1f1204">http://gyazo.com/f606d5ead7ffe1152e9353ae6f1f1204</a></p>
+
+<p>この図の6になっている部分をクリックし、Impalaをダウンロード。</p>
+
+<p>画面下部の Cluster 1 の部分の配布ボタンをクリック。</p>
+
+<h2>作成したクラスタにログイン</h2>
+
+<p>ホストのコンソールで次のコマンドを実行。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ ssh vagrant@vm-cluster-node1</span></code></pre></td></tr></table></div></figure>
+
+
+<p>PASS は vagrant</p>
+
+<h2>YARN で MapReduce 処理の動作チェック</h2>
+
+<p>vagrant@vm-cluster-node1 で作業。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ sudo su - hdfs
+</span><span class='line'>$ hadoop jar /opt/cloudera/parcels/CDH-5.2.0-1.cdh5.2.0.p0.36/lib/hadoop-mapreduce/hadoop-mapreduce-examples.jar pi 4 100</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Job の実行状況は下記URLで確認できる。
+<a href="http://vm-cluster-node1:8088/cluster">http://vm-cluster-node1:8088/cluster</a></p>
+
+<h3>実行結果</h3>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+<span class='line-number'>67</span>
+<span class='line-number'>68</span>
+<span class='line-number'>69</span>
+<span class='line-number'>70</span>
+<span class='line-number'>71</span>
+<span class='line-number'>72</span>
+<span class='line-number'>73</span>
+<span class='line-number'>74</span>
+<span class='line-number'>75</span>
+<span class='line-number'>76</span>
+<span class='line-number'>77</span>
+<span class='line-number'>78</span>
+<span class='line-number'>79</span>
+<span class='line-number'>80</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>Number of Maps  = 4
+</span><span class='line'>Samples per Map = 100
+</span><span class='line'>Wrote input for Map #0
+</span><span class='line'>Wrote input for Map #1
+</span><span class='line'>Wrote input for Map #2
+</span><span class='line'>Wrote input for Map #3
+</span><span class='line'>Starting Job
+</span><span class='line'>14/11/03 11:44:03 INFO client.RMProxy: Connecting to ResourceManager at vm-cluster-node1/10.211.55.100:8032
+</span><span class='line'>14/11/03 11:44:04 INFO input.FileInputFormat: Total input paths to process : 4
+</span><span class='line'>14/11/03 11:44:04 INFO mapreduce.JobSubmitter: number of splits:4
+</span><span class='line'>14/11/03 11:44:05 INFO mapreduce.JobSubmitter: Submitting tokens for job: job_1415003058856_0001
+</span><span class='line'>14/11/03 11:44:05 INFO impl.YarnClientImpl: Submitted application application_1415003058856_0001
+</span><span class='line'>14/11/03 11:44:05 INFO mapreduce.Job: The url to track the job: http://vm-cluster-node1:8088/proxy/application_1415003058856_0001/
+</span><span class='line'>14/11/03 11:44:05 INFO mapreduce.Job: Running job: job_1415003058856_0001
+</span><span class='line'>14/11/03 11:44:25 INFO mapreduce.Job: Job job_1415003058856_0001 running in uber mode : false
+</span><span class='line'>14/11/03 11:44:25 INFO mapreduce.Job:  map 0% reduce 0%
+</span><span class='line'>14/11/03 11:44:39 INFO mapreduce.Job:  map 25% reduce 0%
+</span><span class='line'>14/11/03 11:44:40 INFO mapreduce.Job:  map 50% reduce 0%
+</span><span class='line'>14/11/03 11:44:50 INFO mapreduce.Job:  map 100% reduce 0%
+</span><span class='line'>14/11/03 11:45:01 INFO mapreduce.Job:  map 100% reduce 100%
+</span><span class='line'>14/11/03 11:45:02 INFO mapreduce.Job: Job job_1415003058856_0001 completed successfully
+</span><span class='line'>14/11/03 11:45:02 INFO mapreduce.Job: Counters: 49
+</span><span class='line'>         File System Counters
+</span><span class='line'>              FILE: Number of bytes read=62
+</span><span class='line'>                    FILE: Number of bytes written=532213
+</span><span class='line'>                          FILE: Number of read operations=0
+</span><span class='line'>                                FILE: Number of large read operations=0
+</span><span class='line'>                                      FILE: Number of write operations=0
+</span><span class='line'>                                            HDFS: Number of bytes read=1084
+</span><span class='line'>                                                  HDFS: Number of bytes written=215
+</span><span class='line'>                                                        HDFS: Number of read operations=19
+</span><span class='line'>                                                              HDFS: Number of large read operations=0
+</span><span class='line'>                                                                    HDFS: Number of write operations=3
+</span><span class='line'>                                                                    Job Counters 
+</span><span class='line'>                                                                        Launched map tasks=4
+</span><span class='line'>                                                                                 Launched reduce tasks=1
+</span><span class='line'>                                                                                          Data-local map tasks=4
+</span><span class='line'>                                                                                                     Total time spent by all maps in occupied slots (ms)=40475
+</span><span class='line'>                                                                                                           Total time spent by all reduces in occupied slots (ms)=5994
+</span><span class='line'>                                                                                                                 Total time spent by all map tasks (ms)=40475
+</span><span class='line'>                                                                                                                       Total time spent by all reduce tasks (ms)=5994
+</span><span class='line'>                                                                                                                             Total vcore-seconds taken by all map tasks=40475
+</span><span class='line'>                                                                                                                                   Total vcore-seconds taken by all reduce tasks=5994
+</span><span class='line'>                                                                                                                                         Total megabyte-seconds taken by all map tasks=41446400
+</span><span class='line'>                                                                                                                                               Total megabyte-seconds taken by all reduce tasks=6137856
+</span><span class='line'>                                                                                                                                               Map-Reduce Framework
+</span><span class='line'>                                                                                                                                                          Map input records=4
+</span><span class='line'>                                                                                                                                                              Map output records=8
+</span><span class='line'>                                                                                                                                                                  Map output bytes=72
+</span><span class='line'>                                                                                                                                                                      Map output materialized bytes=136
+</span><span class='line'>                                                                                                                                                                          Input split bytes=612
+</span><span class='line'>                                                                                                                                                                                Combine input records=0
+</span><span class='line'>                                                                                                                                                                                        Combine output records=0
+</span><span class='line'>                                                                                                                                                                                                Reduce input groups=2
+</span><span class='line'>                                                                                                                                                                                                       Reduce shuffle bytes=136
+</span><span class='line'>                                                                                                                                                                                                              Reduce input records=8
+</span><span class='line'>                                                                                                                                                                                                                     Reduce output records=0
+</span><span class='line'>                                                                                                                                                                                                                            Spilled Records=16
+</span><span class='line'>                                                                                                                                                                                                                                    Shuffled Maps =4
+</span><span class='line'>                                                                                                                                                                                                                                             Failed Shuffles=0
+</span><span class='line'>                                                                                                                                                                                                                                                    Merged Map outputs=4
+</span><span class='line'>                                                                                                                                                                                                                                                           GC time elapsed (ms)=211
+</span><span class='line'>                                                                                                                                                                                                                                                              CPU time spent (ms)=5230
+</span><span class='line'>                                                                                                                                                                                                                                                                  Physical memory (bytes) snapshot=1845346304
+</span><span class='line'>                                                                                                                                                                                                                                                                           Virtual memory (bytes) snapshot=8395341824
+</span><span class='line'>                                                                                                                                                                                                                                                                                   Total committed heap usage (bytes)=1530396672
+</span><span class='line'>                                                                                                                                                                                                                                                                                   Shuffle Errors
+</span><span class='line'>                                                                                                                                                                                                                                                                                           BAD_ID=0
+</span><span class='line'>                                                                                                                                                                                                                                                                                            CONNECTION=0
+</span><span class='line'>                                                                                                                                                                                                                                                                                             IO_ERROR=0
+</span><span class='line'>                                                                                                                                                                                                                                                                                              WRONG_LENGTH=0
+</span><span class='line'>                                                                                                                                                                                                                                                                                               WRONG_MAP=0
+</span><span class='line'>                                                                                                                                                                                                                                                                                                WRONG_REDUCE=0
+</span><span class='line'>                                                                                                                                                                                                                                                                                                File Input Format Counters 
+</span><span class='line'>                                                                                                                                                                                                                                                                                                     Bytes Read=472
+</span><span class='line'>                                                                                                                                                                                                                                                                                                     File Output Format Counters 
+</span><span class='line'>                                                                                                                                                                                                                                                                                                          Bytes Written=97
+</span><span class='line'>Job Finished in 59.247 seconds
+</span><span class='line'>Estimated value of Pi is 3.17000000000000000000
+</span><span class='line'>hdfs@vm-cluster-node1:~$ </span></code></pre></td></tr></table></div></figure>
+
+
+<p>MapReduce の Job が YARN で実行できた。</p>
+
+<h2>Hive の動作確認</h2>
+
+<p>vagrant@vm-cluster-node1 で作業。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ hive
+</span><span class='line'>hive&gt; SHOW databases;
+</span><span class='line'>OK
+</span><span class='line'>default
+</span><span class='line'>Time taken: 0.388 seconds, Fetched: 1 row(s)
+</span><span class='line'>hive&gt; CREATE DATABASE IF NOT EXISTS sample_logs;
+</span><span class='line'>OK
+</span><span class='line'>Time taken: 0.408 seconds
+</span><span class='line'>hive&gt; USE sample_logs;          
+</span><span class='line'>OK
+</span><span class='line'>Time taken: 0.54 seconds
+</span><span class='line'>hive&gt; CREATE TABLE logs(id INT, created_at STRING) row format delimited fields terminated by ',' lines terminated by '\n';
+</span><span class='line'>OK
+</span><span class='line'>Time taken: 0.771 seconds
+</span><span class='line'>hive&gt;</span></code></pre></td></tr></table></div></figure>
+
+
+<p>
+動作した。</p>
+
+<h2>Impala の動作確認</h2>
+
+<p>次のURLにアクセスすると Impala の WebUI にアクセスできる。
+<a href="http://vm-cluster-node1:25010">http://vm-cluster-node1:25010</a></p>
+
+<p>vm-cluster-node1 で下記コマンドを実行し、シェルの起動。ノード2 ~ 4 のどれかにログイン。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ impala-shell -i vm-cluster-node2 </span></code></pre></td></tr></table></div></figure>
+
+
+<p>操作してみる。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>[vm-cluster-node2:21000] &gt; SHOW databases;
+</span><span class='line'>[vm-cluster-node2:21000] &gt; CREATE DATABASE IF NOT EXISTS sample_logs;
+</span><span class='line'>[vm-cluster-node2:21000] &gt; USE sample_logs;
+</span><span class='line'>[vm-cluster-node2:21000] &gt; CREATE TABLE logs(id INT, created_at STRING) row format delimited fields terminated by ',' lines terminated by '\n';
+</span><span class='line'>[vm-cluster-node2:21000] &gt; SHOW tables;
+</span><span class='line'>Query: show tables
+</span><span class='line'>+------+
+</span><span class='line'>| name |
+</span><span class='line'>+------+
+</span><span class='line'>| logs |
+</span><span class='line'>+------+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>動作した。</p>
+
+<p>サーバーからログアウトして、</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ vagrant halt</span></code></pre></td></tr></table></div></figure>
+
+
+<p>でクラスタの全サーバーをシャットダウン。</p>
+
+<p>とりあえず、ここまででテスト用の CDH5 の Hadoop (HDFS + YARN によるMapReduce)環境、Hive、Impala環境が構築できた。</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Salinger</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-11-03T23:04:00+09:00" pubdate data-updated="true">Nov 3<span>rd</span>, 2014</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/cdh5/'>CDH5</a>, <a class='category' href='/blog/categories/cloudera/'>Cloudera</a>, <a class='category' href='/blog/categories/hadoop/'>Hadoop</a>, <a class='category' href='/blog/categories/hive/'>Hive</a>, <a class='category' href='/blog/categories/impala/'>Impala</a>, <a class='category' href='/blog/categories/vagrant/'>Vagrant</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  
+  
+</div>
+
+    
+    
+    <section>
+      <h1>Comments</h1>
+      <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+    </section>
+    
+    <ul class="pager">
+      
+      <li class="previous"><a class="basic-alignment left"
+        href="/blog/2014/02/03/1/" title="Previous Post:
+        Python 2.7.X 入門者向けのまとめ">&laquo; Python 2.7.X 入門者向けのまとめ</a></li>
+      
+      <li><a href="/blog/archives">Blog Archives</a></li>
+      
+    </ul>
+  </footer>
+</article>
+
+<aside class="sidebar-nav span3">
+  
+    <section>
+  <h1>About me</h1>
+  <p>Name: さりんじゃー</p>
+  <p>使用言語: Python (main), R (学習中), Clojure (学習中)</p>
+  <p>興味: 機械学習, データ分析, 自然言語処理, 情報検索 など</p>
+</section>
+<section class="well">
+  <ul id="recent_posts" class="nav nav-list">
+    <li class="nav-header">Recent Posts</li>
+    
+      <li class="post">
+        <a href="/blog/2014/11/03/1/">Vagrant で 始める CDH5 + Hive + Impala 入門</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/02/03/1/">Python 2.7.X 入門者向けのまとめ</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/11/05/1/">Mac で Vagrant 環境の整備</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/09/29/1/">第33回 長岡IT開発者勉強会 Scala入学式に参加してきました</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/07/06/1/">第32回 長岡IT開発者勉強会に参加してきました</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section class="well">
+  <ul id="gh_repos" class="nav">
+    <li class="nav-header">GitHub Repos</li>
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/Salinger">@Salinger</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        github.showRepos({
+            user: 'Salinger',
+            count: 5,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/asides/github.js" type="text/javascript"> </script>
+</section>
+
+
+<section class="well">
+  <a class="twitter-timeline" href="https://twitter.com/salinger001101" data-widget-id="429220673311891456">
+    @salinger001101 からのツイート
+  </a>
+  <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
+  </script>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo" class="page-footer"><hr>
+<p>
+  Copyright &copy; 2014 - Salinger -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'salinger';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://Salinger.github.com/blog/2014/11/03/1/';
+        var disqus_url = 'http://Salinger.github.com/blog/2014/11/03/1/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

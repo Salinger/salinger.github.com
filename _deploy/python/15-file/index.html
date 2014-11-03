@@ -1,0 +1,408 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>15. ファイル入出力 - さりんじゃーのプログラミング日記</title>
+  <meta name="author" content="Salinger">
+
+  
+  <meta name="description" content="">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://Salinger.github.com/python/15-file">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/bootstrap/bootstrap.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/stylesheets/bootstrap/responsive.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/stylesheets/syntax/syntax.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <style type="text/css">
+    body {
+      padding-bottom: 40px;
+    }
+    h1 {
+      margin-bottom: 15px;
+    }
+    img {
+      max-width: 100%;
+    }
+    .sharing, .meta, .pager {
+      margin: 20px 0px 20px 0px;
+    }
+    .page-footer p {
+      text-align: center;
+    }
+  </style>
+  <script src="/javascripts/libs/jquery.js"></script>
+  <script src="/javascripts/libs/modernizr-2.0.js"></script>
+  <script src="/javascripts/libs/bootstrap.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="さりんじゃーのプログラミング日記" type="application/atom+xml">
+  <link href="/stylesheets/data-table.css" rel="stylesheet" type="text/css" />
+  
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-39177183-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <nav role="navigation"><div class="navbar navbar-inverse">
+  <div class="navbar-inner">
+    <div class="container">
+      <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </a>
+
+      <a class="brand" href="/">さりんじゃーのプログラミング日記</a>
+
+      <div class="nav-collapse">
+        <ul class="nav">
+  <li><a href="/">Top</a></li>
+  <li><a href="/blog">Blog</a></li>
+  <li><a href="/python">Python</a></li>
+  <li><a href="/r">R</a></li>
+  <li><a href="/clojure">Clojure</a></li>
+  <li><a href="/ml">機械学習</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+
+        <ul class="nav pull-right" data-subscription="rss">
+          <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+          
+        </ul>
+
+        
+          <form class="pull-right navbar-search" action="http://google.com/search" method="get">
+            <fieldset role="search">
+              <input type="hidden" name="q" value="site:Salinger.github.com" />
+              <input class="search-query" type="text" name="q" results="0" placeholder="Search"/>
+            </fieldset>
+          </form>
+        
+      </div>
+    </div>
+  </div>
+</div>
+</nav>
+  <div class="container">
+    <div class="row-fluid">
+      
+<article role="article" class="span9">
+
+  
+  <header class="page-header">
+    <h1 class="entry-title">15. ファイル入出力</h1>
+    <p class="meta">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-02-03T16:32:00+09:00" pubdate data-updated="true">Feb 3<span>rd</span>, 2014</time></p>
+  </header>
+  
+  <p>ファイル入出力を扱う際は、基本的にcodecsモジュールを使うようにする。プログラムの冒頭に</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>import codecs</span></code></pre></td></tr></table></div></figure>
+
+
+<p>を記述する。</p>
+
+<h2>読み込み</h2>
+
+<p>最初にファイルオブジェクトを取得する。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>fin  = codecs.open(filename,"r","utf-8")</span></code></pre></td></tr></table></div></figure>
+
+
+<p>filenameには開くファイルの場所を記入。 &#8220;r&#8221; は読み込みモードを表す。 文字コードは基本的に&#8221;utf-8&#8221;を使用する。ただし、Windows環境でファイルを利用する場合は、 &#8220;sift-jis&#8221;を使用しなければならない場合あり。</p>
+
+<p>読み込む場合は以下の様なメソッドが利用できる。</p>
+
+<ul>
+<li><p>fin.readline([size])</p>
+
+<ul>
+<li>ファイルから一行全部を読み込む。終末の改行文字は文字列に残る。size 引数が与えられ、負でなければ、そのsizeバイト分だけ読み込む。</li>
+</ul>
+</li>
+<li><p>fin.readlines([sizehint])</p>
+
+<ul>
+<li>readline() を使ってに到達するまで読み出し、 EOF 読み出された行を含むリストを返す。オプションの sizehint 引数が存在すれば、 EOF まで読み出す代わりに完全な行を全体で大体 sizehint バイトになるように読み出す。</li>
+</ul>
+</li>
+</ul>
+
+
+<p>ファイルを1行ずつ読む場合は、次のように書くことも出来る。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>for l in fin:
+</span><span class='line'>    proc_A</span></code></pre></td></tr></table></div></figure>
+
+
+<p>ファイルを読み込む場合、これが一番普通な方法。この方法なら、ファイルを一度に全部読み込まないので巨大なファイルも扱える。この書き方を推奨します。</p>
+
+<p>処理が終わったら、</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>fin.close()</span></code></pre></td></tr></table></div></figure>
+
+
+<p>を実行して、ファイルを閉じる。</p>
+
+<p>今いるディレクトリにあるtest.txtを開いて、 その内容を画面に表示する場合は次のように書ける。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>fin = codecs.open("./test.txt","r","utf-8"):
+</span><span class='line'>try:
+</span><span class='line'>    for l in fin:
+</span><span class='line'>        print l
+</span><span class='line'>finally:
+</span><span class='line'>    fin.close()</span></code></pre></td></tr></table></div></figure>
+
+
+<p>withを使えばcloseメソッドを直接呼び出す必要がなくなる。 閉じ忘れが無くなるので、こっちを使うほうがいいかも。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>from __future__ import with_statement
+</span><span class='line'>    
+</span><span class='line'>with codecs.open("./test.txt","r","utf-8") as fin
+</span><span class='line'>    for line in fin:
+</span><span class='line'>        print line</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>書き込み</h2>
+
+<p>まずファイルオブジェクトを取得。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>fout = codecs.open(file_name,"w","utf-8")</span></code></pre></td></tr></table></div></figure>
+
+
+<p>filenameには開くファイルの場所を記入。</p>
+
+<p>&#8220;w&#8221; は書き込みモード(同名ファイルがあれば上書き)を表す。</p>
+
+<p>&#8220;a&#8221;にすると追記モード(同名ファイルがあれば追記)になる。</p>
+
+<p>文字コードは基本的に&#8221;utf-8&#8221;を使用する。ただし、Windows環境でファイルを利用する場合は、 &#8220;sift-jis&#8221;を使用しなければならない場合あり。</p>
+
+<p>書き込む場合は以下の様なメソッドが利用できる。</p>
+
+<ul>
+<li><p>fout.write(str)</p>
+
+<ul>
+<li>文字列をファイルに書き込む。戻り値はない。バッファリング によって、flush() または close() が呼び出されるまで、実際にファイル中に文字列が書き込まれないこともある。</li>
+</ul>
+</li>
+<li><p>fout.writelines(sequence)</p>
+
+<ul>
+<li>文字列からなるシーケンスをファイルに書き込む。戻り値はない。行間の区切りを追加しないので注意。fout.write(&#8220;&#8221;.join(lines))と等価。</li>
+</ul>
+</li>
+</ul>
+
+
+<p>処理が終わったら、</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>fout.close()</span></code></pre></td></tr></table></div></figure>
+
+
+<p>を実行して、ファイルを閉じる。</p>
+
+<p>今いるディレクトリにあるtest.txtを開いて、 文字列からなるリストの内容をファイルに出力する(改行も)場合、 次のように書ける。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>l = ["This is ...", "for test...", "!"]
+</span><span class='line'>fout = codecs.open("./test.txt","w","utf-8"):
+</span><span class='line'>for line in l:
+</span><span class='line'>    fout.write(l + '\n')
+</span><span class='line'>fout.close()</span></code></pre></td></tr></table></div></figure>
+
+
+  
+    <footer>
+      <p class="meta">
+        
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-02-03T16:32:00+09:00" pubdate data-updated="true">Feb 3<span>rd</span>, 2014</time>
+        
+      </p>
+      
+        <div class="sharing">
+  
+  
+  
+</div>
+
+      
+      
+    </footer>
+  
+</article>
+
+<aside class="sidebar-nav span3">
+  
+    <section>
+  <h1>About me</h1>
+  <p>Name: さりんじゃー</p>
+  <p>使用言語: Python (main), R (学習中), Clojure (学習中)</p>
+  <p>興味: 機械学習, データ分析, 自然言語処理, 情報検索 など</p>
+</section>
+<section class="well">
+  <ul id="recent_posts" class="nav nav-list">
+    <li class="nav-header">Recent Posts</li>
+    
+      <li class="post">
+        <a href="/blog/2014/11/03/1/">Vagrant で 始める CDH5 + Hive + Impala 入門</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/02/03/1/">Python 2.7.X 入門者向けのまとめ</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/11/05/1/">Mac で Vagrant 環境の整備</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/09/29/1/">第33回 長岡IT開発者勉強会 Scala入学式に参加してきました</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/07/06/1/">第32回 長岡IT開発者勉強会に参加してきました</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section class="well">
+  <ul id="gh_repos" class="nav">
+    <li class="nav-header">GitHub Repos</li>
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/Salinger">@Salinger</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        github.showRepos({
+            user: 'Salinger',
+            count: 5,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/asides/github.js" type="text/javascript"> </script>
+</section>
+
+
+<section class="well">
+  <a class="twitter-timeline" href="https://twitter.com/salinger001101" data-widget-id="429220673311891456">
+    @salinger001101 からのツイート
+  </a>
+  <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
+  </script>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo" class="page-footer"><hr>
+<p>
+  Copyright &copy; 2014 - Salinger -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

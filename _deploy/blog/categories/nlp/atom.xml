@@ -1,0 +1,326 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: NLP | さりんじゃーのプログラミング日記]]></title>
+  <link href="http://Salinger.github.com/blog/categories/nlp/atom.xml" rel="self"/>
+  <link href="http://Salinger.github.com/"/>
+  <updated>2014-11-03T23:31:09+09:00</updated>
+  <id>http://Salinger.github.com/</id>
+  <author>
+    <name><![CDATA[Salinger]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Raspberry Piに人工無脳搭載してみた]]></title>
+    <link href="http://Salinger.github.com/blog/2013/01/27/1/"/>
+    <updated>2013-01-27T00:09:00+09:00</updated>
+    <id>http://Salinger.github.com/blog/2013/01/27/1</id>
+    <content type="html"><![CDATA[<p>前回の記事に引き続きRaspberry Piネタ。マルコフ連鎖により文章を自動生成しLCDに出力してみた。</p>
+
+<p><img src="/images/2013-01-27/001.png" alt="出力例の画像" /></p>
+
+<!--more-->
+
+
+<h2>人工無脳とは</h2>
+
+<p>考えてるように見えて考えてない。ただ確率に従い文章を生成するプログラム。それでも人間から見ると、意味のある文章に見える文章が生成される。</p>
+
+<p>基本的な生成手順は</p>
+
+<ol>
+<li>元データを形態素解析して形態素毎に分割</li>
+<li>マルコフ連鎖により再構成</li>
+</ol>
+
+
+<h2>形態素解析</h2>
+
+<p>自然言語で書かれた文を、形態素 (言語で意味を持つ最小単位) ごとに分割し、各形態素の品詞を特定することを形態素解析と呼ぶ。プログラムで自然言語を扱う場合、よく使われる技術の一つ。細かいことは<a href="http://ja.wikipedia.org/wiki/%e5%bd%a2%e6%85%8b%e7%b4%a0%e8%a7%a3%e6%9e%90">Wikipedia</a> でも見てください。</p>
+
+<p>日本語の形態素解析を行うためのツールは以下の様なものがある。</p>
+
+<ul>
+<li><a href="http://mecab.sourceforge.net/">MeCab</a>
+
+<ul>
+<li>bi-gram マルコフモデル</li>
+<li>学習モデルはCRF</li>
+</ul>
+</li>
+<li><a href="http://chasen-legacy.sourceforge.jp">ChaSen</a>
+
+<ul>
+<li>可変長マルコフモデル</li>
+<li>学習モデルは隠れマルコフモデル(HMM)</li>
+</ul>
+</li>
+<li><a href="http://www.phontron.com/kytea/index-ja.html">KyTea</a>
+
+<ul>
+<li>比較的最近でてきたもの</li>
+<li>ネットスラングや顔文字などの認識も比較的精度がいいらしい</li>
+</ul>
+</li>
+<li><a href="http://developer.yahoo.co.jp/webapi/jlp/ma/v1/parse.html">日本語形態素解析Webサービス</a>
+
+<ul>
+<li>Webベースの日本語形態素解析API</li>
+<li>組み込み系などマシンが非力な場合にも使えそう</li>
+</ul>
+</li>
+</ul>
+
+
+<p>今回は使い慣れているMeCabを使いました。</p>
+
+<h2>マルコフ連鎖</h2>
+
+<p>すごく簡単に言うと、ある要素を次々と発生させる状況を考えたときに、次の要素が現在の要素のみによって決まるのがマルコフ連鎖である。詳しくは<a href="http://ja.wikipedia.org/wiki/%e3%83%9e%e3%83%ab%e3%82%b3%e3%83%95%e9%80%a3%e9%8e%96">Wikipedia</a>でも見てください。</p>
+
+<p>これを文章に適用した場合の例だが、解説はこのページがわかりやすい(<a href="https://www.evernote.com/shard/s70/sh/71947f67-ee6c-405f-92a2-1d64fd631639/2d9397138827808cbc21c36c9389f642">「それが大事」にマルコフ連鎖を適用してみる</a>)。</p>
+
+<p>ある単語があったとき、その単語の次に現れる可能性のある単語の確率のみを考える場合を単語uni-gramのマルコフ連鎖、2単語ずつをペアにして考える場合を単語bi-gramのマルコフ連鎖、さらに続いてtri-gram、4-gram、…N-gram。と呼ぶ。</p>
+
+<p>例えば、<br/>
+私/は/旅行/に/行き/たい/。<br/>
+という文章があった場合、</p>
+
+<ul>
+<li>単語uni-gram:
+
+<ul>
+<li>"私", "は", "旅行", "に", "行き", "たい", "。"</li>
+</ul>
+</li>
+<li>単語bi-gram:
+
+<ul>
+<li>"私/は", "は/旅行", "旅行/に", "に/行き", "行き/たい", "たい/。"</li>
+</ul>
+</li>
+<li>単語tri-gram:
+
+<ul>
+<li>"私/は/旅行", "は/旅行/に", "旅行/に/行き", "に/行き/たい", "行き/たい/。"<br/>
+となる。</li>
+</ul>
+</li>
+</ul>
+
+
+<h2>文章を生成する際のポイント</h2>
+
+<ol>
+<li>要素の単位
+
+<ul>
+<li>文字単位でマルコフ連鎖を行う場合もあるが、単語単位で生成したほうが読みやすい文章になる。N-gramのNが大きくなれば、長文になりやすく、同じパターンのものが生成されやすい。解決するためにはデータ量を増やす必要がある。個人的にいい意味で人工無脳っぽさが出るは単語bi-gramかtri-gramあたりだと思う。</li>
+</ul>
+</li>
+<li>開始・終了の扱い
+
+<ul>
+<li>開始、終了にも適当な目印を割り当てると楽。<code>[S]/私/は/旅行/に/行き/たい/。/[E]</code>のように。単語[S]から作り始めて、単語[E]が現れたら終了。</li>
+</ul>
+</li>
+<li>元データの選択
+
+<ul>
+<li>◯◯っぽいものを作りたい場合は◯◯っぽい文章を集めてくる。とりあえず試してみたい場合のデータ収集元としておすすめなのはTwitterやネットのニュースあたり。この辺りを元データにしたものは<a href="https://twitter.com/shuumai">しゅうまい君</a>や<a href="http://pha22.net/comp/">圧縮新聞</a>なんかが有名ですね。</li>
+</ul>
+</li>
+</ol>
+
+
+<h2>プログラム</h2>
+
+<p>という訳で、Raspberry Pi + LCD で動くものを実装してみました(<a href="https://github.com/Salinger/MunouChan-onRaspberryPi">MunouChan</a>)。文章生成に使用したのは友人のTweet。<code>@~</code> から始まるリプライツイートは削除しました。各単語はMeCabで分割し単語の読みに変換(最終出力が半角カナのみなので)。単語の読みのみを考慮して(火と日は"ひ"で同一単語扱い)bi-gramの単語ペアを生成。ペアの出現回数をカウント。次に現れる単語の確率を計算したものをpickleモジュールでダンプしたものが上記URLのプログラムの状態です。</p>
+
+<p>後はプログラム起動時にダンプされたデータを読み込み、開始単語から終了単語が現れるまで確率に従いランダムに単語を選択。LCDに収まる文字数ならLCDに出力し、オーバーしていたら再生成。</p>
+
+<p><code>./probability.pkl</code>を削除またはリネームし、tweetディレクトリの中のsample.tsvを同じ形式で書き換えてやれば、任意の元データでも動くはず。ただ元データに文字数が多いものばかりを選ぶと、制限文字数をオーバしまくるので怪しい動作しそう。</p>
+
+<p>実行したときの画像がこのページトップあたりにある画像です。</p>
+
+<h2>まとめ</h2>
+
+<p>シンプルな人工無脳を作るのはさほど難しくないが、人間らしい応答をさせようとすると難易度が跳ね上がる。そもそも「人間らしい」という定義すらよくわからない。</p>
+
+<p>これはマルコフ連鎖を文章に適用した例だけど、状態の遷移を確率的に表現できるものに適用できるので、音楽や絵の自動生成など、他分野にもいろいろ適用できるはず。</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Homebrew + virtualenv 環境でlibsvmのインストール]]></title>
+    <link href="http://Salinger.github.com/blog/2013/01/18/1/"/>
+    <updated>2013-01-18T02:42:00+09:00</updated>
+    <id>http://Salinger.github.com/blog/2013/01/18/1</id>
+    <content type="html"><![CDATA[<p>サポートベクターマシン(SVM)についての概要は <a href="http://ja.wikipedia.org/wiki/%E3%82%B5%E3%83%9D%E3%83%BC%E3%83%88%E3%83%99%E3%82%AF%E3%82%BF%E3%83%BC%E3%83%9E%E3%82%B7%E3%83%B3">Wikipedia</a> でも見てください。
+スパムの分類、ユーザーのクラスタリング、他何か色々なものを分類する用途に使われます。今回はSVMを使うための環境構築を行った際のメモです。</p>
+
+<!-- more -->
+
+
+<h2>libsvmについて</h2>
+
+<p><a href="http://www.csie.ntu.edu.tw/~cjlin/libsvm/">libsvm</a>はChih-Chung Changさん・Chih-Jen Linさんが開発したSVMのライブラリです。様々なSVMタイプ・カーネル関数、また細かくオプションも指定できるので、SVMを使う必要がある場合は、とりあえずこれを選んでおけば困ることは少ないと思います。</p>
+
+<h2>libsvmのインストール</h2>
+
+<pre><code>$ brew search libsvm
+libsvm
+</code></pre>
+
+<p>brewにあった。ラッキー。</p>
+
+<pre><code>$ brew install libsvm
+</code></pre>
+
+<p>本体のインストール完了。</p>
+
+<pre><code>$ svm-train
+Usage: svm-train [options] training_set_file [model_file]
+options:
+-s svm_type : set type of SVM (default 0)
+        0 -- C-SVC              (multi-class classification)
+...
+</code></pre>
+
+<p>動いた。がこれだとPython用バインディングがインストールできなかった。残念。</p>
+
+<h2>libsvmのPython用バインディングのインストール</h2>
+
+<p>無いなら、pipで公式のバインディングをインストールするためのsetup.pyを自分で書いてしまえばいいじゃない。てな訳で書いた奴をgithubに上げといた<a href="https://github.com/Salinger/libsvm-python">(libsvm-python)</a>。
+問題はsetup.py書いたのが初めてなので、これであってるのかどうか自信がない。とりあえず以下のコマンドでインストールできます。</p>
+
+<pre><code>$ pip install -e git+https://github.com/Salinger/libsvm-python.git#egg=libsvm-python
+</code></pre>
+
+<h2>動作確認</h2>
+
+<p>テスト用のコード。
+<div><script src='https://gist.github.com/4579980.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+
+<p>そして実行。</p>
+
+<pre><code>$ python libsvm_test.py 
+.*.*
+optimization finished, #iter = 9
+nu = 0.298326
+obj = -0.596685, rho = 3.000257
+nSV = 3, nBSV = 0
+Total nSV = 3
+Accuracy = 75% (3/4) (classification)
+[Result]
+[-1.0, 1.0, -1.0, -1.0]
+(75.0, 1.0, 0.3333333333333333)
+[[-1.3527684585781998], [3.038557720585867], [-1.9331234989121904], [-2.4115929900464406]]
+</code></pre>
+
+<p>問題なく動くのを確認できた。自分で書いたsetup.pyもとりあえず問題ないっぽい？</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Homebrew + virtualenv 環境でMeCabのインストール]]></title>
+    <link href="http://Salinger.github.com/blog/2013/01/17/1/"/>
+    <updated>2013-01-17T18:40:00+09:00</updated>
+    <id>http://Salinger.github.com/blog/2013/01/17/1</id>
+    <content type="html"><![CDATA[<p>普段良く使うモジュールのMeCabのインストール。
+Homebrewもvirutalenvも最近使い始めたばかりなので、自分用メモとして記録。</p>
+
+<!-- more -->
+
+
+<h2>virtualenv環境の作成</h2>
+
+<p>普段はNormalという環境を作って、これを使うことにする。</p>
+
+<pre><code>$ mkvirtualenv Normal
+</code></pre>
+
+<h2>MeCabのインストール</h2>
+
+<pre><code>$ brew search mecab
+mecab mecab-ipadic
+</code></pre>
+
+<p>Homebrewにあった。</p>
+
+<pre><code>$ brew install mecab mecab-ipadic
+$ mecab
+</code></pre>
+
+<p>これでこの時点の最新版である0.994とIPA辞書がインストールできた。動作確認。</p>
+
+<pre><code>$ mecab
+すもももももももものうち
+すもも  名詞,一般,*,*,*,*,すもも,スモモ,スモモ
+も      助詞,係助詞,*,*,*,*,も,モ,モ
+もも    名詞,一般,*,*,*,*,もも,モモ,モモ
+も      助詞,係助詞,*,*,*,*,も,モ,モ
+もも    名詞,一般,*,*,*,*,もも,モモ,モモ
+の      助詞,連体化,*,*,*,*,の,ノ,ノ
+うち    名詞,非自立,副詞可能,*,*,*,うち,ウチ,ウチ
+EOS
+</code></pre>
+
+<p>Ctrl + c で終了。
+文字コード周りのトラブルも特になし。</p>
+
+<h2>MeCabのPythonバインディングのインストール</h2>
+
+<p>MacPortsのときはPythonバインディングもまとめてインストールできたが、Homebrewには無いっぽい。まあvirtualenvで作った環境にインストールするには結局自分で入れなきゃならないらしいので、普通にインストールすることにする。インストール先のvirtualenv環境のまま作業続行。</p>
+
+<pre><code>$ cd ~/Downloads/
+$ curl -O http://mecab.googlecode.com/files/mecab-python-0.994.tar.gz # 同じバージョンのものをダウンロード
+$ pip install mecab-python-0.994.tar.gz # tar.gz のままインストールできる。
+</code></pre>
+
+<p>動作確認を行う。</p>
+
+<h2>Pythonバインディングの動作確認</h2>
+
+<p>サンプルコード
+<div><script src='https://gist.github.com/4555097.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+
+<p>実行。</p>
+
+<pre><code>$ python mecab_test.py
+ BOS/EOS,*,*,*,*,*,*,*,*
+それ 名詞,代名詞,一般,*,*,*,それ,ソレ,ソレ
+サバンナ 名詞,一般,*,*,*,*,サバンナ,サバンナ,サバンナ
+で 助詞,格助詞,一般,*,*,*,で,デ,デ
+も 助詞,係助詞,*,*,*,*,も,モ,モ
+同じ 連体詞,*,*,*,*,*,同じ,オナジ,オナジ
+事 名詞,非自立,一般,*,*,*,事,コト,コト
+言え 動詞,自立,*,*,一段,未然形,言える,イエ,イエ
+ん 助動詞,*,*,*,不変化型,基本形,ん,ン,ン
+の 助詞,終助詞,*,*,*,*,の,ノ,ノ
+？ 記号,一般,*,*,*,*,？,？,？
+ BOS/EOS,*,*,*,*,*,*,*,*
+</code></pre>
+
+<p>動いた。</p>
+
+<h2>おまけ</h2>
+
+<p>今回はgistで書いたコードをブログに貼ってみたけど、</p>
+
+<pre><code>{% gist 4555097 %}
+</code></pre>
+
+<p>の1行で長いコードを見やすい形式で貼れるのってかなり便利だ。
+Github + Octopress 快適すぎる。</p>
+]]></content>
+  </entry>
+  
+</feed>

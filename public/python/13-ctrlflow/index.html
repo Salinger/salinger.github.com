@@ -1,0 +1,478 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>13. 制御構文 - さりんじゃーのプログラミング日記</title>
+  <meta name="author" content="Salinger">
+
+  
+  <meta name="description" content="">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://Salinger.github.com/python/13-ctrlflow">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/bootstrap/bootstrap.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/stylesheets/bootstrap/responsive.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/stylesheets/syntax/syntax.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <style type="text/css">
+    body {
+      padding-bottom: 40px;
+    }
+    h1 {
+      margin-bottom: 15px;
+    }
+    img {
+      max-width: 100%;
+    }
+    .sharing, .meta, .pager {
+      margin: 20px 0px 20px 0px;
+    }
+    .page-footer p {
+      text-align: center;
+    }
+  </style>
+  <script src="/javascripts/libs/jquery.js"></script>
+  <script src="/javascripts/libs/modernizr-2.0.js"></script>
+  <script src="/javascripts/libs/bootstrap.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="さりんじゃーのプログラミング日記" type="application/atom+xml">
+  <link href="/stylesheets/data-table.css" rel="stylesheet" type="text/css" />
+  
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-39177183-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <nav role="navigation"><div class="navbar navbar-inverse">
+  <div class="navbar-inner">
+    <div class="container">
+      <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </a>
+
+      <a class="brand" href="/">さりんじゃーのプログラミング日記</a>
+
+      <div class="nav-collapse">
+        <ul class="nav">
+  <li><a href="/">Top</a></li>
+  <li><a href="/blog">Blog</a></li>
+  <li><a href="/python">Python</a></li>
+  <li><a href="/r">R</a></li>
+  <li><a href="/clojure">Clojure</a></li>
+  <li><a href="/ml">機械学習</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+
+        <ul class="nav pull-right" data-subscription="rss">
+          <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+          
+        </ul>
+
+        
+          <form class="pull-right navbar-search" action="http://google.com/search" method="get">
+            <fieldset role="search">
+              <input type="hidden" name="q" value="site:Salinger.github.com" />
+              <input class="search-query" type="text" name="q" results="0" placeholder="Search"/>
+            </fieldset>
+          </form>
+        
+      </div>
+    </div>
+  </div>
+</div>
+</nav>
+  <div class="container">
+    <div class="row-fluid">
+      
+<article role="article" class="span9">
+
+  
+  <header class="page-header">
+    <h1 class="entry-title">13. 制御構文</h1>
+    <p class="meta">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-02-03T16:32:00+09:00" pubdate data-updated="true">Feb 3<span>rd</span>, 2014</time></p>
+  </header>
+  
+  <h3>pass</h3>
+
+<p>何もしない場合に</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>pass</span></code></pre></td></tr></table></div></figure>
+
+
+<p>と書く。仮決めした中身の関数を記述しておく場合等に使用。</p>
+
+<h3>print</h3>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>print exp1[, exp2[,...]]</span></code></pre></td></tr></table></div></figure>
+
+
+<p>でexpを画面に出力。通常は改行文字が自動的に付加されるが末尾に&#8221;,&#8221;でキャンセル可。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&gt;&gt;&gt; print "abc","def","ghi"
+</span><span class='line'>abc def ghi</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>return</h3>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>return exp1[, exp2, [...]]</span></code></pre></td></tr></table></div></figure>
+
+
+<p>でexpを返す。finally節を伴うtry文の外に処理が引き渡されると関数から抜ける前にfinnlay節が実行される。</p>
+
+<h3>yield</h3>
+
+<p>関数定義中でreturnの代わりに使用すると、通常の関数ではなくジェネレータ関数になる。関数が終了しても、関数中のすべてのローカル変数が保存されたままになる。</p>
+
+<h3>raise</h3>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>raise [exp1[,...]]</span></code></pre></td></tr></table></div></figure>
+
+
+<p>例外expを送出する。詳細は後述。</p>
+
+<h3>break</h3>
+
+<p>for ループや while ループ中の最も内側のループを終了させる。finally節を伴うtry文の外に処理が引き渡されると関数から抜ける前にfinnlay節が実行される。</p>
+
+<h3>continue</h3>
+
+<p>for ループや while ループ中の最も内側の次周期の処理を開始させる。</p>
+
+<h3>import</h3>
+
+<p>モジュールを探し、必要なら初期化する。fromを使う形式と使わない形式がある。詳細は後述。</p>
+
+<h3>global</h3>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>global exp1[, ...]</span></code></pre></td></tr></table></div></figure>
+
+
+<p>列挙した識別子をグローバル変数として解釈する。大域変数はトラブルの元になりやすいので非推奨。</p>
+
+<h3>exec</h3>
+
+<p>一連の文字列もしくはファイルオブジェクトをPython実行文として実行する。</p>
+
+<h3>if</h3>
+
+<p>条件分岐のために使用。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>if cond:
+</span><span class='line'>    proc_A
+</span><span class='line'>elif cond:
+</span><span class='line'>    proc_B
+</span><span class='line'>else:
+</span><span class='line'>    proc_C</span></code></pre></td></tr></table></div></figure>
+
+
+<p>condの部分にはブール型を返す式を記述する。式を順に評価していき、condが真になった最初の部分を実行する。すべて偽なら、else節がある場合その部分が実行される。</p>
+
+<h3>while</h3>
+
+<p>式が真の間、実行を繰り返す。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>while cond:
+</span><span class='line'>    proc_A
+</span><span class='line'>else:
+</span><span class='line'>    proc_B</span></code></pre></td></tr></table></div></figure>
+
+
+<p>式が偽であれば、else節がある場合にはそれを実行しループ終了。</p>
+
+<h3>for</h3>
+
+<p>シーケンス内の要素に渡って反復処理を行う。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>for x in iter:
+</span><span class='line'>    proc_A</span></code></pre></td></tr></table></div></figure>
+
+
+<p>ループ回数を指定したい場合はrange()が使える</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>for x in range(5):
+</span><span class='line'>    proc_A</span></code></pre></td></tr></table></div></figure>
+
+
+<p>とすると5回ループが繰り返される(xは0 ~ 4に順次更新される)。range()は指定した範囲の数列リストを作成するための関数。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&gt;&gt;&gt; range(5)
+</span><span class='line'>[0, 1, 2, 3, 4]
+</span><span class='line'>&gt;&gt;&gt; range(1,5)
+</span><span class='line'>[1, 2, 3, 4]
+</span><span class='line'>&gt;&gt;&gt; range(1,10,2)
+</span><span class='line'>[1, 3, 5, 7, 9]</span></code></pre></td></tr></table></div></figure>
+
+
+<p>iterの部分にディクショナリを指定すると全keyを順にたどることが出来る。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&gt;&gt;&gt; for x in {"a":1,"b":2,"c":3}:
+</span><span class='line'>        print x
+</span><span class='line'>a
+</span><span class='line'>b
+</span><span class='line'>c</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>try</h3>
+
+<p>例外処理を行う。下記のように記述する。詳細は後述。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>try:
+</span><span class='line'>    proc_A
+</span><span class='line'>except state:
+</span><span class='line'>    proc_B
+</span><span class='line'>finally:
+</span><span class='line'>    proc_C</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>with</h3>
+
+<p>ファイルオープン時などに使用。詳細は後述。</p>
+
+<h3>関数定義</h3>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>def function_name([arg1,[,arg2[,...]]]):
+</span><span class='line'>    proc_A</span></code></pre></td></tr></table></div></figure>
+
+
+<p>このように定義する。詳細は後述。</p>
+
+<h3>クラス定義</h3>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>class class_A (inheritance):
+</span><span class='line'>    class_variable_A
+</span><span class='line'>    class_variable_B
+</span><span class='line'>    ...
+</span><span class='line'>    
+</span><span class='line'>    def __init__(self[,arg1[,...]]):
+</span><span class='line'>        proc_A
+</span><span class='line'>     
+</span><span class='line'>    def class_methodA(self[,arg1[,...]]):
+</span><span class='line'>        proc_B</span></code></pre></td></tr></table></div></figure>
+
+
+<p>このように定義する。詳細は後述。</p>
+
+  
+    <footer>
+      <p class="meta">
+        
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-02-03T16:32:00+09:00" pubdate data-updated="true">Feb 3<span>rd</span>, 2014</time>
+        
+      </p>
+      
+        <div class="sharing">
+  
+  
+  
+</div>
+
+      
+      
+    </footer>
+  
+</article>
+
+<aside class="sidebar-nav span3">
+  
+    <section>
+  <h1>About me</h1>
+  <p>Name: さりんじゃー</p>
+  <p>使用言語: Python (main), R (学習中), Clojure (学習中)</p>
+  <p>興味: 機械学習, データ分析, 自然言語処理, 情報検索 など</p>
+</section>
+<section class="well">
+  <ul id="recent_posts" class="nav nav-list">
+    <li class="nav-header">Recent Posts</li>
+    
+      <li class="post">
+        <a href="/blog/2014/11/03/1/">Vagrant で 始める CDH5 + Hive + Impala 入門</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/02/03/1/">Python 2.7.X 入門者向けのまとめ</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/11/05/1/">Mac で Vagrant 環境の整備</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/09/29/1/">第33回 長岡IT開発者勉強会 Scala入学式に参加してきました</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/07/06/1/">第32回 長岡IT開発者勉強会に参加してきました</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section class="well">
+  <ul id="gh_repos" class="nav">
+    <li class="nav-header">GitHub Repos</li>
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/Salinger">@Salinger</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        github.showRepos({
+            user: 'Salinger',
+            count: 5,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/asides/github.js" type="text/javascript"> </script>
+</section>
+
+
+<section class="well">
+  <a class="twitter-timeline" href="https://twitter.com/salinger001101" data-widget-id="429220673311891456">
+    @salinger001101 からのツイート
+  </a>
+  <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
+  </script>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo" class="page-footer"><hr>
+<p>
+  Copyright &copy; 2014 - Salinger -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>
